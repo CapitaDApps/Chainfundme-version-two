@@ -8,19 +8,21 @@ import { CategorisItem } from "@/lib/CategoriesContent";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function CategoriesTab() {
+interface Props {
+  initialCategory: string;
+}
+
+function CategoriesTab({ initialCategory }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState("for you");
+  const [activeTab, setActiveTab] = useState(initialCategory);
 
   useEffect(() => {
     const category = searchParams.get("category");
-    if (category) {
+    if (category && category !== activeTab) {
       setActiveTab(category);
-    } else {
-      setActiveTab("for you");
     }
-  }, [searchParams]);
+  }, [searchParams,activeTab]);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -39,11 +41,7 @@ function CategoriesTab() {
 
   return (
     <div className="w-full">
-      <Tabs
-        value={activeTab}
-        onValueChange={handleTabChange}
-        className="w-full"
-      >
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className="flex flex-row flex-wrap gap-4 mb-8">
           {List.map((list) => (
             <TabsTrigger
@@ -60,7 +58,7 @@ function CategoriesTab() {
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCampaigns.length > 0 ? (
                 filteredCampaigns.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />
@@ -80,7 +78,7 @@ function CategoriesTab() {
           "travel",
         ].map((category) => (
           <TabsContent key={category} value={category}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Changed to 3 columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCampaigns.length > 0 ? (
                 filteredCampaigns.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />

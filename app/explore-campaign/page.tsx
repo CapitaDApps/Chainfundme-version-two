@@ -2,8 +2,15 @@ import CategoriesTab from "@/components/layout/ExploreCampaign/CategoriesTab";
 import CreateCamBtn from "@/components/layout/CreateCamBtn";
 import Filter from "@/components/layout/ExploreCampaign/Filter";
 import SearchBar from "@/components/layout/SearchBar";
+import { Suspense } from "react";
 
-function ExploreCampaignPage() {
+export default function ExploreCampaignPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  const category = searchParams.category ?? "for you";
+
   return (
     <div>
       <p>
@@ -23,9 +30,11 @@ function ExploreCampaignPage() {
         <Filter />
       </div>
       <hr className="border-[#CDCDCD]/40 w-full my-8" />
-      <CategoriesTab />
+
+      {/* Pass category to client component */}
+      <Suspense fallback={<div>Loading categories...</div>}>
+        <CategoriesTab initialCategory={category} />
+      </Suspense>
     </div>
   );
 }
-
-export default ExploreCampaignPage;
