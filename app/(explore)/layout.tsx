@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
-import ClientShell from "@/app/ClientShell";
+import ClientShell from "@/app/(explore)/ClientShell";
 import NextTopLoader from "nextjs-toploader";
-import "./globals.css";
+import "../globals.css";
 
 const sora = Sora({
   variable: "--font-sora",
