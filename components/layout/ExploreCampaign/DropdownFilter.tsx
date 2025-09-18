@@ -55,7 +55,7 @@ export default function DropdownFilter() {
       <DropdownMenuPortal>
         <DropdownMenuContent
           ref={ref}
-          className="mr-2 mt-2 shadow-sm shadow-zinc-950 bg-sidebar-content text-background w-[180px] border-none flex flex-col gap-1 p-6 py-4 rounded-sm"
+          className="mr-2 mt-2 shadow-sm shadow-zinc-950 bg-white text-background w-[180px] border-none flex flex-col gap-1 p-6 py-4 rounded-sm"
         >
           <DropdownMenuLabel className="text-sm text-[#2a2a2a] font-normal ">
             SORT BY

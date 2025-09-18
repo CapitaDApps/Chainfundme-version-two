@@ -40,9 +40,6 @@ export const List = [
     value: "personal",
     icon: FaCreativeCommonsBy,
   },
-];
-
-export const OtherList = [
   {
     title: "Creatives",
     value: "creatives",
@@ -53,6 +50,9 @@ export const OtherList = [
     value: "organisation",
     icon: CgOrganisation,
   },
+];
+
+export const OtherList = [
   {
     title: "Community rescue",
     value: "community rescue",

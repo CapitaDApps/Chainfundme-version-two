@@ -22,7 +22,7 @@ function CategoriesTab({ initialCategory }: Props) {
     if (category && category !== activeTab) {
       setActiveTab(category);
     }
-  }, [searchParams,activeTab]);
+  }, [searchParams, activeTab]);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
@@ -41,24 +41,30 @@ function CategoriesTab({ initialCategory }: Props) {
 
   return (
     <div className="w-full">
-      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-        <TabsList className="flex flex-row flex-wrap gap-4 mb-8">
-          {List.map((list) => (
-            <TabsTrigger
-              key={list.value}
-              value={list.value}
-              className="data-[state=active]:text-white data-[state=active]:bg-[#2379BC] px-4 py-3 rounded-xl items-center cursor-pointer border border-[#666666]/50 flex flex-row gap-2"
-            >
-              <span className="text-lg">{<list.icon />}</span>
-              <span className="truncate">{list.title}</span>
-            </TabsTrigger>
-          ))}
-          <OtherCampaign />
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={handleTabChange}
+        className="w-full"
+      >
+        <div className="flex items-center justify-center">
+          <TabsList className="flex flex-row flex-wrap gap-4 mb-8">
+            {List.map((list) => (
+              <TabsTrigger
+                key={list.value}
+                value={list.value}
+                className="data-[state=active]:text-white data-[state=active]:bg-[#2379BC] px-4 py-3 rounded-xl items-center cursor-pointer border border-[#666666]/50 flex flex-row gap-2"
+              >
+                <span className="text-lg">{<list.icon />}</span>
+                <span className="truncate">{list.title}</span>
+              </TabsTrigger>
+            ))}
+            <OtherCampaign />
+          </TabsList>
+        </div>
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredCampaigns.length > 0 ? (
                 filteredCampaigns.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />
@@ -70,15 +76,9 @@ function CategoriesTab({ initialCategory }: Props) {
           </TabsContent>
         ))}
 
-        {[
-          "creatives",
-          "organisation",
-          "community rescue",
-          "crisis relief",
-          "travel",
-        ].map((category) => (
+        {["community rescue", "crisis relief", "travel"].map((category) => (
           <TabsContent key={category} value={category}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredCampaigns.length > 0 ? (
                 filteredCampaigns.map((campaign) => (
                   <CampaignCard key={campaign.id} campaign={campaign} />

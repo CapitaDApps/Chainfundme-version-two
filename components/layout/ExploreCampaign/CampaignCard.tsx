@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Clock } from "lucide-react";
 import Image from "next/image";
@@ -29,9 +29,9 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
           boxShadow:
             "0px 110px 44px rgba(179, 201, 255, 0.02), 0px 62px 37px rgba(179, 201, 255, 0.08), 0px 28px 28px rgba(179, 201, 255, 0.13), 0px 7px 15px rgba(179, 201, 255, 0.15)",
         }}
-        className="w-full h-full rounded-[16px] bg-[#FFFFFF] border-2 border-[#2379BC]/20 hover:border-[#2379BC] transition-colors duration-500 overflow-hidden flex flex-col" 
+        className="w-full h-full max-w-[330px] rounded-[16px] bg-[#FFFFFF] border-2 border-[#2379BC]/20 hover:border-[#2379BC] transition-colors duration-500 overflow-hidden flex flex-col" 
       >
-        <div className="relative w-full h-40"> 
+        <div className="relative w-full h-50"> 
           <Image
             src={campaign.image}
             alt={campaign.title}
@@ -44,7 +44,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             <Clock className="w-3 h-3" /> {campaign.timeleft}
           </div>
           <h3 className="font-semibold line-clamp-1 mb-2">{campaign.title}</h3> 
-          <div className="flex items-center mb-2">
+          {/* <div className="flex items-center mb-2">
             <Avatar className="w-6 h-6 mr-2">
               <AvatarImage
                 src={campaign.creatorimage || "/layout/Ellipse.png"}
@@ -54,10 +54,10 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             <div className="text-xs text-[#666666]">
               {campaign.creatorname} | Campaign Creator
             </div>
-          </div>
-          <div className="line-clamp-2 text-sm text-[#666666] mb-3 font-medium flex-1">
+          </div> */}
+          {/* <div className="line-clamp-2 text-sm text-[#666666] mb-3 font-medium flex-1">
             {campaign.story}
-          </div>
+          </div> */}
           <div className="space-y-2 mb-4"> 
             <Progress value={43} className="h-2" />
             <div className="flex justify-end items-center text-xs space-x-2">
@@ -69,7 +69,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
               </span>
             </div>
           </div>
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             <Button
               style={{
                 background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
@@ -78,7 +78,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             >
               Fund now
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </article>
