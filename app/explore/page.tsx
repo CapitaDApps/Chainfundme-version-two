@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import ExploreCampaignPageClient from "./ExplorePageClient";
 
-export default function ExplorePage() {
-  redirect("/explore-campaign");
+export default function ExploreCampaignPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ExploreCampaignPageClient />
+    </Suspense>
+  );
 }

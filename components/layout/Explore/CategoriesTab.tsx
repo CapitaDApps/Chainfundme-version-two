@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { List } from "@/lib/Categories";
 import OtherCampaign from "./OtherCampaigns";
-import CampaignCard from "@/components/layout/ExploreCampaign/CampaignCard";
+import CampaignCard from "@/components/layout/Explore/CampaignCard";
 import { CategorisItem } from "@/lib/CategoriesContent";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -64,28 +64,32 @@ function CategoriesTab({ initialCategory }: Props) {
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredCampaigns.length > 0 ? (
-                filteredCampaigns.map((campaign) => (
-                  <CampaignCard key={campaign.id} campaign={campaign} />
-                ))
-              ) : (
-                <p>No campaigns found in this category.</p>
-              )}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {filteredCampaigns.length > 0 ? (
+                  filteredCampaigns.map((campaign) => (
+                    <CampaignCard key={campaign.id} campaign={campaign} />
+                  ))
+                ) : (
+                  <p>No campaigns found in this category.</p>
+                )}
+              </div>
             </div>
           </TabsContent>
         ))}
 
         {["community rescue", "crisis relief", "travel"].map((category) => (
           <TabsContent key={category} value={category}>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredCampaigns.length > 0 ? (
-                filteredCampaigns.map((campaign) => (
-                  <CampaignCard key={campaign.id} campaign={campaign} />
-                ))
-              ) : (
-                <p>No campaigns found in this category.</p>
-              )}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {filteredCampaigns.length > 0 ? (
+                  filteredCampaigns.map((campaign) => (
+                    <CampaignCard key={campaign.id} campaign={campaign} />
+                  ))
+                ) : (
+                  <p>No campaigns found in this category.</p>
+                )}
+              </div>
             </div>
           </TabsContent>
         ))}

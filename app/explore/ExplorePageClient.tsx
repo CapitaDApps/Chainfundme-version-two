@@ -1,13 +1,12 @@
-// app/explore-campaign/ExploreCampaignPageClient.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import CategoriesTab from "@/components/layout/ExploreCampaign/CategoriesTab";
+import CategoriesTab from "@/components/layout/Explore/CategoriesTab";
 import CreateCamBtn from "@/components/layout/CreateCamBtn";
-import Filter from "@/components/layout/ExploreCampaign/Filter";
+import Filter from "@/components/layout/Explore/Filter";
 import SearchBar from "@/components/layout/SearchBar";
 import { useState } from "react";
-import ComProfileModel from "@/components/layout/ExploreCampaign/ComProfileModel";
+import ComProfileModel from "@/components/layout/Explore/ComProfileModel";
 
 export default function ExploreCampaignPageClient() {
   const searchParams = useSearchParams();

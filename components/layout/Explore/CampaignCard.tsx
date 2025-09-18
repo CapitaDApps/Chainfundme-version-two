@@ -25,13 +25,10 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
   return (
     <article className="w-full h-full"> 
       <div
-        style={{
-          boxShadow:
-            "0px 110px 44px rgba(179, 201, 255, 0.02), 0px 62px 37px rgba(179, 201, 255, 0.08), 0px 28px 28px rgba(179, 201, 255, 0.13), 0px 7px 15px rgba(179, 201, 255, 0.15)",
-        }}
-        className="w-full h-full max-w-[330px] rounded-[16px] bg-[#FFFFFF] border-2 border-[#2379BC]/20 hover:border-[#2379BC] transition-colors duration-500 overflow-hidden flex flex-col" 
+        
+        className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none  transition-colors duration-500 overflow-hidden flex flex-col items-center justify-between" 
       >
-        <div className="relative w-full h-50"> 
+        <div className="relative w-full h-55"> 
           <Image
             src={campaign.image}
             alt={campaign.title}
@@ -58,7 +55,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
           {/* <div className="line-clamp-2 text-sm text-[#666666] mb-3 font-medium flex-1">
             {campaign.story}
           </div> */}
-          <div className="space-y-2 mb-4"> 
+          <div className="space-y-2"> 
             <Progress value={43} className="h-2" />
             <div className="flex justify-end items-center text-xs space-x-2">
               <span className="text-muted-foreground/80">

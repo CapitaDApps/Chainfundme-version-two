@@ -1,3 +1,4 @@
+import Campaigns from "@/components/layout/Donation/Campaigns";
 import SearchBar from "@/components/layout/SearchBar";
 function MyDonationsPage() {
   return (
@@ -8,6 +9,7 @@ function MyDonationsPage() {
           <span className="text-[#2379bc]">Contributions&nbsp;</span> & Impact
         </h1>
         <SearchBar />
+        <Campaigns />
       </div>
     </div>
   );
