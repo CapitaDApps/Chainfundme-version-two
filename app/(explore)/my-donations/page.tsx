@@ -6,9 +6,14 @@ function MyDonationsPage() {
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-sidebar-content flex flex-row font-semibold text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
-          <span className="text-[#2379bc]">Contributions&nbsp;</span> & Impact
+          <span className="text-[#2379bc] font-semibold">
+            Contributions&nbsp;
+          </span>{" "}
+          & Impact
         </h1>
         <SearchBar />
+      </div>
+      <div className="">
         <Campaigns />
       </div>
     </div>

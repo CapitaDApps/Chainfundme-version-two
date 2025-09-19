@@ -1,10 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
-import CampaignList from "./CampaignList";
 
-function Campaigns() {
+function Campaignsdraft() {
   const campaignlist = [
-    { name: "Default Campaign", value: "default" },
+    { name: "Campaign(drafts)", value: "default" },
     { name: "Active Campaign", value: "active" },
     { name: "Completed Campaign", value: "completed" },
   ];
@@ -32,27 +31,19 @@ function Campaigns() {
           </div>
 
           <TabsContent value="default" className="w-full pt-6">
-            <div className="w-full">
-              <CampaignList />
-            </div>
+            <div className="w-full"></div>
           </TabsContent>
 
           <TabsContent value="active" className="w-full pt-6">
-            <div className="w-full">
-              {" "}
-              <CampaignList />
-            </div>
+            <div className="w-full"> </div>
           </TabsContent>
 
           <TabsContent value="completed" className="w-full pt-6">
-            <div className="w-full">
-              {" "}
-              <CampaignList />
-            </div>
+            <div className="w-full"> </div>
           </TabsContent>
         </Tabs>
       </div>
     </div>
   );
 }
-export default Campaigns;
+export default Campaignsdraft;

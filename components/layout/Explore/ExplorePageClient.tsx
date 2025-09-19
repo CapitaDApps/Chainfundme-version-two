@@ -8,7 +8,7 @@ import SearchBar from "@/components/layout/SearchBar";
 import { useState } from "react";
 import ComProfileModel from "@/components/layout/Explore/ComProfileModel";
 
-export default function ExploreCampaignPageClient() {
+export default function ExplorePageClient() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") ?? "for you";
 

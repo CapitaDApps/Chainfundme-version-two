@@ -1,10 +1,10 @@
+import MyCampaignsPage from "@/components/layout/MyCampaign/MyCampaignPage";
 import { Suspense } from "react";
-import ExplorePageClient from "@/components/layout/Explore/ExplorePageClient";
 
 export default function ExploreCampaignPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ExplorePageClient />
+      <MyCampaignsPage />
     </Suspense>
   );
 }
