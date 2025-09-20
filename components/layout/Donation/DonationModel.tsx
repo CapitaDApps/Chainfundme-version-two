@@ -3,9 +3,10 @@ import Image from "next/image";
 
 interface DonationModelProps {
   onClose: () => void;
+  text: string;
 }
 
-function DonationModel({ onClose }: DonationModelProps) {
+function DonationModel({ onClose, text }: DonationModelProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 z-50 w-full h-screen bg-white/5 backdrop-blur-sm transition-all duration-500">
       <div className="w-full max-w-[45rem] min-h-[250px] bg-white rounded-xl p-6 transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center text-center">
@@ -16,9 +17,7 @@ function DonationModel({ onClose }: DonationModelProps) {
           height={70}
           className="cursor-pointer"
         />
-        <h1 className="font-bold text-lg mt-4">
-          Join or Sign In to Access Your Donations
-        </h1>
+        <h1 className="font-bold text-lg mt-4">{text}</h1>
         <p className="text-[#666666] text-sm mt-2 max-w-md">
           Sign in or create an account to track your contributions and support
           campaigns you care about.

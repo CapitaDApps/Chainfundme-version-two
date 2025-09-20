@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 import Draftcard from "./Draftcard";
 import { CategorisItem } from "@/lib/CategoriesContent";
+import EmptyModel from "./EmptyModel";
 
 function Campaignsdraft() {
   const campaignlist = [
@@ -34,43 +35,70 @@ function Campaignsdraft() {
 
           <TabsContent value="default" className="w-full pt-6">
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
-                {CategorisItem.map((campaign) => (
-                  <Draftcard
-                    key={campaign.id}
-                    campaign={campaign}
-                    status="draft"
-                  />
-                ))}
-              </div>
+              {CategorisItem.length === 0 ? (
+                <EmptyModel
+                  src="/layout/bo.png"
+                  alt="campaign"
+                  text2="No Drafts Yet"
+                  text1="Work on a campaign privately and publish it when you’re ready."
+                />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                  {CategorisItem.map((campaign) => (
+                    <Draftcard
+                      key={campaign.id}
+                      campaign={campaign}
+                      status="draft"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="active" className="w-full pt-6">
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
-                {CategorisItem.map((campaign) => (
-                  <Draftcard
-                    key={campaign.id}
-                    campaign={campaign}
-                    status="active"
-                  />
-                ))}
-              </div>
+              {CategorisItem.length === 0 ? (
+                <EmptyModel
+                  src="/layout/can.png"
+                  alt="campaign"
+                  text2="You don't have an active campaign"
+                  text1="Create a campaign to start raising funds for the causes you care about."
+                />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                  {CategorisItem.map((campaign) => (
+                    <Draftcard
+                      key={campaign.id}
+                      campaign={campaign}
+                      status="active"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="completed" className="w-full pt-6">
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
-                {CategorisItem.map((campaign) => (
-                  <Draftcard
-                    key={campaign.id}
-                    campaign={campaign}
-                    status="completed"
-                  />
-                ))}
-              </div>
+              {CategorisItem.length === 0 ? (
+                <EmptyModel
+                  src="/layout/can.png"
+                  alt="campaign"
+                  text2="No Completed Campaigns"
+                  text1="Once a campaign reaches its goal or end date, it will appear here."
+                />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                  {CategorisItem.map((campaign) => (
+                    <Draftcard
+                      key={campaign.id}
+                      campaign={campaign}
+                      status="completed"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>

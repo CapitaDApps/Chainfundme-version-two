@@ -4,10 +4,12 @@ import { initialNotifications } from "@/lib/NotificationContent";
 import { Notification } from "@/types/notification";
 import Image from "next/image";
 import React, { useState } from "react";
+import DonationModel from "../Donation/DonationModel";
 
 function NotificationPageClient() {
   const [notifications, setNotifications] =
     useState<Notification[]>(initialNotifications);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   const allRead = notifications.every((n) => n.read);
 
@@ -17,7 +19,12 @@ function NotificationPageClient() {
 
   return (
     <div>
-      
+      {isModalOpen && (
+        <DonationModel
+          text="Join or Sign In to start getting notified"
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       <div className="p-6 sm:p-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-[40px] md:mb-[50px]">

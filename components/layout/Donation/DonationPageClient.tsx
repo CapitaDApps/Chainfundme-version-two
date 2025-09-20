@@ -8,7 +8,12 @@ function DonationPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
     <div>
-      {isModalOpen && <DonationModel onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <DonationModel
+          text="Join or Sign In to Access Your Donations"
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-sidebar-content flex flex-row font-semibold text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}

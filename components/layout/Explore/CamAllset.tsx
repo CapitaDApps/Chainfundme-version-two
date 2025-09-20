@@ -26,14 +26,14 @@ function ConAllset({ onClose }: ConAllsetProps) {
             }}
             className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer"
           >
-            I am Donating
+            I’m Donating
           </Button>
           <Button
             variant="outline"
             className="px-6 py-3 shadow-xl rounded-xl text-[#2379bc] cursor-pointer"
             onClick={onClose}
           >
-            I am Creating a Campaign
+            I’m Creating a Campaign
           </Button>
         </div>
       </div>

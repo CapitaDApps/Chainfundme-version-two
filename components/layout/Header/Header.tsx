@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../../ui/button";
+// import { Button } from "../../ui/button";
 import ToggleNotificationbar from "./ToggleNotificationbar";
 import Navdropdown from "./Navdropdown";
 
@@ -35,7 +35,7 @@ function Header() {
           {links.map((link) => {
             const isActive =
               link.href === "/"
-                ? pathname === "/" || pathname.startsWith("/explore-campaign")
+                ? pathname.startsWith("/explore")
                 : pathname === link.href;
 
             return (
@@ -57,10 +57,7 @@ function Header() {
           })}
         </div>
 
-        <div className="flex flex-row items-center">
-          <div className="">
-            <ToggleNotificationbar />
-          </div>
+        {/* <div className="flex flex-row items-center">
           <Button
             style={{
               background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
@@ -69,10 +66,15 @@ function Header() {
           >
             Connect Wallet
           </Button>
-        </div>
+        </div> */}
 
-        <div>
-          <Navdropdown />
+        <div className="flex flex-row  items-center">
+          <div>
+            <ToggleNotificationbar />
+          </div>
+          <div>
+            <Navdropdown />
+          </div>
         </div>
       </div>
 
