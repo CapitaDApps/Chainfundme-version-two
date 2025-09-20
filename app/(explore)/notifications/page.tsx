@@ -1,9 +1,11 @@
+import NotificationPageClient from "@/components/layout/Notification/NotificationPageClient";
+import { Suspense } from "react";
+
 function NotificationsPage() {
   return (
-    <div>
-      <h1>Notifications</h1>
-      {/* Render notifications here */}
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <NotificationPageClient />
+    </Suspense>
   );
 }
 export default NotificationsPage;

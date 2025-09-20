@@ -29,12 +29,12 @@ export const menuItems = [
     route: "/notifications",
     slug: "notifications",
   },
-  {
-    title: "Bookmarked",
-    icon: CiBookmark,
-    route: "/bookmarked",
-    slug: "bookmarked",
-  },
+  // {
+  //   title: "Bookmarked",
+  //   icon: CiBookmark,
+  //   route: "/bookmarked",
+  //   slug: "bookmarked",
+  // },
   {
     title: "Profile",
     icon: CgProfile,

@@ -1,5 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
+import Draftcard from "./Draftcard";
+import { CategorisItem } from "@/lib/CategoriesContent";
 
 function Campaignsdraft() {
   const campaignlist = [
@@ -31,15 +33,45 @@ function Campaignsdraft() {
           </div>
 
           <TabsContent value="default" className="w-full pt-6">
-            <div className="w-full"></div>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {CategorisItem.map((campaign) => (
+                  <Draftcard
+                    key={campaign.id}
+                    campaign={campaign}
+                    status="draft"
+                  />
+                ))}
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="active" className="w-full pt-6">
-            <div className="w-full"> </div>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {CategorisItem.map((campaign) => (
+                  <Draftcard
+                    key={campaign.id}
+                    campaign={campaign}
+                    status="active"
+                  />
+                ))}
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="completed" className="w-full pt-6">
-            <div className="w-full"> </div>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {CategorisItem.map((campaign) => (
+                  <Draftcard
+                    key={campaign.id}
+                    campaign={campaign}
+                    status="completed"
+                  />
+                ))}
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

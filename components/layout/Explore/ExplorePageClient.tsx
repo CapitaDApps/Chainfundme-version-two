@@ -17,6 +17,7 @@ export default function ExplorePageClient() {
   return (
     <div>
       {isModalOpen && <ComProfileModel onClose={() => setIsModalOpen(false)} />}
+        {/* {isModalOpen && <ConAllset onClose={() => setIsModalOpen(false)} />} */}
       <div>
         <p>
           Welcome back, <span className="text-[#2379bc]">Tarey Kasali</span>
