@@ -15,7 +15,7 @@ export default function ClientShell({ children }: { children: ReactNode }) {
         {/* Main content area */}
         <div className="flex flex-1 flex-col">
           <Header />
-          <main className="flex-1 p-6 pt-6">{children}</main>
+          <main className="flex-1">{children}</main>
         </div>
       </div>
     </SidebarProvider>

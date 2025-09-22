@@ -15,7 +15,7 @@ export default function ExplorePageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
-    <div>
+    <div className="p-6">
       {isModalOpen && <ComProfileModel onClose={() => setIsModalOpen(false)} />}
         {/* {isModalOpen && <ConAllset onClose={() => setIsModalOpen(false)} />} */}
       <div>

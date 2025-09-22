@@ -76,7 +76,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             <Button
               variant="outline"
               className="rounded-2xl shadow-lg/20 py-2 !px-6 disabled:cursor-not-allowed cursor-pointer"
-              disabled={status === "completed"}
+              disabled={["completed", "active"].includes(status)}
             >
               <CiEdit className="mr-1" />
               Edit

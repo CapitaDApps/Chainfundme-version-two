@@ -7,7 +7,7 @@ import { useState } from "react";
 function DonationPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
-    <div>
+    <div className="p-6">
       {isModalOpen && (
         <DonationModel
           text="Join or Sign In to Access Your Donations"
