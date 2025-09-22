@@ -55,14 +55,14 @@ function ProfileClient() {
               <span>Following</span>
             </span>
           </div>
-          <div className="flex items-center flex-col pr-6">
+          <div className="flex items-center flex-col pr-10">
             <Image src="/layout/lo.png" alt="solor" width={70} height={70} />
             <p className="text-[#05BB72] text-[14px] ml-4">
               Average Trust Score
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-between py-2 px-6">
+        <div className="flex items-center justify-between py-2 px-10">
           <div className="space-y-3">
             <h1 className="font-bold text-2xl">Osama bin Ladin</h1>
             <p className="text-[#6D6D6D] text-[14px] max-w-[45rem]">
@@ -71,7 +71,7 @@ function ProfileClient() {
               guide
             </p>
           </div>
-          <div>
+          <div className="pr-4">
             <Button
               variant="outline"
               className="shadow-[0_0_15px_rgba(0,0,0,0.3)] rounded-2xl text-[#2379BC] border-none cursor-pointer"
@@ -80,9 +80,9 @@ function ProfileClient() {
             </Button>
           </div>
         </div>
-        <div className="pt-6 px-6">
+        <div className="pt-6 px-10">
           <h1 className="text-3xl font-bold">Metrics</h1>
-          <div className="py-4 px-2 flex flex-row space-x-45 justify-center items-center">
+          <div className="py-4 px-2 flex flex-row space-x-35 justify-center items-center">
             {list.map((list) => (
               <React.Fragment key={list.campaigns}>
                 <div className="border border-[#6D6D6D]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] rounded-2xl w-[300px] flex flex-col items-center justify-center p-8 space-y-2">
@@ -94,10 +94,10 @@ function ProfileClient() {
             ))}
           </div>
         </div>
-        <div className="pt-8 px-6">
+        <div className="pt-8 px-10">
           <p className="text-2xl font-bold">Osama’s</p>
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-35 pt-6 pb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-25 pt-6 pb-10">
               {CategorisItem.slice(0, 3).map((campaign) => (
                 <Draftcard
                   key={campaign.id}
