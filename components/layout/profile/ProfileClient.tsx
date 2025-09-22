@@ -25,7 +25,7 @@ function ProfileClient() {
   ];
   return (
     <div>
-      <div className=" relative w-full h-[150px] -mt-2">
+      <div className=" relative w-full h-[250px] -mt-2">
         <Image
           src="/layout/sol.png"
           alt="solor"
