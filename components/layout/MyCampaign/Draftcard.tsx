@@ -3,6 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
@@ -72,23 +73,45 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             </div>
           </div>
 
-          <div className="flex flex-row justify-between items-center py-1">
+          <div
+            className={`flex flex-row justify-between items-center py-1 ${
+              ["completed", "active"].includes(status)
+                ? "flex items-center justify-center pt-2"
+                : ""
+            }`}
+          >
             <Button
               variant="outline"
-              className="rounded-2xl shadow-lg/20 py-2 !px-6 disabled:cursor-not-allowed cursor-pointer"
-              disabled={["completed", "active"].includes(status)}
+              className={`rounded-2xl shadow-lg/20 py-2 !px-6 disabled:cursor-not-allowed cursor-pointer ${
+                ["completed", "active"].includes(status) ? "hidden" : ""
+              }`}
             >
               <CiEdit className="mr-1" />
               Edit
             </Button>
-            <Button
-              style={{
-                background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-              }}
-              className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
-            >
-              {status === "draft" ? "Post now" : "View now"}
-            </Button>
+            {status === "draft" ? (
+              <Button
+                style={{
+                  background:
+                    "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                }}
+                className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
+              >
+                Post now
+              </Button>
+            ) : (
+              <Link href={`/my-campaigns/${campaign.id}`} className="block">
+                <Button
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                  }}
+                  className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
+                >
+                  View now
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

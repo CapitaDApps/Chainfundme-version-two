@@ -3,7 +3,7 @@ import { TbMoneybag } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiFolderOn } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
-import { CiBookmark } from "react-icons/ci";
+// import { CiBookmark } from "react-icons/ci";
 export const menuItems = [
   // {
   //   title: "Explore Campaigns",

@@ -18,7 +18,7 @@ function Rightpart() {
         </span>
         <span className="flex flex-col space-y-4 pt-8 pb-8">
           <Button className="!px-24 !py-6 space-x-2 cursor-pointer rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.3)] ">
-            Donate Now
+            Fund Now
           </Button>
           <Button
             variant="outline"

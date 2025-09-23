@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 // import AppSidebar from "@/components/layout/sidebar/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from "@/components/layout/Header/Header";
+import Footer from "@/components/layout/Footer";
 
 export default function ClientShell({ children }: { children: ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export default function ClientShell({ children }: { children: ReactNode }) {
         <div className="flex flex-1 flex-col w-full max-w-[1500px] mx-auto">
           <Header />
           <main className="flex-1">{children}</main>
+          <Footer />
         </div>
       </div>
     </SidebarProvider>

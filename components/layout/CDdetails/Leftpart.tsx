@@ -131,18 +131,18 @@ function Leftpart() {
               </div>
               <hr className="border-[#CDCDCD]/40 w-full " />
               <div>
-                <p className="font-bold text-[32px] py-2">Organiser</p>
+                <p className="font-bold text-[32px] py-2">Campaign Creator</p>
                 <Profile />
               </div>
               <hr className="border-[#CDCDCD]/40 w-full " />
-              <div className="py-8 ">
+              {/* <div className="py-8 ">
                 <h1 className="text-[#2C2C2C] text-2xl font-bold">
                   Words of support (5)
                 </h1>
                 <p className="text-[14px]">
                   Please donate to share words of support.
                 </p>
-              </div>
+              </div> */}
               <div>
                 <Comments />
               </div>

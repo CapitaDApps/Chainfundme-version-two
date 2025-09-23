@@ -12,7 +12,7 @@ function Profile() {
         </Avatar>
         <div className="">
           <h2 className="font-semibold">Kareem Benzema</h2>
-          <p>Organiser</p>
+          <p>Campaign Creator</p>
         </div>
       </div>
       <Button
