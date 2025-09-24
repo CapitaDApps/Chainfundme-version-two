@@ -29,7 +29,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             {status === "draft" ? (
               <>
                 <Clock className="w-3 h-3" />
-                <span>{campaign.timeleft}</span>
+                <span>Draft</span> {/* Changed from timeleft to just "Draft" */}
               </>
             ) : status === "active" ? (
               <>
@@ -46,37 +46,40 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
 
           <h3 className="font-semibold line-clamp-1 mb-2">{campaign.title}</h3>
 
-          <div className="space-y-2">
-            <Progress
-              value={
-                status === "completed"
-                  ? 100
-                  : status === "draft"
-                  ? 4
-                  : status === "active"
-                  ? 43
-                  : 0
-              }
-              className={`h-2 ${
-                status === "completed"
-                  ? "[&>div]:bg-green-500"
-                  : "[&>div]:bg-blue-500"
-              }`}
-            />
-            <div className="flex justify-end space-x-1 items-center text-xs">
-              <span className="text-muted-foreground/80">
-                {campaign.fundrasied} raised
-              </span>
-              <span className="text-muted-foreground">
-                of {campaign.fundtarget}
-              </span>
+          {/* Conditionally render progress section only for active/completed campaigns */}
+          {status !== "draft" && (
+            <div className="space-y-2">
+              <Progress
+                value={
+                  status === "completed"
+                    ? 100
+                    : status === "active"
+                    ? 43
+                    : 0
+                }
+                className={`h-2 ${
+                  status === "completed"
+                    ? "[&>div]:bg-green-500"
+                    : "[&>div]:bg-blue-500"
+                }`}
+              />
+              <div className="flex justify-end space-x-1 items-center text-xs">
+                <span className="text-muted-foreground/80">
+                  {campaign.fundrasied} raised
+                </span>
+                <span className="text-muted-foreground">
+                  of {campaign.fundtarget}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
           <div
             className={`flex flex-row justify-between items-center py-1 ${
               ["completed", "active"].includes(status)
                 ? "flex items-center justify-center pt-2"
+                : status === "draft" 
+                ? "pt-4" // Add extra padding for draft to compensate for missing progress section
                 : ""
             }`}
           >

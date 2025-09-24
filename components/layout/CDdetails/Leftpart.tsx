@@ -4,6 +4,7 @@ import SelectToken from "@/components/layout/CDdetails/SelectToken";
 import { CiShare2 } from "react-icons/ci";
 import Profile from "./Profile";
 import Comments from "./Comment";
+import PreviewImages from "./PreviewImages";
 function Leftpart() {
   return (
     <div>
@@ -59,20 +60,17 @@ function Leftpart() {
             className="hidden"
           />
           <div className="flex flex-row space-x-4 mt-4">
-            <Image
-              src="/layout/im1.png"
-              alt="preview"
-              width={80}
-              height={80}
-              className="rounded-xl"
-            />
-            <Image
-              src="/layout/im2.png"
-              alt="preview"
-              width={80}
-              height={80}
-              className="rounded-xl"
-            />
+            {/* {img.map((i) => (
+              <Image
+                key={i.image}
+                src={i.image}
+                alt={i.image}
+                width={80}
+                height={80}
+                className="rounded-xl"
+              />
+            ))} */}
+            <PreviewImages />
           </div>
           <div className="mt-4">
             <span>

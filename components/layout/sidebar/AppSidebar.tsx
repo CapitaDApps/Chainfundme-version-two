@@ -40,13 +40,17 @@ export function AppSidebar() {
         </div>
         <SidebarMenu className="mt-4 px-2 pt-4">
           <div className="flex flex-col gap-2 w-full ">
-            {menuItems.map((item, index) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <Link
-                    key={index}
-                    href={item.route}
-                    className={`
+            {menuItems
+              .filter(
+                (item) => !["explore", "how-it-works"].includes(item.slug)
+              )
+              .map((item, index) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link
+                      key={index}
+                      href={item.route}
+                      className={`
                      flex items-center px-4 py-3 gap-3 cursor-pointer rounded-md text-[12px]
                      hover:text-primary text-[#666666] transition-colors duration-200
                     ${
@@ -55,13 +59,13 @@ export function AppSidebar() {
                         : "hover:bg-primary/10"
                     }
                         `}
-                  >
-                    <span className="text-lg">{<item.icon />}</span>
-                    <span className="truncate">{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+                    >
+                      <span className="text-lg">{<item.icon />}</span>
+                      <span className="truncate">{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
           </div>
           <SidebarMenuItem className="relative flex justify-center mt-20">
             <div

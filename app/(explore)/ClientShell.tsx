@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer";
+import MobileHeader from "@/components/layout/Header/MobileHeader";
 
 export default function ClientShell({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +16,12 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
         {/* Main content area */}
         <div className="flex flex-1 flex-col w-full max-w-[1500px] mx-auto">
-          <Header />
+          <div className="hidden lg:block">
+            <Header />
+          </div>
+          <div className="lg:hidden">
+            <MobileHeader />
+          </div>
           <main className="flex-1">{children}</main>
           <Footer />
         </div>

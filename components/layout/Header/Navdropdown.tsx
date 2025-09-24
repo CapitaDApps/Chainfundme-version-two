@@ -37,11 +37,15 @@ function Navdropdown() {
         <DropdownMenuContent>
           <DropdownMenuItem>
             <div className="flex flex-col gap-2 w-full ">
-              {menuItems.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.route}
-                  className={`
+              {menuItems
+                .filter(
+                  (item) => !["explore", "how-it-works"].includes(item.slug)
+                )
+                .map((item, index) => (
+                  <Link
+                    key={index}
+                    href={item.route}
+                    className={`
                      flex items-center px-4 py-3 gap-3 cursor-pointer rounded-md text-[12px]
                      hover:text-primary text-[#666666] transition-colors duration-200
                     ${
@@ -50,11 +54,11 @@ function Navdropdown() {
                         : "hover:bg-primary/10"
                     }
                         `}
-                >
-                  <span className="text-lg">{<item.icon />}</span>
-                  <span className="truncate">{item.title}</span>
-                </Link>
-              ))}
+                  >
+                    <span className="text-lg">{<item.icon />}</span>
+                    <span className="truncate">{item.title}</span>
+                  </Link>
+                ))}
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -1,16 +1,25 @@
 import { TbMoneybag } from "react-icons/tb";
-// import { CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiFolderOn } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
+import { FaNetworkWired } from "react-icons/fa";
 // import { CiBookmark } from "react-icons/ci";
 export const menuItems = [
-  // {
-  //   title: "Explore Campaigns",
-  //   icon: CiSearch,
-  //   route: "/explore-campaign",
-  //   slug: "explore-campaign",
-  // },
+  {
+    title: "Explore",
+    icon: CiSearch,
+    route: "/explore",
+    slug: "explore",
+    children: [
+      {
+        title: "How it works",
+        icon: FaNetworkWired,
+        route: "/how-it-works",
+        slug: "how-it-works",
+      },
+    ],
+  },
   {
     title: "Donations",
     icon: TbMoneybag,

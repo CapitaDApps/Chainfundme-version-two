@@ -45,7 +45,7 @@ function Footer() {
           </span>
         </div>
         <div className="flex items-center space-x-4">
-          <h1 className="text-white font-semibold text-lg">Categoris</h1>
+          <h1 className="text-white font-semibold text-lg">Categories</h1>
           <span className="text-[#E3E3E3] font-thin ">
             <ul className="space-y-2">
               <li>

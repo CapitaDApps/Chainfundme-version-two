@@ -4,33 +4,11 @@ import { GoPlus } from "react-icons/go";
 import React from "react";
 import Draftcard from "../MyCampaign/Draftcard";
 import { CategorisItem } from "@/lib/CategoriesContent";
-import { IoIosTrendingUp } from "react-icons/io";
-import { IoIosTrendingDown } from "react-icons/io";
 import { FaFacebook } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
+import Matrics from "./Metrics";
 
 function ProfilePrivateClient() {
-  const list = [
-    {
-      image: "/layout/mic.png",
-      campaigns: "Total Campaigns",
-      stack: "78 bmp",
-    },
-    {
-      image: "/layout/lh.png",
-      campaigns: "Total Donations",
-      trend: 2.5,
-      trendDirection: "up",
-      stack: "$5.5k",
-    },
-    {
-      image: "/layout/mo.png",
-      campaigns: "Amout raised from campaigns",
-      trend: 2.3,
-      trendDirection: "down",
-      stack: "$300k",
-    },
-  ];
 
   return (
     <div>
@@ -99,33 +77,7 @@ function ProfilePrivateClient() {
         </div>
         <div className="pt-6 px-10">
           <h1 className="text-3xl font-bold">Metrics</h1>
-          <div className="py-4 px-2 flex flex-row space-x-35 justify-center items-center">
-            {list.map((item) => (
-              <React.Fragment key={item.campaigns}>
-                <div className="relative border border-[#6D6D6D]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] rounded-2xl w-[300px] flex flex-col items-center justify-center p-8 space-y-2">
-                  {item.trend && (
-                    <span
-                      className={`flex items-center absolute gap-x-2 top-2 right-2 border border-none rounded-2xl text-xs px-4 py-1 ${
-                        item.trendDirection === "up"
-                          ? "bg-green-100 text-[#00B600]"
-                          : "bg-red-100 text-[#FF0000]"
-                      }`}
-                    >
-                      {item.trend}
-                      {item.trendDirection === "up" ? (
-                        <IoIosTrendingUp />
-                      ) : (
-                        <IoIosTrendingDown />
-                      )}
-                    </span>
-                  )}
-                  <Image src={item.image} alt="image" width={70} height={70} />
-                  <p className="text-[14px] text-[#6D6D6D]">{item.campaigns}</p>
-                  <h1 className="font-bold text-xl">{item.stack}</h1>
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
+          <Matrics />
           <div className="pt-6">
             <h1 className="text-2xl font-bold pb-3">Linked Account</h1>
             <span className="flex flex-col space-y-3 max-w-80 ">

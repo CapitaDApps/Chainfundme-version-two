@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import PopupProfile from "../profile/PopupProfile";
 
 type Reply = {
   id: number;
@@ -208,7 +209,9 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
   return (
     <div className="bg-white text-gray-900">
       <div className="pt-6 px-4 md:px-0">
-        <h3 className="text-lg mb-4 font-semibold">Comments ({comments.length})</h3>
+        <h3 className="text-lg mb-4 font-semibold">
+          Comments ({comments.length})
+        </h3>
 
         <div className="mb-6">
           <div className="flex items-center gap-3">
@@ -227,7 +230,10 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                 <button
                   onClick={addComment}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1.5 rounded-full text-white text-sm shadow"
-                  style={{ background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)" }}
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                  }}
                 >
                   Comment
                 </button>
@@ -240,7 +246,25 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
           {visibleComments.map((c) => (
             <div key={c.id} className="pt-4">
               <div className="flex items-start gap-4">
-                <Avatar src="/layout/avatarboy.svg" alt="you" size={32} />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      className="rounded-full focus:outline-none"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Avatar src="/layout/avatarboy.svg" alt="you" size={32} />
+                    </button>
+                  </PopoverTrigger>
+
+                  <PopoverContent
+                    side="left"
+                    align="center"
+                    sideOffset={10}
+                    className="bg-white rounded-xl shadow-md p-6 w-[400px] md:w-[350px]"
+                  >
+                    <PopupProfile />
+                  </PopoverContent>
+                </Popover>
 
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
@@ -293,7 +317,10 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                           <button
                             onClick={() => saveEdit(c.id)}
                             className="px-3 py-1 rounded-md text-white"
-                            style={{ background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)" }}
+                            style={{
+                              background:
+                                "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                            }}
                           >
                             Save
                           </button>
@@ -429,7 +456,29 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
 
                   {replyOpen[c.id] && (
                     <div className="mt-4 flex items-start gap-3">
-                      <Avatar src="/layout/avatarboy.svg" alt="you" size={32} />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            className="rounded-full focus:outline-none"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Avatar
+                              src="/layout/avatarboy.svg"
+                              alt="you"
+                              size={32}
+                            />
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          side="left"
+                          align="center"
+                          sideOffset={10}
+                          className="bg-white rounded-xl shadow-md p-6 w-[400px] md:w-[350px]"
+                        >
+                          <PopupProfile />
+                        </PopoverContent>
+                      </Popover>
 
                       <div className="flex-1">
                         <div className="relative">
@@ -450,7 +499,10 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                             <button
                               onClick={() => addReply(c.id)}
                               className="px-3 py-1 rounded-full text-white text-sm"
-                              style={{ background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)" }}
+                              style={{
+                                background:
+                                  "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                              }}
                             >
                               Reply
                             </button>

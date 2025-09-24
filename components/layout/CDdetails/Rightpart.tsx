@@ -3,7 +3,13 @@ import { Button } from "@/components/ui/button";
 import { CiShare2 } from "react-icons/ci";
 import Image from "next/image";
 import { list } from "@/lib/donatelist";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import React from "react";
+import PopupProfile from "../profile/PopupProfile";
 
 function Rightpart() {
   return (
@@ -43,13 +49,27 @@ function Rightpart() {
           {list.map((list) => (
             <React.Fragment key={list.id}>
               <span className="flex flex-row items-center space-x-4 w-full pb-3 ">
-                <Image
-                  src={list.image}
-                  alt="image"
-                  width={40}
-                  height={40}
-                  className="shrink-0 rounded-full"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Image
+                      src={list.image}
+                      alt="image"
+                      width={40}
+                      height={40}
+                      className="shrink-0 rounded-full"
+                    />
+                  </PopoverTrigger>
+
+                  <PopoverContent
+                    side="right"
+                    align="center"
+                    sideOffset={10}
+                    className="bg-white rounded-xl shadow-md p-6 w-[400px] md:w-[350px]"
+                  >
+                    <PopupProfile />
+                  </PopoverContent>
+                </Popover>
+
                 <span>
                   <h3 className="text-[14px]">{list.name}</h3>
                   <span></span>{" "}
