@@ -41,7 +41,7 @@ function MobileHeader() {
                               className={`
                                 flex items-center gap-3 px-4 py-3 cursor-pointer rounded-md text-[12px]
                                  hover:text-primary text-[#666666] transition-colors duration-200
-                                 data-[state=open]:bg-primary/15 data-[state=open]:!text-primary
+                                 data-[state=open]:bg-white/15 data-[state=open]:!text-primary
                                  [&[data-state=open]>svg]:rotate-180
                                  border-0 !justify-start
                                    ${

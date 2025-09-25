@@ -16,11 +16,10 @@ function CampaignList() {
         <span className="text-left">Status</span>
       </div>
       <hr className="border-[#CDCDCD]/50 w-full mb-6" />
-      
+
       {List.map((list) => (
         <React.Fragment key={list.id}>
           <div className="grid grid-cols-[450px_290px_200px_230px_100px] items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg">
-            {/* First column - Campaign info */}
             <div className="flex flex-row items-center space-x-4">
               <CiStar />
               <Link href={`/my-donations/${list.id}`} className="block">
@@ -40,23 +39,19 @@ function CampaignList() {
                 </p>
               </div>
             </div>
-            
-            {/* Amount Donated column */}
+
             <div className="text-left text-[#32A2D9] text-[16px] font-medium">
               ${list.amount}
             </div>
-            
-            {/* Campaign Goal column */}
+
             <div className="text-[#1A1A1A] text-[16px] font-medium text-left">
               {list.goal}%
             </div>
-            
-            {/* Donor Numbers column */}
+
             <div className="text-[#1A1A1A] text-[16px] font-medium">
               {millify(list.donoeNumber)} donors
             </div>
-            
-            {/* Status column - FIXED */}
+
             <div
               className={`text-[14px] font-semibold whitespace-nowrap ${
                 list.status === "in-progress"

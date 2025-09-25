@@ -48,8 +48,8 @@ export default function DropdownFilter() {
         className="cursor-pointer border-none"
       >
         <div className="flex items-center gap-1 cursor-pointer text-[#666666] text-sm">
-          <IoFilterOutline />
-          <p>Filters</p>
+          <IoFilterOutline className="text-xl md:text-lg" />
+          <p className="hidden md:block">Filters</p>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>

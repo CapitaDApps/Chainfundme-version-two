@@ -46,26 +46,31 @@ function CategoriesTab({ initialCategory }: Props) {
         onValueChange={handleTabChange}
         className="w-full"
       >
-        <div className="flex items-center justify-center">
-          <TabsList className="flex flex-row flex-wrap gap-4 mb-8">
+        <div className="flex flex-row justify-center items-center gap-4 overflow-x-auto pb-2  pt-10 md:pt-15 scrollbar-hide snap-x snap-mandatory">
+          <TabsList className="flex flex-row gap-4 mb-8">
+            <span className="block md:hidden">
+              <OtherCampaign />
+            </span>
             {List.map((list) => (
               <TabsTrigger
                 key={list.value}
                 value={list.value}
-                className="data-[state=active]:text-white data-[state=active]:bg-[#2379BC] px-4 py-3 rounded-xl items-center cursor-pointer border border-[#666666]/50 flex flex-row gap-2"
+                className="data-[state=active]:text-white data-[state=active]:bg-[#2379BC] px-3 py-4 md:px-4 md:py-3 rounded-xl items-center cursor-pointer border border-[#666666]/50 flex flex-row gap-2 snap-start"
               >
                 <span className="text-lg">{<list.icon />}</span>
                 <span className="truncate">{list.title}</span>
               </TabsTrigger>
             ))}
-            <OtherCampaign />
+            <span className="hidden md:block">
+              <OtherCampaign />
+            </span>
           </TabsList>
         </div>
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 md:gap-20 justify-items-center">
                 {filteredCampaigns.length > 0 ? (
                   filteredCampaigns.map((campaign) => (
                     <CampaignCard key={campaign.id} campaign={campaign} />

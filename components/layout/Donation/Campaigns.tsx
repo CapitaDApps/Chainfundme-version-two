@@ -19,12 +19,12 @@ function Campaigns() {
                 <React.Fragment key={list.value}>
                   <TabsTrigger
                     value={list.value}
-                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#2379BC] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer px-4 text-[#6B6B65]"
+                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#2379BC] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer md:px-4 px-2 text-[11px] font-bold md:text-sm text-[#6B6B65]"
                   >
                     {list.name}
                   </TabsTrigger>
                   {index < campaignlist.length - 1 && (
-                    <div className="w-px h-10 bg-gray-300"></div>
+                    <div className="w-px h-10 bg-gray-300 hidden"></div>
                   )}
                 </React.Fragment>
               ))}

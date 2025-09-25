@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sora.variable} antialiased min-h-screen`}>
+      <body className={`${sora.className} antialiased min-h-screen`}>
         <NextTopLoader color="#2379bc" height={4} showSpinner={false} />
         <ClientShell>{children}</ClientShell>
       </body>
