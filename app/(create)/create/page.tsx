@@ -31,6 +31,7 @@ export default function MultiStepForm() {
 
   const steps = [
     <StepOne key="s1" />,
+    // <div key="sam">sam</div>,
     // <StepTwo key="s2" />,
     // <StepThree key="s3" />,
     // <StepFour key="s4" />,

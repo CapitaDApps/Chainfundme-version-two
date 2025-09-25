@@ -1,68 +1,72 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+
 import z from "zod";
+import { FormSchema } from "@/lib/schemas";
+import CampaignSelect from "./form/CampaignSelect";
+import { category, creator } from "@/lib/constant";
+import CampaignInput from "./form/form/CampaignInput";
+import DateField from "./Date";
 
 export default function StepOne() {
-  const Step1Schema = z.object({
-    firstName: z.string().min(2, "First name is required"),
-    lastName: z.string().min(2, "Last name is required"),
-  });
-
-  const Step2Schema = z.object({
-    email: z.string().email("Invalid email"),
-    phone: z.string().min(10, "Phone number too short"),
-  });
-
-  const Step3Schema = z
-    .object({
-      password: z.string().min(6, "Password must be at least 6 characters"),
-      confirmPassword: z.string(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    });
-
-  // Merge schemas
-  const FormSchema = Step1Schema.merge(Step2Schema).merge(Step3Schema);
   type FormData = z.infer<typeof FormSchema>;
   const { control } = useFormContext<FormData>();
   return (
-    <div className="space-y-4">
-      <FormField<FormData>
-        control={control}
-        name="firstName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>First Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter first name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="lastName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Last Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter last name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+    <div className="space-y-6 sm:space-y-10">
+      <div className="flex lg:flex-row gap-6 flex-col justify-between items-center w-full">
+        <div className="w-full">
+          <CampaignInput
+            required={true}
+            label="Campaign Name"
+            placeholder="Give your campaign a clear and memorable name"
+            control={control}
+            textType="text"
+            name="campaignName"
+            type="input"
+          />
+        </div>
+
+        <div className="w-full  flex items-center lg:justify-end">
+          <CampaignSelect
+            control={control}
+            required={true}
+            name="creator"
+            label="Creator Type"
+            placeholder="Are you an individual, organization, DAO or Startup?"
+            array={creator}
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-between items-center gap-6 lg:flex-row flex-col w-full">
+        <div className="w-full ">
+          <div className="lg:w-[80%] gap-8 flex  items-center justify-between">
+            <DateField
+              control={control}
+              required={true}
+              label="Start Date"
+              name="startDate"
+            />
+            <DateField
+              control={control}
+              required={true}
+              label="End Date"
+              name="endDate"
+            />
+          </div>
+        </div>
+
+        <div className="w-full  flex items-center lg:justify-end">
+          <CampaignSelect
+            required={true}
+            control={control}
+            name="category"
+            label="Campaign Category"
+            placeholder="Select your Campaign Category"
+            array={category}
+          />
+        </div>
+      </div>
     </div>
   );
 }
