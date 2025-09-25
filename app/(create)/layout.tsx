@@ -22,9 +22,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
         <div className="grid grid-cols-[20rem_1fr] h-screen">
           <FormUpdate />
 
-          <div className="bg-white  rounded-tl-[150px] ">
-            {/* {children} */}
-          </div>
+          <div className="bg-white  rounded-tl-[150px] ">{children}</div>
         </div>
       </body>
     </html>
