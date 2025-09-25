@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { FaWallet } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Header({ step }: { step: number }) {
   const arr = [
@@ -11,6 +13,7 @@ export default function Header({ step }: { step: number }) {
     "Campaign Fundraising",
     "Campaign Review",
   ];
+  const router = useRouter();
   return (
     <>
       <div className="space-y-3 hidden lg:block pb-16 px-2">
@@ -29,7 +32,7 @@ export default function Header({ step }: { step: number }) {
       </div>
       <div className="space-y-3 lg:hidden fixed w-full bg-[#F4F9FC] pt-4 z-50  px-2">
         <div className="flex justify-between items-center">
-          <MdOutlineKeyboardArrowLeft  />
+          <MdOutlineKeyboardArrowLeft onClick={() => router.push("/expore")} />
           <h6 className="text-sm font-medium">{arr.at(step)}</h6>
           <button
             style={{
@@ -37,7 +40,7 @@ export default function Header({ step }: { step: number }) {
             }}
             className="cursor-pointer  size-8 rounded-full flex items-center justify-center"
           >
-            <FaWallet className="text-white text-xs"/>
+            <FaWallet className="text-white text-xs" />
           </button>
         </div>
 
