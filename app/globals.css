@@ -13,12 +13,39 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.no-scrollbar {
+  overflow: auto;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.line {
+  background: #d9ffe7;
+  height: 10px;
+  width: 100%;
+  position: relative;
+}
+.line::after {
+  content: "";
+  position: absolute;
+  height: 10px;
+  background: #00b875;
+  width: var(--progress-width, 0%);
+}
 
 @layer base {
   * {
     @apply box-border;
   }
-  html, body {
+  html,
+  body {
     @apply m-0 p-0;
   }
 }
@@ -88,7 +115,7 @@ a {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: #6b7280;
-  --card-foreground: #CDCDCD;
+  --card-foreground: #cdcdcd;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: #1e5aa8;
