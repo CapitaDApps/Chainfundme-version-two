@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { FormSchema } from "@/lib/schemas";
 import { Prog } from "@/components/create-campaign/Prog";
 import Bottom from "@/components/create-campaign/Bottom";
+import StepTwo from "@/components/create-campaign/StepTwo";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -31,8 +32,7 @@ export default function MultiStepForm() {
 
   const steps = [
     <StepOne key="s1" />,
-    // <div key="sam">sam</div>,
-    // <StepTwo key="s2" />,
+    <StepTwo key="s2" />,
     // <StepThree key="s3" />,
     // <StepFour key="s4" />,
     // <StepFive key="s5" />,
