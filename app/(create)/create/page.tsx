@@ -14,6 +14,9 @@ import { FormSchema } from "@/lib/schemas";
 import { Prog } from "@/components/create-campaign/Prog";
 import Bottom from "@/components/create-campaign/Bottom";
 import StepTwo from "@/components/create-campaign/StepTwo";
+import StepThree from "@/components/create-campaign/StepThree";
+import StepFour from "@/components/create-campaign/StepFour";
+import StepFive from "@/components/create-campaign/StepFive";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -33,9 +36,9 @@ export default function MultiStepForm() {
   const steps = [
     <StepOne key="s1" />,
     <StepTwo key="s2" />,
-    // <StepThree key="s3" />,
-    // <StepFour key="s4" />,
-    // <StepFive key="s5" />,
+    <StepThree key="s3" />,
+    <StepFour key="s4" />,
+    <StepFive key="s5" />,
   ];
 
   const nextStep = async () => {
