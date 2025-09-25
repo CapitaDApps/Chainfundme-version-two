@@ -32,7 +32,7 @@ export default function Header({ step }: { step: number }) {
       </div>
       <div className="space-y-3 lg:hidden fixed w-full bg-[#F4F9FC] pt-4 z-50  px-2">
         <div className="flex justify-between items-center">
-          <MdOutlineKeyboardArrowLeft onClick={() => router.push("/expore")} />
+          <MdOutlineKeyboardArrowLeft onClick={() => router.push("/explore")} />
           <h6 className="text-sm font-medium">{arr.at(step)}</h6>
           <button
             style={{
