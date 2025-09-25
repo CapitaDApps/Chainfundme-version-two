@@ -1,8 +1,8 @@
 import React from "react";
 import "../globals.css";
-import FormUpdate from "@/components/create-campaign/FormUpdate";
 import { Metadata } from "next";
 import { Sora } from "next/font/google";
+import { Toaster } from "sonner";
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
@@ -16,14 +16,9 @@ export const metadata: Metadata = {
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={` ${sora.className} bg-[#F4F9FC] max-w-[144rem] mx-auto  `}
-      >
-        <div className="grid grid-cols-[20rem_1fr] h-screen">
-          <FormUpdate />
-
-          <div className="bg-white  rounded-tl-[150px] ">{children}</div>
-        </div>
+      <body className={` ${sora.className} bg-[#F4F9FC]   `}>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

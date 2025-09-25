@@ -1,154 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import StepOne from "@/components/create-campaign/StepOne";
 
-// Step Schemas
-const Step1Schema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-});
+import Layout from "@/components/create-campaign/Layout";
+import { toast } from "sonner";
+import { FormSchema } from "@/lib/schemas";
+import { Prog } from "@/components/create-campaign/Prog";
+import Bottom from "@/components/create-campaign/Bottom";
 
-const Step2Schema = z.object({
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(10, "Phone number too short"),
-});
-
-const Step3Schema = z
-  .object({
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
-
-// Merge schemas
-const FormSchema = Step1Schema.merge(Step2Schema).merge(Step3Schema);
 type FormData = z.infer<typeof FormSchema>;
-
-// Step 1
-function Step1() {
-  const { control } = useFormContext<FormData>();
-  return (
-    <div className="space-y-4">
-      <FormField<FormData>
-        control={control}
-        name="firstName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>First Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter first name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField<FormData>
-        control={control}
-        name="lastName"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Last Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter last name" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
-  );
-}
-
-// Step 2
-function Step2() {
-  const { control } = useFormContext<FormData>();
-  return (
-    <div className="space-y-4">
-      <FormField<FormData>
-        control={control}
-        name="email"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Email</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter email" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField<FormData>
-        control={control}
-        name="phone"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Phone</FormLabel>
-            <FormControl>
-              <Input placeholder="Enter phone number" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
-  );
-}
-
-// Step 3
-function Step3() {
-  const { control } = useFormContext<FormData>();
-  return (
-    <div className="space-y-4">
-      <FormField<FormData>
-        control={control}
-        name="password"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Password</FormLabel>
-            <FormControl>
-              <Input type="password" placeholder="Enter password" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField<FormData>
-        control={control}
-        name="confirmPassword"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Confirm Password</FormLabel>
-            <FormControl>
-              <Input
-                type="password"
-                placeholder="Confirm password"
-                {...field}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
-  );
-}
-
+const stepText = [
+  { label: "Campaign basics" },
+  { label: "Campaign media" },
+  { label: "Campaign details" },
+  { label: "Fundraising step" },
+  { label: "Campaign review" },
+];
 export default function MultiStepForm() {
   const methods = useForm<FormData>({
     resolver: zodResolver(FormSchema),
@@ -156,14 +29,32 @@ export default function MultiStepForm() {
   });
   const [step, setStep] = useState(0);
 
-  const steps = [<Step1 key="s1" />, <Step2 key="s2" />, <Step3 key="s3" />];
+  const steps = [
+    <StepOne key="s1" />,
+    // <StepTwo key="s2" />,
+    // <StepThree key="s3" />,
+    // <StepFour key="s4" />,
+    // <StepFive key="s5" />,
+  ];
 
   const nextStep = async () => {
     let fieldsToValidate: (keyof FormData)[] = [];
 
-    if (step === 0) fieldsToValidate = ["firstName", "lastName"];
-    if (step === 1) fieldsToValidate = ["email", "phone"];
-    if (step === 2) fieldsToValidate = ["password", "confirmPassword"];
+    const x = methods.watch("twitter");
+    if (!x && step === 1) toast("Social links is required");
+
+    if (step === 0)
+      fieldsToValidate = [
+        "campaignName",
+        "creator",
+        "category",
+        "startDate",
+        "endDate",
+      ];
+    if (step === 1) fieldsToValidate = ["cover", "supportingImages", "twitter"];
+    if (step === 2) fieldsToValidate = ["bio"];
+    if (step === 3) fieldsToValidate = ["amount", "tokens", "chain"];
+    if (step === 4) fieldsToValidate = ["agree"];
 
     const isValid = await methods.trigger(fieldsToValidate);
 
@@ -180,30 +71,43 @@ export default function MultiStepForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <Form {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="max-w-md mx-auto p-6 border rounded-lg shadow-md space-y-6"
-        >
-          {steps[step]}
+    <Layout step={step}>
+      <>
+        <Prog steps={stepText} currentStep={step} />
 
-          <div className="flex justify-between pt-4">
-            {step > 0 && (
-              <Button type="button" variant="outline" onClick={prevStep}>
-                Back
-              </Button>
-            )}
-            {step < steps.length - 1 ? (
-              <Button type="button" onClick={nextStep}>
-                Next
-              </Button>
-            ) : (
-              <Button type="submit">Submit</Button>
-            )}
-          </div>
-        </form>
-      </Form>
-    </FormProvider>
+        <FormProvider {...methods}>
+          <Form {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="">
+              {steps[step]}
+              {/* <StepTwo key="s2" /> */}
+
+              <div className="flex items-center mt-4 justify-center gap-4 pt-4">
+                {step > 0 && (
+                  <Button type="button" variant="outline" onClick={prevStep}>
+                    Back
+                  </Button>
+                )}
+                {step < steps.length - 1 ? (
+                  <Button
+                    type="reset"
+                    onClick={nextStep}
+                    style={{
+                      background:
+                        "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                    }}
+                    className="rounded-2xl cursor-pointer  px-6 py-3"
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button type="submit">Submit</Button>
+                )}
+              </div>
+              <Bottom step={step} />
+            </form>
+          </Form>
+        </FormProvider>
+      </>
+    </Layout>
   );
 }
