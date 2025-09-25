@@ -4,6 +4,7 @@ import Campaigns from "@/components/layout/Donation/Campaigns";
 import SearchBar from "@/components/layout/SearchBar";
 import DonationModel from "./DonationModel";
 import { useState } from "react";
+import Filter from "../Explore/Filter";
 function DonationPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
@@ -15,15 +16,29 @@ function DonationPageClient() {
         />
       )}
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-sidebar-content flex flex-row font-semibold text-[32px] text-[#101828]">
+
+        <h1 className="text-sidebar-content text-center leading-tight font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
-          <span className="text-[#2379bc] font-semibold">
-            Contributions&nbsp;
-          </span>{" "}
-          & Impact
+          <span className="block md:inline">
+            <span className="text-[#2379bc] font-semibold">
+              Contributions&nbsp;
+            </span>{" "}
+            & Impact
+          </span>
         </h1>
-        <SearchBar />
+        <div className="hidden md:block w-full max-w-3xl">
+          <SearchBar />
+        </div>
+        <div className="flex flex-row items-center justify-center w-full space-x-4 pt-6 md:hidden">
+          <div>
+            <Filter />
+          </div>
+          <div className="flex-1">
+            <SearchBar />
+          </div>
+        </div>
       </div>
+
       <div className="">
         <Campaigns />
       </div>

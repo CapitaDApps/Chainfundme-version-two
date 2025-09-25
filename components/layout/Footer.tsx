@@ -12,9 +12,8 @@ function Footer() {
       style={{
         background: "linear-gradient(180deg, #2379BC 0%, #103756 100%)",
       }}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden "
     >
-      {/* Background Circle - Adjusted for mobile */}
       <div className="flex justify-end pr-4 md:pr-8">
         <Image 
           src="/layout/Cir.png" 
@@ -25,8 +24,7 @@ function Footer() {
         />
       </div>
 
-      {/* Main Content */}
-      <div className="flex flex-col md:flex-row items-start md:justify-between justify-start -mt-8 md:-mt-4 px-4 md:px-8 lg:px-12 gap-8 md:gap-0">
+      <div className="flex flex-col md:flex-row items-start md:justify-between justify-start -mt-8 md:-mt-4 px-4 md:px-8 lg:pl-7 lg:pr-18 gap-8 md:gap-0">
         
         {/* Main Links */}
         <div className="flex flex-col md:flex-row items-start text-left gap-6 md:gap-12">
@@ -90,7 +88,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="space-y-3 text-left w-full md:w-auto max-w-[17rem]">
+        <div className="space-y-3 text-left w-full md:w-auto max-w-[17rem] ">
           <h1 className="text-white font-semibold text-xl">Subscribe</h1>
           <div>
             <p className="text-[#E3E3E3] font-thin text-sm md:text-[15px] pb-3">
