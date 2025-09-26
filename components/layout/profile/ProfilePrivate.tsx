@@ -5,11 +5,11 @@ import React from "react";
 import Draftcard from "../MyCampaign/Draftcard";
 import { CategorisItem } from "@/lib/CategoriesContent";
 import { FaFacebook } from "react-icons/fa";
+import { IoWalletOutline } from "react-icons/io5";
 import { BsTwitterX } from "react-icons/bs";
 import Matrics from "./Metrics";
 
 function ProfilePrivateClient() {
-
   return (
     <div>
       <div className="relative w-full h-[250px] -mt-2">
@@ -59,7 +59,19 @@ function ProfilePrivateClient() {
                 Get Verification Badge
               </Button>
             </span>
-
+            <div>
+              <span className="flex flex-row space-x-3">
+                <span>
+                  <IoWalletOutline />
+                </span>
+                <span>
+                  <FaFacebook className="text-blue-700" />
+                </span>
+                <span>
+                  <BsTwitterX />
+                </span>
+              </span>
+            </div>
             <p className="text-[#6D6D6D] text-[14px] max-w-[45rem]">
               I share tips and free resources on UX Design | @base Builder |
               Ui/ux designer @futa_mart | Check Pinned tweet for my free design
@@ -78,29 +90,6 @@ function ProfilePrivateClient() {
         <div className="pt-6 px-10">
           <h1 className="text-3xl font-bold">Metrics</h1>
           <Matrics />
-          <div className="pt-6">
-            <h1 className="text-2xl font-bold pb-3">Linked Account</h1>
-            <span className="flex flex-col space-y-3 max-w-80 ">
-              <Button
-                variant="outline"
-                className="px-20 rounded-2xl py-4 font-light"
-              >
-                Connect Wallet
-              </Button>
-              <Button
-                variant="outline"
-                className="px-20 rounded-2xl py-4 font-light"
-              >
-                <FaFacebook className="text-blue-700" /> Connect your Facebook
-              </Button>
-              <Button
-                variant="outline"
-                className="px-20 rounded-2xl py-4 font-light"
-              >
-                <BsTwitterX /> Connect you x
-              </Button>
-            </span>
-          </div>
         </div>
         <div className="pt-8 px-10">
           <p className="text-2xl font-bold">Osama’s</p>

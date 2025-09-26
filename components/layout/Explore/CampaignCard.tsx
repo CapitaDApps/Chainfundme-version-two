@@ -70,10 +70,6 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
                   of {campaign.fundtarget}
                 </span>
               </div>
-              {/* <div className="flex justify-start space-x-2 items-center text-[10px]">
-                <span>{campaign.fundrasied} raised</span>
-                <span>of {campaign.fundtarget}</span>
-              </div> */}
             </div>
           </div>
         </div>

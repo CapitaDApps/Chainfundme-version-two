@@ -16,8 +16,7 @@ function DonationPageClient() {
         />
       )}
       <div className="flex flex-col items-center justify-center">
-
-        <h1 className="text-sidebar-content text-center leading-tight font-semibold text-[22px] md:text-[32px] text-[#101828]">
+        <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
           <span className="block md:inline">
             <span className="text-[#2379bc] font-semibold">
@@ -26,7 +25,7 @@ function DonationPageClient() {
             & Impact
           </span>
         </h1>
-        <div className="hidden md:block w-full max-w-3xl">
+        <div className="hidden md:block w-full mb-3 max-w-3xl">
           <SearchBar />
         </div>
         <div className="flex flex-row items-center justify-center w-full space-x-4 pt-6 md:hidden">

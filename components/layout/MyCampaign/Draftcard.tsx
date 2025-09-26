@@ -6,104 +6,92 @@ import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import MobileDraftCard from "./MobileDraftCard";
 
 const Draftcard = ({ campaign, status }: DraftCardProps) => {
   return (
-    <article className="w-full h-full">
-      <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col">
-        <div className="relative w-full h-50">
-          <Image
-            src={campaign.image}
-            alt={campaign.title}
-            fill
-            className="object-cover w-full h-full"
-          />
-        </div>
-
-        <div className="py-2 px-4 flex-1 flex flex-col">
-          <div
-            className={`text-xs flex justify-end space-x-1 items-center mb-1 ${
-              status === "completed" ? "text-green-600" : "text-[#666666]"
-            }`}
-          >
-            {status === "draft" ? (
-              <>
-                <Clock className="w-3 h-3" />
-                <span>Draft</span> {/* Changed from timeleft to just "Draft" */}
-              </>
-            ) : status === "active" ? (
-              <>
-                <IoIosCheckmarkCircle className="w-3 h-3 text-blue-600" />
-                <span>Active</span>
-              </>
-            ) : (
-              <>
-                <IoIosCheckmarkCircle className="w-3 h-3 text-green-600" />
-                <span>Completed</span>
-              </>
-            )}
+    <>
+      <article className="w-full h-full hidden md:block">
+        <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col">
+          <div className="relative w-full h-50">
+            <Image
+              src={campaign.image}
+              alt={campaign.title}
+              fill
+              className="object-cover w-full h-full"
+            />
           </div>
 
-          <h3 className="font-semibold line-clamp-1 mb-2">{campaign.title}</h3>
-
-          {/* Conditionally render progress section only for active/completed campaigns */}
-          {status !== "draft" && (
-            <div className="space-y-2">
-              <Progress
-                value={
-                  status === "completed"
-                    ? 100
-                    : status === "active"
-                    ? 43
-                    : 0
-                }
-                className={`h-2 ${
-                  status === "completed"
-                    ? "[&>div]:bg-green-500"
-                    : "[&>div]:bg-blue-500"
-                }`}
-              />
-              <div className="flex justify-end space-x-1 items-center text-xs">
-                <span className="text-muted-foreground/80">
-                  {campaign.fundrasied} raised
-                </span>
-                <span className="text-muted-foreground">
-                  of {campaign.fundtarget}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div
-            className={`flex flex-row justify-between items-center py-1 ${
-              ["completed", "active"].includes(status)
-                ? "flex items-center justify-center pt-2"
-                : status === "draft" 
-                ? "pt-4" // Add extra padding for draft to compensate for missing progress section
-                : ""
-            }`}
-          >
-            <Button
-              variant="outline"
-              className={`rounded-2xl shadow-lg/20 py-2 !px-6 disabled:cursor-not-allowed cursor-pointer ${
-                ["completed", "active"].includes(status) ? "hidden" : ""
+          <div className="py-2 px-4 flex-1 flex flex-col">
+            <div
+              className={`text-xs flex justify-end space-x-1 items-center mb-1 ${
+                status === "completed" ? "text-green-600" : "text-[#666666]"
               }`}
             >
-              <CiEdit className="mr-1" />
-              Edit
-            </Button>
-            {status === "draft" ? (
+              {status === "draft" ? (
+                <>
+                  <Clock className="w-3 h-3" />
+                  <span>Draft</span>
+                </>
+              ) : status === "active" ? (
+                <>
+                  <IoIosCheckmarkCircle className="w-3 h-3 text-blue-600" />
+                  <span>Active</span>
+                </>
+              ) : (
+                <>
+                  <IoIosCheckmarkCircle className="w-3 h-3 text-green-600" />
+                  <span>Completed</span>
+                </>
+              )}
+            </div>
+
+            <h3 className="font-semibold line-clamp-1 mb-2">
+              {campaign.title}
+            </h3>
+
+            {status !== "draft" && (
+              <div className="space-y-2">
+                <Progress
+                  value={
+                    status === "completed" ? 100 : status === "active" ? 43 : 0
+                  }
+                  className={`h-2 ${
+                    status === "completed"
+                      ? "[&>div]:bg-green-500"
+                      : "[&>div]:bg-blue-500"
+                  }`}
+                />
+                <div className="flex justify-end space-x-1 items-center text-xs">
+                  <span className="text-muted-foreground/80">
+                    {campaign.fundrasied} raised
+                  </span>
+                  <span className="text-muted-foreground">
+                    of {campaign.fundtarget}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div
+              className={`flex flex-row justify-between items-center py-1 ${
+                ["completed", "active"].includes(status)
+                  ? "flex items-center justify-center pt-2"
+                  : status === "draft"
+                  ? "pt-4"
+                  : ""
+              }`}
+            >
               <Button
-                style={{
-                  background:
-                    "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                }}
-                className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
+                variant="outline"
+                className={`rounded-2xl shadow-lg/20 py-2 md:!px-6  text-xs !px-4 disabled:cursor-not-allowed cursor-pointer ${
+                  ["completed", "active"].includes(status) ? "hidden" : ""
+                }`}
               >
-                Post now
+                <CiEdit className="mr-1" />
+                Edit
               </Button>
-            ) : (
-              <Link href={`/my-campaigns/${campaign.id}`} className="block">
+              {status === "draft" ? (
                 <Button
                   style={{
                     background:
@@ -111,14 +99,30 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                   }}
                   className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
                 >
-                  View now
+                  Post now
                 </Button>
-              </Link>
-            )}
+              ) : (
+                <Link href={`/my-campaigns/${campaign.id}`} className="block">
+                  <Button
+                    style={{
+                      background:
+                        "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+                    }}
+                    className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
+                  >
+                    View now
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
+      </article>
+
+      <div className=" block md:hidden">
+        <MobileDraftCard campaign={campaign} status={status} />
       </div>
-    </article>
+    </>
   );
 };
 
