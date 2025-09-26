@@ -57,17 +57,6 @@ function Header() {
           })}
         </div>
 
-        {/* <div className="flex flex-row items-center">
-          <Button
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="rounded-2xl cursor-pointer shadow-xl px-6 py-3"
-          >
-            Connect Wallet
-          </Button>
-        </div> */}
-
         <div className="flex flex-row  items-center">
           <div>
             <ToggleNotificationbar />

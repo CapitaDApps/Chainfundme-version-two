@@ -16,17 +16,17 @@ function Campaignsdraft() {
       <div className="flex flex-row items-center justify-center gap-x-12">
         <Tabs defaultValue="default" className="w-full">
           <div className="flex justify-center">
-            <TabsList>
+            <TabsList className="flex-nowrap">
               {campaignlist.map((list, index) => (
                 <React.Fragment key={list.value}>
                   <TabsTrigger
                     value={list.value}
-                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#2379BC] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer px-4 text-[#6B6B65]"
+                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#2379BC] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer md:px-4 px-2 text-[11px] font-bold md:text-sm text-[#6B6B65] whitespace-nowrap"
                   >
                     {list.name}
                   </TabsTrigger>
                   {index < campaignlist.length - 1 && (
-                    <div className="w-px h-10 bg-gray-300"></div>
+                    <div className="w-px h-10 bg-gray-300 md:block"></div>
                   )}
                 </React.Fragment>
               ))}
@@ -43,7 +43,7 @@ function Campaignsdraft() {
                   text1="Work on a campaign privately and publish it when you’re ready."
                 />
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-y-10 gap-x-15 justify-items-center">
                   {CategorisItem.map((campaign) => (
                     <Draftcard
                       key={campaign.id}

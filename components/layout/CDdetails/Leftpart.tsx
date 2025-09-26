@@ -22,7 +22,7 @@ function Leftpart() {
         <Profile />
         <hr className="border-[#CDCDCD]/40 w-full " />
         <div className="mt-10">
-          <p className="text-sm whitespace-pre-line leading-7">
+          <p className="text-xs md:text-sm whitespace-pre-line leading-7">
             On May 2026, our beloved friend and community member, Bob
             Nagamallaiah, was taken from us far too soon. Bob was a devoted
             husband to Nisha, a loving father to his son Gaurav, and a kind,
@@ -43,7 +43,7 @@ function Leftpart() {
           </p>
         </div>
         <div className="pt-6">
-          <label htmlFor="file-upload" className="cursor-pointer">
+          {/* <label htmlFor="file-upload" className="cursor-pointer">
             <Image
               src="/layout/sm.png"
               alt="upload"
@@ -51,7 +51,7 @@ function Leftpart() {
               height={40}
               className="rounded-full"
             />
-          </label>
+          </label> */}
 
           <input
             id="file-upload"
@@ -60,16 +60,6 @@ function Leftpart() {
             className="hidden"
           />
           <div className="flex flex-row space-x-4 mt-4">
-            {/* {img.map((i) => (
-              <Image
-                key={i.image}
-                src={i.image}
-                alt={i.image}
-                width={80}
-                height={80}
-                className="rounded-xl"
-              />
-            ))} */}
             <PreviewImages />
           </div>
           <div className="mt-4">
@@ -129,7 +119,7 @@ function Leftpart() {
               </div>
               <hr className="border-[#CDCDCD]/40 w-full " />
               <div>
-                <p className="font-bold text-[32px] py-2">Campaign Creator</p>
+                <p className="font-bold text-[28px] md:text-[32px] py-2">Campaign Creator</p>
                 <Profile />
               </div>
               <hr className="border-[#CDCDCD]/40 w-full " />

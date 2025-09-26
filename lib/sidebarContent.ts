@@ -10,7 +10,7 @@ export const menuItems = [
     title: "Explore Campaigns",
     icon: CiSearch,
     route: "/Explore Campaigns",
-    slug: "Explore Campaigns",
+    slug: "Explore-Campaigns",
     children: [
       {
         title: "Explore",

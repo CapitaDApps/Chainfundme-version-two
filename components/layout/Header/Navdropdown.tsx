@@ -39,7 +39,7 @@ function Navdropdown() {
             <div className="flex flex-col gap-2 w-full ">
               {menuItems
                 .filter(
-                  (item) => !["explore", "how-it-works"].includes(item.slug)
+                  (item) => !["Explore-Campaigns", "How-it-works"].includes(item.slug)
                 )
                 .map((item, index) => (
                   <Link
