@@ -220,7 +220,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
               src="/layout/avatarboy.svg"
               alt="you"
               size={32}
-              className="md:w-10 md:h-10"
+              className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
             />
 
             <div className="flex-1">
@@ -262,8 +262,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                       <Avatar
                         src="/layout/avatarboy.svg"
                         alt="you"
-                        size={28}
-                        className="md:w-8 md:h-8"
+                        size={32}
+                        className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
                       />
                     </button>
                   </PopoverTrigger>
@@ -413,8 +413,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                                     <Avatar
                                       src="/layout/avatarboy.svg"
                                       alt="reply"
-                                      size={20}
-                                      className="md:w-8 md:h-8 mt-1"
+                                      size={28}
+                                      className="w-6 h-6 md:w-8 md:h-8 mt-1 flex-shrink-0"
                                     />
                                   </button>
                                 </PopoverTrigger>
@@ -496,8 +496,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                             <Avatar
                               src="/layout/avatarboy.svg"
                               alt="you"
-                              size={28}
-                              className="md:w-8 md:h-8 flex-shrink-0"
+                              size={32}
+                              className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
                             />
                           </button>
                         </PopoverTrigger>

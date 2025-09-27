@@ -4,7 +4,7 @@ import CampaignList from "./CampaignList";
 
 function Campaigns() {
   const campaignlist = [
-    { name: "Default Campaign", value: "default" },
+    // { name: "Default Campaign", value: "default" },
     { name: "Active Campaign", value: "active" },
     { name: "Completed Campaign", value: "completed" },
   ];
@@ -12,7 +12,7 @@ function Campaigns() {
   return (
     <div className="pt-6">
       <div className="flex flex-col items-center">
-        <Tabs defaultValue="default" className="w-full">
+        <Tabs defaultValue="active" className="w-full">
           <div className="flex justify-center">
             <TabsList className="flex-nowrap">
               {campaignlist.map((list, index) => (

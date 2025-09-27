@@ -31,7 +31,7 @@ function Profile() {
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className="font-semibold text-xs py-2 px-6 rounded-2xl cursor-pointer w-full md:w-auto"
+            className="font-semibold text-xs py-2 px-6 max-w-[200px] rounded-2xl cursor-pointer w-full md:w-auto"
           >
             Check Profile
           </Button>
