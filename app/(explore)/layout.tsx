@@ -3,6 +3,7 @@ import { Sora } from "next/font/google";
 import ClientShell from "@/app/(explore)/ClientShell";
 import NextTopLoader from "nextjs-toploader";
 import "../globals.css";
+import Web3Provider from "../web3Provider";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -24,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sora.className} antialiased min-h-screen`}>
+        <Web3Provider>
         <NextTopLoader color="#2379bc" height={4} showSpinner={false} />
         <ClientShell>{children}</ClientShell>
+      </Web3Provider>
       </body>
     </html>
   );

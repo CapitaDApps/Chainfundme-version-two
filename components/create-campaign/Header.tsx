@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { FaWallet } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 
 export default function Header({ step }: { step: number }) {
   const arr = [
@@ -18,14 +19,15 @@ export default function Header({ step }: { step: number }) {
     <>
       <div className="space-y-3 hidden lg:block pb-16 px-2">
         <div className="flex justify-end">
-          <Button
+          {/* <Button
             style={{
               background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
             }}
             className="rounded-2xl cursor-pointer  px-6 py-3"
           >
             Connect Wallet
-          </Button>
+          </Button> */}
+          <CreateWalletButton />
         </div>
 
         <p className="underline text-[#878787] text-sm">Save to draft</p>
