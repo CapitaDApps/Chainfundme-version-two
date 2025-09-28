@@ -1,20 +1,125 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
-import Draftcard from "./Draftcard";
+import React, { useState } from "react";
+import Draftcard from "../Card";
 import { CategorisItem } from "@/lib/CategoriesContent";
 import EmptyModel from "./EmptyModel";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 function Campaignsdraft() {
   const campaignlist = [
-    { name: "Campaign(drafts)", value: "default" },
-    { name: "Active Campaign", value: "active" },
-    { name: "Completed Campaign", value: "completed" },
+    { name: "Drafts", value: "draft" },
+    { name: "Active ", value: "active" },
+    { name: "Completed ", value: "completed" },
   ];
+
+  const [pages, setPages] = useState({
+    draft: 1,
+    active: 1,
+    completed: 1,
+  });
+
+  const itemsPerPage = 6;
+
+  const handlePageChange = (tab: string, newPage: number) => {
+    setPages((prev) => ({ ...prev, [tab]: newPage }));
+  };
+
+  const renderCampaigns = (status: "draft" | "active" | "completed") => {
+    if (CategorisItem.length === 0) {
+      return (
+        <EmptyModel
+          src="/layout/can.png"
+          alt="campaign"
+          text2={
+            status === "draft"
+              ? "No Drafts Yet"
+              : status === "active"
+              ? "You don't have an active campaign"
+              : "No Completed Campaigns"
+          }
+          text1={
+            status === "draft"
+              ? "Work on a campaign privately and publish it when you’re ready."
+              : status === "active"
+              ? "Create a campaign to start raising funds for the causes you care about."
+              : "Once a campaign reaches its goal or end date, it will appear here."
+          }
+        />
+      );
+    }
+
+    const currentPage = pages[status];
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const campaignsToShow = CategorisItem.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(CategorisItem.length / itemsPerPage);
+
+    return (
+      <div className="flex flex-col items-center gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center max-w-6xl mx-auto w-full">
+          {campaignsToShow.map((campaign) => (
+            <Draftcard key={campaign.id} campaign={campaign} status={status} />
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handlePageChange(status, Math.max(1, currentPage - 1))
+                  }
+                />
+              </PaginationItem>
+
+              {[...Array(totalPages)].map((_, i) => (
+                <PaginationItem key={i}>
+                  <button
+                    onClick={() => handlePageChange(status, i + 1)}
+                    className={`px-3 py-1 rounded-md text-sm font-medium ${
+                      currentPage === i + 1
+                        ? "bg-[#2379BC] text-white"
+                        : "text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem>
+                <PaginationNext
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handlePageChange(
+                      status,
+                      Math.min(totalPages, currentPage + 1)
+                    )
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="pt-6">
       <div className="flex flex-row items-center justify-center gap-x-12">
-        <Tabs defaultValue="default" className="w-full">
+        <Tabs defaultValue="" className="w-full">
           <div className="flex justify-center">
             <TabsList className="flex-nowrap">
               {campaignlist.map((list, index) => (
@@ -22,22 +127,19 @@ function Campaignsdraft() {
                   <TabsTrigger
                     value={list.value}
                     className="bg-transparent border-none shadow-none 
-                 data-[state=active]:text-[#2379BC] 
-                 data-[state=active]:bg-transparent 
-                 data-[state=active]:border-none 
-                 data-[state=active]:shadow-none 
-                 focus-visible:ring-0 cursor-pointer 
-                 md:px-4 px-2 text-[11px] font-bold md:text-sm 
-                 text-[#6B6B65] whitespace-nowrap"
+                     data-[state=active]:text-[#2379BC] 
+                     data-[state=active]:bg-transparent 
+                     focus-visible:ring-0 cursor-pointer 
+                     md:px-4 px-2 text-[11px] font-bold md:text-sm 
+                     text-[#6B6B65] whitespace-nowrap"
                   >
                     <span className="md:hidden">
-                      {list.value === "default"
+                      {list.value === "draft"
                         ? "Draft"
                         : list.value === "active"
                         ? "Active"
                         : "Completed"}
                     </span>
-
                     <span className="hidden md:inline">{list.name}</span>
                   </TabsTrigger>
 
@@ -49,77 +151,19 @@ function Campaignsdraft() {
             </TabsList>
           </div>
 
-          <TabsContent value="default" className="w-full pt-6">
-            <div className="flex justify-center">
-              {CategorisItem.length === 0 ? (
-                <EmptyModel
-                  src="/layout/bo.png"
-                  alt="campaign"
-                  text2="No Drafts Yet"
-                  text1="Work on a campaign privately and publish it when you’re ready."
-                />
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-y-10 gap-x-15 justify-items-center">
-                  {CategorisItem.map((campaign) => (
-                    <Draftcard
-                      key={campaign.id}
-                      campaign={campaign}
-                      status="draft"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+          <TabsContent value="draft" className="w-full pt-6">
+            {renderCampaigns("draft")}
           </TabsContent>
-
           <TabsContent value="active" className="w-full pt-6">
-            <div className="flex justify-center">
-              {CategorisItem.length === 0 ? (
-                <EmptyModel
-                  src="/layout/can.png"
-                  alt="campaign"
-                  text2="You don't have an active campaign"
-                  text1="Create a campaign to start raising funds for the causes you care about."
-                />
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
-                  {CategorisItem.map((campaign) => (
-                    <Draftcard
-                      key={campaign.id}
-                      campaign={campaign}
-                      status="active"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+            {renderCampaigns("active")}
           </TabsContent>
-
           <TabsContent value="completed" className="w-full pt-6">
-            <div className="flex justify-center">
-              {CategorisItem.length === 0 ? (
-                <EmptyModel
-                  src="/layout/can.png"
-                  alt="campaign"
-                  text2="No Completed Campaigns"
-                  text1="Once a campaign reaches its goal or end date, it will appear here."
-                />
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
-                  {CategorisItem.map((campaign) => (
-                    <Draftcard
-                      key={campaign.id}
-                      campaign={campaign}
-                      status="completed"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
+            {renderCampaigns("completed")}
           </TabsContent>
         </Tabs>
       </div>
     </div>
   );
 }
+
 export default Campaignsdraft;
