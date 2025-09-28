@@ -21,7 +21,7 @@ function MyCampaignsPage() {
         <Filter />
       </div>
       <div className="flex flex-col items-center justify-center pt-6">
-        <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
+        <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[24px] md:text-[32px] text-[#101828]">
           Manage&nbsp;{" "}
           <span className="block md:inline">
             Your&nbsp;{" "}
@@ -35,7 +35,7 @@ function MyCampaignsPage() {
         </div>
 
         <div className="flex flex-row items-center justify-center w-full space-x-4 pt-6 md:hidden">
-          <div>
+          <div className="flex items-center justify-center pt-4">
             <Filter />
           </div>
           <div className="flex-1">

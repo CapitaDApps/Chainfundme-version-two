@@ -34,10 +34,9 @@ On May 2026, our beloved friend and community member, Bob Nagamallaiah, was take
         <Profile />
         <hr className="border-[#CDCDCD]/40 w-full " />
 
-        <div className="mt-1 md:mt-10">
+        <div className="mt-1 md:mt-1">
           <p className="text-xs md:text-sm whitespace-pre-line leading-7">
             {expanded ? fullText : previewText}
-            <br />
             <span
               className="text-blue-600 cursor-pointer hover:underline"
               onClick={() => setExpanded(!expanded)}
@@ -47,7 +46,7 @@ On May 2026, our beloved friend and community member, Bob Nagamallaiah, was take
           </p>
         </div>
 
-        <div className="pt-6">
+        <div className="md:pt-1 pt-4">
           <input
             id="file-upload"
             type="file"

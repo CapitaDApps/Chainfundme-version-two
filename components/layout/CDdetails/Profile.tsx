@@ -27,25 +27,27 @@ function Profile() {
         </div>
       </div>
 
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="font-semibold text-xs py-2 px-6 max-w-[200px] rounded-2xl cursor-pointer w-full md:w-auto"
-          >
-            Check Profile
-          </Button>
-        </PopoverTrigger>
+      <div className="pl-10">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="font-semibold text-xs py-2 px-6 max-w-[180px] md:max-w-[200px] rounded-2xl cursor-pointer w-full md:w-auto"
+            >
+              Check Profile
+            </Button>
+          </PopoverTrigger>
 
-        <PopoverContent
-          side="bottom"
-          align="center"
-          sideOffset={8}
-          className="bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-sm md:max-w-[350px]"
-        >
-          <PopupProfile />
-        </PopoverContent>
-      </Popover>
+          <PopoverContent
+            side="bottom"
+            align="center"
+            sideOffset={8}
+            className="bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-[310px] md:max-w-[350px]"
+          >
+            <PopupProfile />
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
   );
 }

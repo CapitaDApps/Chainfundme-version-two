@@ -4,9 +4,8 @@ import CampaignList from "./CampaignList";
 
 function Campaigns() {
   const campaignlist = [
-    // { name: "Default Campaign", value: "default" },
-    { name: "Active Campaign", value: "active" },
-    { name: "Completed Campaign", value: "completed" },
+    { name: "Active", value: "active" },
+    { name: "Completed", value: "completed" },
   ];
 
   return (
@@ -31,21 +30,15 @@ function Campaigns() {
             </TabsList>
           </div>
 
-          <TabsContent value="default" className="w-full pt-6">
-            <div className="w-full overflow-x-auto md:overflow-x-visible scrollbar-hide md:scrollbar-auto">
-              <CampaignList />
-            </div>
-          </TabsContent>
-
           <TabsContent value="active" className="w-full pt-6">
             <div className="w-full overflow-x-auto md:overflow-x-visible scrollbar-hide md:scrollbar-auto">
-              <CampaignList />
+              <CampaignList status="active" />
             </div>
           </TabsContent>
 
-          <TabsContent value="completed" className="w-full pt-6">
+          <TabsContent value="completed" className="w-full py-6">
             <div className="w-full overflow-x-auto md:overflow-x-visible scrollbar-hide md:scrollbar-auto">
-              <CampaignList />
+              <CampaignList status="completed" />
             </div>
           </TabsContent>
         </Tabs>

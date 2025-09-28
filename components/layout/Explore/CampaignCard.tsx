@@ -8,7 +8,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
   return (
     <>
       <article className="w-full h-full hidden md:block">
-         <Link href={`/my-donations/${campaign.id}`} className="block">
+         <Link href={`/explore/${campaign.id}`} className="block">
         <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none  transition-colors duration-500 overflow-hidden flex flex-row md:flex-col items-center">
           <div className="relative w-full h-55">
             <Image

@@ -49,13 +49,13 @@ const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
     }
 
     return (
-      <div className="flex justify-center pt-2">
+      <div className="flex justify-start pt-2">
         <Link href={`/my-campaigns/${campaign.id}`} className="block">
           <Button
             style={{
               background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
             }}
-            className="rounded-2xl cursor-pointer shadow-md text-[10px] md:px-6 md:py-2 md:text-sm"
+            className="rounded-2xl cursor-pointer shadow-md py-2 px-2 text-[10px] md:py-2 md:px-6 md:text-sm"
           >
             View now
           </Button>

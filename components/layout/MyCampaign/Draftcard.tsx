@@ -74,7 +74,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             )}
 
             <div
-              className={`flex flex-row justify-between items-center py-1 ${
+              className={`flex flex-row justify-center items-center py-1 ${
                 ["completed", "active"].includes(status)
                   ? "flex items-center justify-center pt-2"
                   : status === "draft"

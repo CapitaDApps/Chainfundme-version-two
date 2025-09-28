@@ -31,35 +31,12 @@ function MobileHeader() {
 
   return (
     <div className="flex flex-row items-center justify-between px-4 pt-2">
-      <div className="flex space-x-4 items-center pb-2">
-        <Link href="/">
-          <div className="flex">
-            <Image
-              src="/layout/Logo.png"
-              alt="capita_logo"
-              width={130}
-              height={60}
-              className="cursor-pointer"
-            />
-          </div>
-        </Link>
-      </div>
-
-      <div className="flex flex-row items-center gap-3">
-        <Button
-          style={{
-            background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-          }}
-          className="rounded-2xl cursor-pointer shadow-xl px-3 py-1 text-xs"
-        >
-          Connect Wallet
-        </Button>
-
+      <div className="flex flex-row space-x-4 items-center pb-2">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger>
             <RxHamburgerMenu className="cursor-pointer w-6 h-6" />
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent side="left">
             <SheetHeader>
               <SheetDescription>
                 <div className="flex flex-col gap-2 w-full pt-10">
@@ -90,7 +67,7 @@ function MobileHeader() {
                                 <Link
                                   key={child.slug}
                                   href={child.route}
-                                  onClick={handleClose} 
+                                  onClick={handleClose}
                                   className={`
                                     flex items-center px-4 py-2 gap-3 rounded-md text-[12px]
                                     hover:text-primary text-[#666666]
@@ -117,7 +94,7 @@ function MobileHeader() {
                       <Link
                         key={item.slug}
                         href={item.route}
-                        onClick={handleClose} 
+                        onClick={handleClose}
                         className={`
                           flex items-center px-4 py-3 gap-3 cursor-pointer rounded-md text-[12px]
                           hover:text-primary text-[#666666] transition-colors duration-200
@@ -138,6 +115,29 @@ function MobileHeader() {
             </SheetHeader>
           </SheetContent>
         </Sheet>
+
+        <Link href="/">
+          <div className="flex">
+            <Image
+              src="/layout/Logo.png"
+              alt="capita_logo"
+              width={130}
+              height={60}
+              className="cursor-pointer"
+            />
+          </div>
+        </Link>
+      </div>
+
+      <div className="flex flex-row items-center gap-3">
+        <Button
+          style={{
+            background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
+          }}
+          className="rounded-2xl cursor-pointer shadow-xl px-3 py-1 text-xs"
+        >
+          Connect Wallet
+        </Button>
       </div>
     </div>
   );
