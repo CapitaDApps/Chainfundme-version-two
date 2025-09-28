@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import MobileDraftCard from "./MobileDraftCard";
+import MobileDraftCard from "./MobileCard";
 
 const Draftcard = ({ campaign, status }: DraftCardProps) => {
   return (
@@ -38,12 +38,17 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                   <IoIosCheckmarkCircle className="w-3 h-3 text-blue-600" />
                   <span>Active</span>
                 </>
-              ) : (
+              ) : status === "completed" ? (
                 <>
                   <IoIosCheckmarkCircle className="w-3 h-3 text-green-600" />
                   <span>Completed</span>
                 </>
-              )}
+              ) : status === "explore" ? (
+                <>
+                  <Clock className="w-3 h-3" />
+                  <span>3days left</span>
+                </>
+              ) : null}
             </div>
 
             <h3 className="font-semibold line-clamp-1 mb-2">
@@ -75,7 +80,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
 
             <div
               className={`flex flex-row justify-center items-center py-1 ${
-                ["completed", "active"].includes(status)
+                ["completed", "active", "explore"].includes(status)
                   ? "flex items-center justify-center pt-2"
                   : status === "draft"
                   ? "pt-4"
@@ -85,7 +90,9 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
               <Button
                 variant="outline"
                 className={`rounded-2xl shadow-lg/20 py-2 md:!px-6 text-xs !px-4 disabled:cursor-not-allowed cursor-pointer ${
-                  ["completed", "active"].includes(status) ? "hidden" : ""
+                  ["completed", "active", "explore"].includes(status)
+                    ? "hidden"
+                    : ""
                 }`}
               >
                 <CiEdit className="mr-1" />

@@ -9,6 +9,14 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
   const renderStatus = () => {
+    if (status === "explore") {
+      return (
+        <>
+          <Clock className="w-3 h-3" />
+          <span>3days left</span>
+        </>
+      );
+    }
     if (status === "draft") {
       return (
         <>

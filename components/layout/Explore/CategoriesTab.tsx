@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/pagination";
 import { List } from "@/lib/Categories";
 import OtherCampaign from "./OtherCampaigns";
-import CampaignCard from "@/components/layout/Explore/CampaignCard";
 import { CategorisItem } from "@/lib/CategoriesContent";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Draftcard from "../Card";
 
 interface Props {
   initialCategory: string;
@@ -110,7 +110,11 @@ function CategoriesTab({ initialCategory }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 md:gap-20 justify-items-center">
                 {currentCampaigns.length > 0 ? (
                   currentCampaigns.map((campaign) => (
-                    <CampaignCard key={campaign.id} campaign={campaign} />
+                    <Draftcard
+                      key={campaign.id}
+                      campaign={campaign}
+                      status="explore"
+                    />
                   ))
                 ) : (
                   <p>No campaigns found in this category.</p>

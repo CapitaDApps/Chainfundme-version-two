@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import React from "react";
-import Draftcard from "../MyCampaign/Draftcard";
+import Draftcard from "../Card";
 import { CategorisItem } from "@/lib/CategoriesContent";
 import { FaFacebook } from "react-icons/fa";
 import { IoWalletOutline } from "react-icons/io5";
@@ -93,10 +93,12 @@ function ProfilePrivateClient() {
             >
               <GoPlus /> Edit Profile
             </Button>
-           <div className="flex flex-col space-y-2">
-             <ProgressIndicator value={75} size={60} />
-             <p className="text-[#05BB72] text-[14px] ml-4">Boost Trust Score</p>
-           </div>
+            <div className="flex flex-col space-y-2">
+              <ProgressIndicator value={75} size={60} />
+              <p className="text-[#05BB72] text-[14px] ml-4">
+                Boost Trust Score
+              </p>
+            </div>
           </div>
         </div>
 
