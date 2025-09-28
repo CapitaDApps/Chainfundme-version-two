@@ -74,7 +74,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             )}
 
             <div
-              className={`flex flex-row justify-between items-center py-1 ${
+              className={`flex flex-row justify-center items-center py-1 ${
                 ["completed", "active"].includes(status)
                   ? "flex items-center justify-center pt-2"
                   : status === "draft"
@@ -84,24 +84,15 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
             >
               <Button
                 variant="outline"
-                className={`rounded-2xl shadow-lg/20 py-2 md:!px-6  text-xs !px-4 disabled:cursor-not-allowed cursor-pointer ${
+                className={`rounded-2xl shadow-lg/20 py-2 md:!px-6 text-xs !px-4 disabled:cursor-not-allowed cursor-pointer ${
                   ["completed", "active"].includes(status) ? "hidden" : ""
                 }`}
               >
                 <CiEdit className="mr-1" />
                 Edit
               </Button>
-              {status === "draft" ? (
-                <Button
-                  style={{
-                    background:
-                      "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                  }}
-                  className="rounded-2xl cursor-pointer shadow-lg/20 px-6 py-2"
-                >
-                  Post now
-                </Button>
-              ) : (
+
+              {status !== "draft" && (
                 <Link href={`/my-campaigns/${campaign.id}`} className="block">
                   <Button
                     style={{
@@ -119,7 +110,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
         </div>
       </article>
 
-      <div className=" block md:hidden">
+      <div className="block md:hidden">
         <MobileDraftCard campaign={campaign} status={status} />
       </div>
     </>

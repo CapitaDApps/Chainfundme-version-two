@@ -25,15 +25,22 @@ const Footer = () => {
           />
         </div>
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
-          <div className="sm:col-span-2 lg:col-span-1 text-center sm:text-left z-20">
-            <h2 className="text-white text-xl md:text-2xl font-bold mb-3 md:mb-4">
-              ChainFundMe
-            </h2>
-            <p className="text-gray-200 mb-4 md:mb-6 text-sm md:text-base">
-              Empowering communities through blockchain-based fundraising
-              solutions.
-            </p>
-            <div className="flex justify-center sm:justify-start space-x-4">
+          <div className="sm:col-span-2 lg:col-span-1 text-center sm:text-left z-20 flex flex-col space-y-3">
+            <Link href="/">
+              <div className="flex p-2">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-white rounded-lg blur-md opacity-50"></div>
+                  <Image
+                    src="/layout/Logo.png"
+                    alt="capita_logo"
+                    width={200}
+                    height={60}
+                    className="cursor-pointer relative drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                  />
+                </div>
+              </div>
+            </Link>
+            <div className="flex justify-start space-x-4 pl-3">
               <a
                 href="#"
                 className="text-white hover:text-blue-300 transition-colors"
@@ -122,8 +129,9 @@ const Footer = () => {
             <p className="text-gray-200 mb-3 text-xs md:text-sm">
               Stay updated with our latest news and announcements
             </p>
-            <div className="flex flex-col space-y-2 md:space-y-3 max-w-xs sm:mx-0 ">
-              <div className="relative">
+
+            <div className="flex flex-col items-center sm:items-start space-y-2 md:space-y-3 max-w-xs mx-auto sm:mx-0">
+              <div className="relative w-full">
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -134,17 +142,17 @@ const Footer = () => {
                   size={14}
                 />
               </div>
-              <button className="bg-white text-blue-900 hover:bg-blue-100 transition-colors px-4 py-2 rounded-lg font-medium text-sm md:text-base">
+              <button className="bg-white text-blue-900 hover:bg-blue-100 transition-colors px-4 py-2 rounded-lg font-medium text-sm md:text-base w-full sm:w-auto">
                 Subscribe
               </button>
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-gray-300 text-center sm:text-left">
                 By subscribing you agree to our privacy policy
               </p>
             </div>
           </div>
         </div>
 
-        <div className=" absolute z-0 left-[-2rem] top-[10rem] ">
+        <div className=" absolute z-0 md:left-[-2rem] right-[-2rem] md:top[0] bottom-[0rem] ">
           <Image
             src="/layout/Cone.png"
             alt="cone"

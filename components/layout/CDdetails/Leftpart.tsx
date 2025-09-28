@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import SelectToken from "@/components/layout/CDdetails/SelectToken";
@@ -5,7 +7,17 @@ import { CiShare2 } from "react-icons/ci";
 import Profile from "./Profile";
 import Comments from "./Comment";
 import PreviewImages from "./PreviewImages";
+import { useState } from "react";
+
 function Leftpart() {
+  const [expanded, setExpanded] = useState(false);
+
+  const fullText = `
+On May 2026, our beloved friend and community member, Bob Nagamallaiah, was taken from us far too soon. Bob was a devoted husband to Nisha, a loving father to his son Gaurav, and a kind, hardworking man whose generosity touched countless lives. Bob’s sudden passing has left his family heartbroken and facing an uncertain future. His son, Gaurav, just graduated high school and is preparing to begin college this fall with dreams of studying Hospitality Management, inspired by his father’s dedication and compassion. This campaign has been created to honor Bob’s memory by supporting Nisha and Gaurav during this incredibly difficult time. Funds raised will go directly toward helping the family manage immediate expenses and ensuring Gaurav can continue his education, carrying forward the legacy of his father’s love and generosity.
+`;
+
+  const previewText = fullText.slice(0, 250) + "...";
+
   return (
     <div>
       <div className="max-w-[720px]">
@@ -21,45 +33,27 @@ function Leftpart() {
         <hr className="border-[#CDCDCD]/40 w-full" />
         <Profile />
         <hr className="border-[#CDCDCD]/40 w-full " />
-        <div className="mt-10">
+
+        <div className="mt-1 md:mt-1">
           <p className="text-xs md:text-sm whitespace-pre-line leading-7">
-            On May 2026, our beloved friend and community member, Bob
-            Nagamallaiah, was taken from us far too soon. Bob was a devoted
-            husband to Nisha, a loving father to his son Gaurav, and a kind,
-            hardworking man whose generosity touched countless lives. Bob’s
-            sudden passing has left his family heartbroken and facing an
-            uncertain future. His son, Gaurav, just graduated high school and is
-            preparing to begin college this fall with dreams of studying
-            Hospitality Management, inspired by his father’s dedication and
-            compassion. This campaign has been created to honor Bob’s memory by
-            supporting Nisha and Gaurav during this incredibly difficult time.
-            Funds raised will go directly toward helping the family manage
-            immediate expenses and ensuring Gaurav can continue his education,
-            carrying forward the legacy of his father’s love and
-            generosity.&nbsp; <br />
-            <span className="text-blue-600 cursor-pointer hover:underline">
-              Read more...
+            {expanded ? fullText : previewText}
+            <span
+              className="text-blue-600 cursor-pointer hover:underline"
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? "Read less" : "Read more"}
             </span>
           </p>
         </div>
-        <div className="pt-6">
-          {/* <label htmlFor="file-upload" className="cursor-pointer">
-            <Image
-              src="/layout/sm.png"
-              alt="upload"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          </label> */}
 
+        <div className="md:pt-1 pt-4">
           <input
             id="file-upload"
             type="file"
             accept="image/*"
             className="hidden"
           />
-          <div className="flex flex-row space-x-4 mt-4">
+          <div className="flex flex-row space-x-4 mt-[-10] mb-3 md:mt-4">
             <PreviewImages />
           </div>
           <div className="mt-4">
@@ -118,19 +112,6 @@ function Leftpart() {
                 </Button>
               </div>
               <hr className="border-[#CDCDCD]/40 w-full " />
-              <div>
-                <p className="font-bold text-[28px] md:text-[32px] py-2">Campaign Creator</p>
-                <Profile />
-              </div>
-              <hr className="border-[#CDCDCD]/40 w-full " />
-              {/* <div className="py-8 ">
-                <h1 className="text-[#2C2C2C] text-2xl font-bold">
-                  Words of support (5)
-                </h1>
-                <p className="text-[14px]">
-                  Please donate to share words of support.
-                </p>
-              </div> */}
               <div>
                 <Comments />
               </div>

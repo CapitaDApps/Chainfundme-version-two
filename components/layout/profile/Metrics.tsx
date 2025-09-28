@@ -26,7 +26,7 @@ function Matrics() {
   ];
 
   return (
-    <div className="py-4 px-1 flex flex-row justify-start space-x-15 items-center">
+    <div className="py-4 px-1 flex flex-col md:flex-row justify-center md:justify-start space-y-3 md:space-x-15 items-center">
       {list.map((item) => (
         <React.Fragment key={item.campaigns}>
           <div className="relative border border-[#6D6D6D]/30 shadow-[0_0_15px_rgba(0,0,0,0.3)] rounded-2xl w-[300px] flex flex-col items-center justify-start p-8 space-y-2">

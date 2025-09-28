@@ -14,7 +14,7 @@ import { img } from "@/lib/PreviewImages";
 
 export default function PreviewImages() {
   const [show, setShow] = useState(false);
-  
+
   return (
     <div>
       <div className="space-y-2">
@@ -43,21 +43,22 @@ export default function PreviewImages() {
         </div>
       </div>
 
-      {/* Modal */}
       <div
         className={`
           fixed inset-0 z-50 transition-all duration-300
-          ${show ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"}
+          ${
+            show
+              ? "visible opacity-100"
+              : "invisible opacity-0 pointer-events-none"
+          }
         `}
       >
-        {/* Backdrop - closes when clicked anywhere */}
         <div
           onClick={() => setShow(false)}
           className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         />
 
-        {/* Carousel content - doesn't close when clicked */}
-        <div className="absolute left-1/2 top-1/2 z-50 w-full max-w-[280px] -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 z-50 w-full max-w-[600px] -translate-x-1/2 -translate-y-1/2 px-4">
           <Carousel>
             <CarouselContent>
               {img.map((item, index) => (
@@ -65,15 +66,15 @@ export default function PreviewImages() {
                   className="flex flex-col gap-2 items-center"
                   key={index}
                 >
-                  <div className="relative aspect-square w-full">
+                  <div className="relative w-full h-[400px] md:h-[500px]">
                     <Image
                       src={item.image}
-                      className="rounded-2xl object-cover"
+                      className="rounded-2xl object-contain"
                       fill
                       alt={`Preview image ${index + 1}`}
                     />
                   </div>
-                  <p className="text-white">
+                  <p className="text-white text-sm">
                     <span>{index + 1}</span> / {img.length}
                   </p>
                 </CarouselItem>
@@ -86,7 +87,8 @@ export default function PreviewImages() {
           {/* Close button */}
           <button
             onClick={() => setShow(false)}
-              className="text-[#111] p-2 cursor-pointer rounded-full z-[90] bg-white absolute top-[-40%] right-[-100%]">
+            className="text-[#111] p-2 cursor-pointer rounded-full z-[90] bg-white absolute top-2 right-2"
+          >
             <FaXmark />
           </button>
         </div>

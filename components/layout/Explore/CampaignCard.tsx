@@ -1,5 +1,4 @@
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Progress } from "@/components/ui/progress";
 import { FundraisingCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
@@ -9,6 +8,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
   return (
     <>
       <article className="w-full h-full hidden md:block">
+         <Link href={`/explore/${campaign.id}`} className="block">
         <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none  transition-colors duration-500 overflow-hidden flex flex-row md:flex-col items-center">
           <div className="relative w-full h-55">
             <Image
@@ -39,9 +39,11 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             </div>
           </div>
         </div>
+        </Link>
       </article>
 
       <article className="block md:hidden w-full">
+         <Link href={`/my-donations/${campaign.id}`} className="block">
         <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row min-h-[120px]">
           <div className="relative w-28 h-35 flex-shrink-0">
             <Image
@@ -73,28 +75,10 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             </div>
           </div>
         </div>
+        </Link>
       </article>
     </>
   );
 };
 
 export default CampaignCard;
-
-{
-  /* <div className="flex items-center mb-2">
-            <Avatar className="w-6 h-6 mr-2">
-              <AvatarImage
-                src={campaign.creatorimage || "/layout/Ellipse.png"}
-              />
-              <AvatarFallback>{campaign.creatorname.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="text-xs text-[#666666]">
-              {campaign.creatorname} | Campaign Creator
-            </div>
-          </div> */
-}
-{
-  /* <div className="line-clamp-2 text-sm text-[#666666] mb-3 font-medium flex-1">
-            {campaign.story}
-          </div> */
-}

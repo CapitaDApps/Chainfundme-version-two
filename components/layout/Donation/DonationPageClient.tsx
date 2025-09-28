@@ -29,7 +29,7 @@ function DonationPageClient() {
           <SearchBar />
         </div>
         <div className="flex flex-row items-center justify-center w-full space-x-4 pt-6 md:hidden">
-          <div>
+          <div className="flex items-center justify-center pt-4">
             <Filter />
           </div>
           <div className="flex-1">
