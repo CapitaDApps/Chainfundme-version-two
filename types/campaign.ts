@@ -1,6 +1,6 @@
 //CampaignCard.tsx
 export interface CampaignItem {
-  id: number;
+  id: string;
   image: string;
   timeleft: string;
   title: string;

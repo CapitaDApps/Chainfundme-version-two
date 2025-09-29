@@ -3,6 +3,7 @@ import "../globals.css";
 import { Metadata } from "next";
 import { Sora } from "next/font/google";
 import { Toaster } from "sonner";
+import Web3Provider from "../web3Provider";
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
@@ -17,8 +18,10 @@ export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={` ${sora.className} bg-[#F4F9FC]   `}>
-        {children}
-        <Toaster />
+        <Web3Provider>
+          {children}
+          <Toaster />
+        </Web3Provider>
       </body>
     </html>
   );

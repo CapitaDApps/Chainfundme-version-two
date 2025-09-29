@@ -9,10 +9,12 @@ import { useState } from "react";
 import ComProfileModel from "@/components/layout/Explore/ComProfileModel";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useCampaigns } from "@/services/api/hooks/campaign/useCampaigns";
 
 export default function ExplorePageClient() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") ?? "for you";
+  const { campaigns, retrievingCampaigns, error } = useCampaigns();
 
   const [isModalOpen, setIsModalOpen] = useState(true);
 
@@ -86,7 +88,12 @@ export default function ExplorePageClient() {
           </div>
         </div>
         <hr className="hidden md:block border-[#CDCDCD]/40 w-full mt-8" />
-        <CategoriesTab initialCategory={category} />
+        <CategoriesTab
+          initialCategory={category}
+          campaigns={campaigns || []}
+          isLoading={retrievingCampaigns}
+          error={error}
+        />
       </div>
     </div>
   );

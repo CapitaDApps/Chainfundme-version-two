@@ -4,12 +4,22 @@ import { Progress } from "@/components/ui/progress";
 import { FundraisingCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const CampaignCard = ({ campaign }: FundraisingCardProps) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/explore/campaign/${campaign.id}`);
+  };
+
   return (
     <>
       <article className="w-full h-full hidden md:block">
-        <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none  transition-colors duration-500 overflow-hidden flex flex-row md:flex-col items-center">
+        <div
+          className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row md:flex-col items-center cursor-pointer hover:bg-blue-100/50"
+          onClick={handleClick}
+        >
           <div className="relative w-full h-55">
             <Image
               src={campaign.image}
@@ -42,7 +52,10 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
       </article>
 
       <article className="block md:hidden w-full">
-        <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row min-h-[120px]">
+        <div
+          className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row min-h-[120px] cursor-pointer hover:bg-blue-100/50"
+          onClick={handleClick}
+        >
           <div className="relative w-28 h-35 flex-shrink-0">
             <Image
               src={campaign.image}
@@ -62,7 +75,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
             </h3>
             <div className="space-y-1 mt-auto">
               <Progress value={43} className="h-2" />
-               <div className="flex justify-start items-center text-[10px] md:text-xs space-x-2">
+              <div className="flex justify-start items-center text-[10px] md:text-xs space-x-2">
                 <span className="text-muted-foreground/80">
                   {campaign.fundrasied} raised
                 </span>

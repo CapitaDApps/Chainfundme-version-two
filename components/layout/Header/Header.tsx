@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 // import { Button } from "../../ui/button";
 import ToggleNotificationbar from "./ToggleNotificationbar";
 import Navdropdown from "./Navdropdown";
+import CreateWalletButton from "../../wallet_connect/CreateWalletButton"
 
 function Header() {
   const pathname = usePathname();
@@ -67,13 +68,13 @@ function Header() {
             Connect Wallet
           </Button>
         </div> */}
-
         <div className="flex flex-row  items-center">
           <div>
             <ToggleNotificationbar />
           </div>
           <div>
-            <Navdropdown />
+            {/* <Navdropdown /> */}
+            <CreateWalletButton />
           </div>
         </div>
       </div>
