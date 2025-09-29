@@ -1,7 +1,13 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { GiCheckMark } from "react-icons/gi";
 
-export default function Bottom({ step }: { step: number }) {
+export default function Bottom({
+  step,
+  setStep,
+}: {
+  step: number;
+  setStep: Dispatch<SetStateAction<number>>;
+}) {
   const bottomSteps = [
     {
       name: "Basics",
@@ -41,7 +47,7 @@ export default function Bottom({ step }: { step: number }) {
   ];
   return (
     <div className="mt-12">
-      <div className="grid grid-cols-2 lg:grid-cols-5 w-full bg-[#DFDFDF]/35 rounded-xl">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 w-full bg-[#DFDFDF]/35 rounded-xl">
         {bottomSteps.map((bot, i) => (
           <div
             key={i}
@@ -60,7 +66,10 @@ export default function Bottom({ step }: { step: number }) {
                     </div>
                   ))}
                 </div>
-                <div className="border bottom-2 absolute w-[90%] right-2 left- border-[#D1D5DB] rounded-full p-1 text-xs text-center text-[#6B7280] ">
+                <div
+                  onClick={() => setStep(bot.step - 1)}
+                  className="border bottom-2 absolute w-[90%] cursor-pointer right-2 left- border-[#D1D5DB] rounded-full p-1 text-xs text-center text-[#6B7280] "
+                >
                   {bot.butName}
                 </div>
               </>

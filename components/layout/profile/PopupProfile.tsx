@@ -5,58 +5,65 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import Socials from "./Socials";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ProgressIndicator } from "./ProgressIndicator";
+import { GoPlus } from "react-icons/go";
 
 function PopupProfile() {
   const [isFollowing, setIsFollowing] = useState(false);
   const toggleFollow = () => setIsFollowing(!isFollowing);
 
   return (
-    <div >
-      <span className="flex justify-end absolute top-4 right-4 cursor-pointer">
+    <div className="relative">
+      <button
+        aria-label="Report profile"
+        className="absolute top-4 right-4 cursor-pointer"
+      >
         <FaExclamationTriangle className="md:text-xl text-lg text-red-500" />
-      </span>
+      </button>
 
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-3">
         <Image
           src="/layout/pro.png"
           alt="avatar"
-          width={80}
-          height={80}
-          className="mx-auto w-16 h-16 md:w-20 md:h-20 rounded-full shadow-sm"
+          width={100}
+          height={100}
+          className="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full shadow-sm"
         />
 
         <div className="text-center flex flex-row gap-x-2 items-center justify-center mt-2">
-          <h3 className="text-2xl font-bold">John Doe</h3>
-          <Button
-            style={{
-              background: "linear-gradient(90deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="h-7 px-3 text-white text-xs rounded-2xl font-bold"
-            onClick={toggleFollow}
-          >
-            {isFollowing ? "Following" : "Follow"}
-          </Button>
+          <h3 className="text-xl font-semibold">John Doe</h3>
+          <span className="flex flex-row items-center justify-center space-x-1">
+            <Image src="/layout/bag.png" alt="bag" width={20} height={20} />
+            <p className="text-xs">45% Trust score</p>
+          </span>
         </div>
 
-        <div className="flex md:justify-between md:flex-row flex-col-reverse gap-4 items-center justify-center w-full">
-          <ProgressIndicator value={43} size={120} />
+        <p className="text-sm text-[#6D6D6D] line-clamp-2 text-center">
+          UX Design tips & free resources | @base Builder | @futa_mart
+        </p>
 
-          <div className="flex justify-center gap-4">
-            <div className="text-center">
-              <p className="font-bold text-lg">1.2k</p>
-              <p className="text-gray-500 text-sm">Followers</p>
-            </div>
-            <div className="text-center">
-              <p className="font-bold text-lg">284</p>
-              <p className="text-gray-500 text-sm">Following</p>
-            </div>
+        <div className="flex justify-center pt-6 space-x-8">
+          <div className="text-center">
+            <p className="font-bold text-sm">1.2k</p>
+            <p className="text-gray-500 text-xs">Followers</p>
+          </div>
+          <div className="text-center">
+            <p className="font-bold text-sm">284</p>
+            <p className="text-gray-500 text-xs">Following</p>
           </div>
         </div>
+
+        <Button
+          className="flex items-center gap-1 mt-4 py-1.5 px-4 text-xs rounded-2xl cursor-pointer"
+          onClick={toggleFollow}
+        >
+          {isFollowing ? "Unfollow" : "Follow"}
+          <GoPlus className="text-sm" />
+        </Button>
 
         <Socials />
       </div>
     </div>
   );
 }
+
 export default PopupProfile;

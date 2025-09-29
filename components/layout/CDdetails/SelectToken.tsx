@@ -194,8 +194,8 @@ function SelectToken({
           </div>
         </div>
 
-        <div className="w-[100%] md:py-3 py-4">
-          <label className="md:text-sm text-[10px] text-sidebar-content block mb-1">
+        <div className="w-full md:w-[100%] md:py-3 py-2">
+          <label className="md:text-sm text-[12px] text-sidebar-content block mb-1">
             Enter Amount
           </label>
           <input
@@ -229,4 +229,5 @@ function SelectToken({
     </div>
   );
 }
+
 export default SelectToken;

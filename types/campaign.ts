@@ -20,5 +20,5 @@ export interface FundraisingCardProps {
 
 export interface DraftCardProps {
   campaign: CampaignItem;
-  status: "draft" | "active" | "completed";
+  status: "draft" | "active" | "completed" | "explore";
 }
