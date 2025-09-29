@@ -28,7 +28,7 @@ export function Prog({ steps, currentStep }: StepperProps) {
               {index > 0 && (
                 <div
                   className={clsx(
-                    "absolute top-3 -left-[50%] right-[50%] h-2",
+                    "absolute top-2.5 -left-[50%] right-[50%] h-1",
                     isCompleted ? "bg-blue-600" : "bg-gray-200"
                   )}
                 />
@@ -36,11 +36,11 @@ export function Prog({ steps, currentStep }: StepperProps) {
 
               <div
                 className={clsx(
-                  "z-10 flex items-center justify-center w-8 h-8  text-xs rounded-full border-2 bg-white",
+                  "z-10 flex items-center justify-center size-6  text-[11px] rounded-full border-2 bg-white",
                   isCompleted
                     ? "border-blue-600 !bg-blue-600 text-white"
                     : isActive
-                    ? "border-blue-600"
+                    ? "border-blue-600 text-blue-600"
                     : "border-gray-300"
                 )}
               >
