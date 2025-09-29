@@ -61,7 +61,7 @@ function Rightpart() {
                   </PopoverTrigger>
 
                   <PopoverContent
-                    side="right"
+                    side="bottom"
                     align="center"
                     sideOffset={10}
                     className="bg-white rounded-xl shadow-md p-6 w-[400px] md:w-[350px]"

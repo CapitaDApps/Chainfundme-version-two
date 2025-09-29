@@ -1,41 +1,53 @@
 import React from "react";
-import { PieChart, Pie, Cell } from "recharts";
 
 interface ProgressIndicatorProps {
   value: number;
   size?: number;
+  strokeWidth?: number;
 }
 
 export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   value,
   size = 100,
+  strokeWidth = 10,
 }) => {
-  const data = [
-    { name: "Completed", value },
-    { name: "Remaining", value: 100 - value },
-  ];
+  const progressValue = Math.max(0, Math.min(100, value));
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDashoffset =
+    circumference - (progressValue / 100) * circumference;
 
   return (
     <div className="relative flex items-center justify-center">
-      <PieChart width={size} height={size}>
-        <Pie
-          data={data}
+      <svg width={size} height={size} className="transform -rotate-90">
+        <circle
           cx={size / 2}
           cy={size / 2}
-          innerRadius={size / 2 - 10}
-          outerRadius={size / 2}
-          startAngle={90}
-          endAngle={-270}
-          dataKey="value"
-        >
-          <Cell key="cell-0" fill="#3B82F6" />
-          <Cell key="cell-1" fill="#E5E7EB" />
-        </Pie>
-      </PieChart>
+          r={radius}
+          stroke="#E5E7EB"
+          strokeWidth={strokeWidth}
+          fill="transparent"
+        />
+
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#05BB72"
+          strokeWidth={strokeWidth}
+          fill="transparent"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className="transition-all duration-300 ease-in-out"
+        />
+      </svg>
 
       {/* Centered text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-xl font-bold text-gray-800">{value}%</span>
+        <span className="text-sm font-bold text-gray-800">
+          {progressValue}%
+        </span>
       </div>
     </div>
   );

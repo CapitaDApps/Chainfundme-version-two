@@ -48,8 +48,8 @@ export default function DropdownFilter() {
         className="cursor-pointer border-none"
       >
         <div className="flex items-center gap-1 cursor-pointer text-[#666666] text-sm">
-          <IoFilterOutline />
-          <p>Filters</p>
+          <IoFilterOutline className="text-xl md:text-lg" />
+          <p className="hidden md:block">Filters</p>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
@@ -68,7 +68,7 @@ export default function DropdownFilter() {
                   key={sot.value}
                   className={`flex items-center text-[#666666] text-sm cursor-pointer rounded-sm px-2 py-1 transition-colors duration-150 ${
                     isChecked
-                      ? "bg-[var(--sidebar-content)] text-white"
+                      ? "bg-[var(--sidebar-content)] text-black"
                       : "hover:bg-[rgba(255,255,255,0.04)]"
                   }`}
                 >

@@ -10,9 +10,9 @@ import {
 function SelectToken() {
   return (
     <div className="rounded-md bg-transparent">
-      <div className="flex flex-row gap-3 md:gap-6 mb-4">
-        <div className="w-[70%] py-3">
-          <label className="md:text-sm text-[10px] text-sidebar-content mb-2">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 mb-4">
+        <div className="w-full md:w-[70%] py-2 md:py-3">
+          <label className="md:text-sm text-[12px] text-sidebar-content mb-2 block">
             Select Token
           </label>
           <div className="relative">
@@ -77,24 +77,24 @@ function SelectToken() {
           </div>
         </div>
 
-        <div className="w-[100%] md:py-3 py-4">
-          <label className="md:text-sm text-[10px] text-sidebar-content block mb-1">
+        <div className="w-full md:w-[100%] md:py-3 py-2">
+          <label className="md:text-sm text-[12px] text-sidebar-content block mb-1">
             Enter Amount
           </label>
           <input
             placeholder="0.00"
-            className="w-full rounded-md bg-background border border-disabled-text px-3 py-2 h-10 text-sidebar-content focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent md:text-sm  text-[12px]"
+            className="w-full rounded-md bg-background border border-disabled-text px-3 py-2 h-10 text-sidebar-content focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent md:text-sm text-[12px]"
           />
           <div className="text-xs text-sidebar-content mt-2">0.000ETH</div>
         </div>
 
-        <div className="w-[100%] py-2">
-          <label className="text-sm block mb-2 text-white">fund campaign</label>
+        <div className="w-full md:w-[100%] py-2">
+          <label className="text-sm block mb-2 text-white">Fund Campaign</label>
           <button
             style={{
               background: "linear-gradient(90deg, #1E5AA8 0%, #2379BC 100%)",
             }}
-            className="w-[100%] cursor-pointer md:px-4 py-2.5 rounded-lg text-white last:col-span-2 md:last:col-span-1 md:text-sm  text-[12px]"
+            className="w-full cursor-pointer md:px-4 py-2.5 rounded-lg text-white md:text-sm text-[12px]"
           >
             Fund Campaign
           </button>
@@ -103,4 +103,5 @@ function SelectToken() {
     </div>
   );
 }
+
 export default SelectToken;

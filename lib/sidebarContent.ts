@@ -7,11 +7,17 @@ import { FaNetworkWired } from "react-icons/fa";
 // import { CiBookmark } from "react-icons/ci";
 export const menuItems = [
   {
-    title: "Explore",
+    title: "Explore Campaigns",
     icon: CiSearch,
-    route: "/explore",
-    slug: "explore",
+    route: "/Explore Campaigns",
+    slug: "Explore-Campaigns",
     children: [
+      {
+        title: "Explore",
+        icon: CiSearch,
+        route: "/explore",
+        slug: "explore",
+      },
       {
         title: "How it works",
         icon: FaNetworkWired,

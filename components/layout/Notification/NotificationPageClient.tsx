@@ -26,7 +26,7 @@ function NotificationPageClient() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
-      <div className="p-6 sm:p-8">
+      <div className="p-6 pb-12 sm:p-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-[40px] md:mb-[50px]">
             <div className="min-w-0">
@@ -48,7 +48,7 @@ function NotificationPageClient() {
           {notifications.length === 0 ? (
             <Empty />
           ) : (
-            <div className="border border-[#b3b3b3]/40 rounded-4xl p-4 sm:p-6">
+            <div className="border border-[#b3b3b3]/40 rounded-4xl p-4 sm:p-6 ">
               <div className="divide-y divide-[#b3b3b3]/50">
                 {notifications.map((n) => (
                   <div
