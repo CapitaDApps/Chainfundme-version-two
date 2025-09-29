@@ -2,7 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    qualities: [25, 50, 75, 100],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "campaign-images-data.s3.eu-north-1.amazonaws.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "campaign-images-data.s3.amazonaws.com",
+        pathname: "**",
+      },
+    ],
   },
 };
 

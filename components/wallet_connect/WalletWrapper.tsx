@@ -72,12 +72,18 @@ export default function WalletWrapper() {
         <div className="flex items-center gap-5">
           <div className="hidden sm:block">
             <WalletSheet>
-              <CustomConnectButton text={truncateAddr(address)} />
+              <CustomConnectButton
+                text={truncateAddr(address)}
+                asTrigger={true}
+              />
             </WalletSheet>
           </div>
           <div className="block sm:hidden">
             <UserMobileSheet>
-              <CustomConnectButton text={truncateAddr(address)} />{" "}
+              <CustomConnectButton
+                text={truncateAddr(address)}
+                asTrigger={true}
+              />
             </UserMobileSheet>
           </div>
           <UserMenu>
