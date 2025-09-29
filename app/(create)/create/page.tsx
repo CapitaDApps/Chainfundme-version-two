@@ -107,7 +107,7 @@ export default function MultiStepForm() {
                   <Button type="submit">Submit</Button>
                 )}
               </div>
-              <Bottom step={step} />
+              <Bottom setStep={setStep} step={step} />
             </form>
           </Form>
         </FormProvider>
