@@ -141,7 +141,7 @@ function CategoriesTab({
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
             <div className="flex flex-col items-center">
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-5 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-5 w-full">
                 {isLoading ? (
                   <div className="col-span-full flex justify-center items-center py-8">
                     <div className="text-center">

@@ -1,7 +1,7 @@
 import { createConfig } from "@privy-io/wagmi";
 import { base, baseSepolia, bsc, bscTestnet } from "wagmi/chains";
 import { http } from "wagmi";
-import { ChainType, NetworkMainnet, NetworkMainnetId } from "./types";
+import { ChainType, NetworkName } from "./types";
 
 const mainnetConfig = createConfig({
   chains: [base, bsc],
@@ -34,7 +34,7 @@ export const connectingChain: number[] =
     ? [base.id, bsc.id]
     : [baseSepolia.id, bscTestnet.id];
 
-export const getEnvChainId = (network: NetworkMainnet) => {
+export const getEnvChainId = (network: NetworkName) => {
   switch (network) {
     case "Base":
       return process.env.NEXT_PUBLIC_PRODUCTION == "true"
@@ -51,15 +51,29 @@ export const getEnvChainId = (network: NetworkMainnet) => {
   }
 };
 
-export const chains: ChainType[] = [
+export const allowedChains: ChainType[] = [
   {
     value: "Base",
     symbol: "Base",
     image: "/tokens/base.svg",
+    networkId: base.id,
   },
   {
     value: "BNB Smart Chain",
     symbol: "BSC",
     image: "/tokens/binance.svg",
+    networkId: bsc.id,
+  },
+  {
+    value: "Base Sepolia",
+    symbol: "Base",
+    image: "/tokens/base.svg",
+    networkId: baseSepolia.id,
+  },
+  {
+    value: "BNB Smart Chain Testnet",
+    symbol: "BSC",
+    image: "/tokens/binance.svg",
+    networkId: bscTestnet.id,
   },
 ];

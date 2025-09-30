@@ -1,11 +1,20 @@
-import { base, bsc } from "wagmi/chains";
+import { base, baseSepolia, bsc, bscTestnet } from "wagmi/chains";
 
-export type NetworkMainnetId = typeof base.id | typeof bsc.id;
+export type NetworkId =
+  | typeof base.id
+  | typeof bsc.id
+  | typeof baseSepolia.id
+  | typeof bscTestnet.id;
 
-export type NetworkMainnet = typeof base.name | typeof bsc.name;
+export type NetworkName =
+  | typeof base.name
+  | typeof bsc.name
+  | typeof baseSepolia.name
+  | typeof bscTestnet.name;
 
 export type ChainType = {
-  value: NetworkMainnet;
+  value: NetworkName;
   image: string;
   symbol: string;
+  networkId: NetworkId;
 };
