@@ -1,21 +1,14 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { List } from "@/lib/Categories";
-import OtherCampaign from "./OtherCampaigns";
 import { CategorisItem } from "@/lib/CategoriesContent";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { ReturnCampaignDocument } from "@/types/api/campaign.types";
 import { CampaignItem } from "@/types/campaign";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import OtherCampaign from "./OtherCampaigns";
+import CampaignCard from "./CampaignCard";
 
 interface Props {
   initialCategory: string;
@@ -33,6 +26,8 @@ function CategoriesTab({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(initialCategory);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   // Function to map API campaign data to the expected format
   const mapCampaignData = (
@@ -145,8 +140,8 @@ function CategoriesTab({
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
-            <div className="flex flex-col items-center space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 md:gap-20 justify-items-center">
+            <div className="flex flex-col items-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-5 w-full">
                 {isLoading ? (
                   <div className="col-span-full flex justify-center items-center py-8">
                     <div className="text-center">

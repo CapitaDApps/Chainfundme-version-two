@@ -1,21 +1,5 @@
-import type { Metadata } from "next";
-import { Sora } from "next/font/google";
 import ClientShell from "@/app/(explore)/ClientShell";
 import NextTopLoader from "nextjs-toploader";
-import "../globals.css";
-import Web3Provider from "../web3Provider";
-
-const sora = Sora({
-  variable: "--font-sora",
-  subsets: ["latin"],
-  fallback: ["system-ui", "arial"],
-  weight: ["300", "400", "600", "700"],
-});
-
-export const metadata: Metadata = {
-  title: "ChainFundMe",
-  description: "A decentralized platform for funding campaigns",
-};
 
 export default function RootLayout({
   children,
@@ -23,13 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${sora.className} antialiased min-h-screen`}>
-        <Web3Provider>
-        <NextTopLoader color="#2379bc" height={4} showSpinner={false} />
-        <ClientShell>{children}</ClientShell>
-      </Web3Provider>
-      </body>
-    </html>
+    <div>
+      <NextTopLoader color="#2379bc" height={4} showSpinner={false} />
+      <ClientShell>{children}</ClientShell>
+    </div>
   );
 }

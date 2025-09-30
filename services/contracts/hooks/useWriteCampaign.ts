@@ -29,13 +29,8 @@ export function useWriteCampaign() {
           cb?.(error.message);
         },
         onSuccess: async () => {
-          await publish(options.uri);
-          console.log("Campaign created successfully");
           cb?.();
-          const uri = localStorage.getItem("campaignId");
-          if (uri) {
-            localStorage.removeItem("campaignId");
-          }
+
           await queryClient.invalidateQueries();
         },
       }

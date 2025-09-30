@@ -10,7 +10,7 @@ const CampaignCard = ({ campaign }: FundraisingCardProps) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/explore/campaign/${campaign.id}`);
+    router.push(`/campaign/${campaign.id}`);
   };
 
   return (

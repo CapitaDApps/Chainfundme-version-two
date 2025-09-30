@@ -10,7 +10,7 @@ export default function StepTwo() {
   const { control } = useFormContext<FormData>();
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10  max-w-3xl mx-auto">
       <CampaignPhotos control={control} />
       <div className={`space-y-4`}>
         <UploadSection />

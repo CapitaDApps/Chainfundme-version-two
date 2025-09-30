@@ -1,8 +1,8 @@
-import { TokenObjectType } from "@/services/contracts/tokensConfig";
 import { ChainDocument } from "./chain.types";
 import { CommentDocument } from "./comment.types";
 import { UserDocument } from "./user.types";
 import { TokenDocument } from "./token.types";
+import { FunderDocument } from "./funder.types";
 
 export type CampaignDocument = {
   title: string;
@@ -30,7 +30,7 @@ export type ReturnCampaignDocument = {
   owner: UserDocument;
   startDate: string;
   endDate: string;
-  chain: ChainDocument;
+  chains: ChainDocument[];
   ipfsId: string;
   creator: string;
   comments: CommentDocument[];
@@ -40,4 +40,5 @@ export type ReturnCampaignDocument = {
   published: boolean;
   tokens: TokenDocument[];
   campaignAddress?: string;
+  funders: FunderDocument[];
 };
