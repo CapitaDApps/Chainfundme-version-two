@@ -23,7 +23,7 @@ export function useCreateCampaign() {
         startDate: new Date(startDateTime).toISOString(),
         endDate: new Date(data.endDate).toISOString(),
         chain: chainId.toString(),
-        otherImages: [],
+        otherImages: data.supportingImages,
         creator: data.creator,
         tokenAddresses,
       });

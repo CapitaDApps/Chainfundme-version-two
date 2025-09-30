@@ -4,7 +4,15 @@ import { publishCampaign } from "../../campaign";
 export function usePublish() {
   const queryClient = useQueryClient();
   const { mutateAsync: publish } = useMutation({
-    mutationFn: async (campaignId: string) => await publishCampaign(campaignId),
+    mutationFn: async ({
+      campaignId,
+      tokens,
+      networkId,
+    }: {
+      campaignId: string;
+      tokens: string[];
+      networkId: number;
+    }) => await publishCampaign(campaignId, tokens, networkId),
 
     onSuccess: () => {
       queryClient.invalidateQueries();

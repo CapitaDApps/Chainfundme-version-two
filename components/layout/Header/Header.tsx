@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 // import { Button } from "../../ui/button";
 import ToggleNotificationbar from "./ToggleNotificationbar";
 import Navdropdown from "./Navdropdown";
-import CreateWalletButton from "../../wallet_connect/CreateWalletButton"
+import CreateWalletButton from "../../wallet_connect/CreateWalletButton";
 
 function Header() {
   const pathname = usePathname();
@@ -17,7 +17,7 @@ function Header() {
   ];
 
   return (
-    <div>
+    <div className="border-[#CDCDCD]/30 w-full -mt-2 pb-2 border">
       <div className="flex flex-row items-center justify-between px-4">
         <div className=" pb-2">
           <Link href="/" className="">
@@ -78,8 +78,8 @@ function Header() {
           </div>
         </div>
       </div>
-
-      <hr className="border-[#CDCDCD]/30 w-full -mt-2 pb-2" />
+      {/* 
+      <hr className="border-[#CDCDCD]/30 w-full -mt-2 pb-2" /> */}
     </div>
   );
 }

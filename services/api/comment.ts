@@ -1,19 +1,14 @@
-import { getAuthToken } from "./config";
+import { baseUrl, getAuthToken } from "./config";
 import axios from "axios";
 
-const url = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000";
-const prodUrl = `${url}/api/v1/campaign/comments`;
-const baseUrl =
-  process.env.NEXT_PUBLIC_PRODUCTION == "true"
-    ? prodUrl
-    : "/api/campaign/comments";
+const url = `${baseUrl}/campaign/comments`;
 
 // comments/create
 const addComment = async (campaignId: string, comment: string) => {
   const token = await getAuthToken();
 
   const resp = await axios.post(
-    `${baseUrl}/create`,
+    `${url}/create`,
     {
       campaignId,
       comment,
@@ -33,7 +28,7 @@ const likeComment = async (commentId: string) => {
   const token = await getAuthToken();
 
   const resp = await axios.put(
-    `${baseUrl}/like/${commentId}`,
+    `${url}/like/${commentId}`,
     {},
     {
       headers: {
@@ -50,7 +45,7 @@ const addReply = async (commentId: string, reply: string) => {
   const token = await getAuthToken();
 
   const resp = await axios.post(
-    `${baseUrl}/reply/${commentId}`,
+    `${url}/reply/${commentId}`,
     {
       reply,
     },
@@ -69,7 +64,7 @@ const likeReply = async (replyId: string) => {
   const token = await getAuthToken();
 
   const resp = await axios.put(
-    `${baseUrl}/reply/like/${replyId}`,
+    `${url}/reply/like/${replyId}`,
     {},
     {
       headers: {

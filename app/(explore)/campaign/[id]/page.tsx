@@ -2,13 +2,14 @@ import { Suspense } from "react";
 import CampaignDetailsClient from "@/components/layout/Explore/CampaignDetailsClient";
 
 interface CampaignPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-function CampaignPage({ params }: CampaignPageProps) {
+async function CampaignPage({ params }: CampaignPageProps) {
+  const id = (await params).id;
   return (
     <Suspense fallback={<div>Loading campaign details...</div>}>
-      <CampaignDetailsClient campaignId={params.id} />
+      <CampaignDetailsClient campaignId={id} />
     </Suspense>
   );
 }

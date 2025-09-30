@@ -2,19 +2,14 @@ import {
   CampaignDocument,
   ReturnCampaignDocument,
 } from "@/types/api/campaign.types";
-import { getAuthToken } from "./config";
+import { baseUrl, getAuthToken } from "./config";
 import axios from "axios";
 
-const url = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000";
-
-const prodUrl = `${url}/api/v1/campaign`;
-
-const baseUrl =
-  process.env.NEXT_PUBLIC_PRODUCTION == "true" ? prodUrl : "/api/campaign";
+const url = `${baseUrl}/campaign`;
 
 const getCampaigns = async (): Promise<ReturnCampaignDocument[]> => {
   // /
-  const resp = await axios.get(baseUrl);
+  const resp = await axios.get(url);
   return resp.data.data.campaignData;
 };
 
@@ -22,7 +17,7 @@ const getCampaign = async (
   campaignId: string
 ): Promise<ReturnCampaignDocument> => {
   // /:campaignId
-  const resp = await axios.get(`${baseUrl}/${campaignId}`);
+  const resp = await axios.get(`${url}/${campaignId}`);
   console.log({ campaign: resp.data.data });
   return resp.data.data;
 };
@@ -45,7 +40,7 @@ const createCampaignDraft = async (data: CampaignDocument) => {
     body.append("campaignImages", file);
   }
 
-  const resp = await axios.post(`${baseUrl}/create`, body, {
+  const resp = await axios.post(`${url}/create`, body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -58,12 +53,19 @@ const createCampaignDraft = async (data: CampaignDocument) => {
   return resp.data.data.cmid;
 };
 
-const publishCampaign = async (campaignId: string) => {
+const publishCampaign = async (
+  campaignId: string,
+  tokens: string[],
+  networkId: number
+) => {
   // /publish/:campaignId
   const token = await getAuthToken();
   const resp = await axios.post(
-    `${baseUrl}/publish/${campaignId}`,
-    {},
+    `${url}/publish/${campaignId}`,
+    {
+      tokenAddresses: tokens,
+      networkId,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,

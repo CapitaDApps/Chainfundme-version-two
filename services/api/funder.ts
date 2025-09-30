@@ -1,14 +1,7 @@
-import { getAuthToken } from "./config";
+import { baseUrl, getAuthToken } from "./config";
 import axios from "axios";
 
-const url = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:3000";
-
-const prodUrl = `${url}/api/v1/campaign/funder`;
-
-const baseUrl =
-  process.env.NEXT_PUBLIC_PRODUCTION == "true"
-    ? prodUrl
-    : "/api/campaign/funder";
+const url = `${baseUrl}/campaign/funder`;
 
 export type FundDataType = {
   userId: string;
@@ -20,7 +13,7 @@ export type FundDataType = {
 
 const addFunder = async (data: FundDataType) => {
   const token = await getAuthToken();
-  const resp = await axios.post(baseUrl, data, {
+  const resp = await axios.post(url, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

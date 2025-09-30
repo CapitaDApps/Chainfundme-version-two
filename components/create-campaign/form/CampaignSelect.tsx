@@ -39,7 +39,7 @@ export default function CampaignSelect({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="lg:w-[80%] w-full min-w-[2px]">
+        <FormItem className="w-full min-w-[2px]">
           <FormLabel className="text-xs text-sidebar-content gap-1 font-normal">
             {label}
             {required && <span className="text-red-500">*</span>}

@@ -40,7 +40,7 @@ export default function DateField({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="flex flex-col flex-1">
           <FormLabel className="text-xs text-sidebar-content gap-1 font-normal">
             {label}
             {required && <span className="text-red-500">*</span>}

@@ -21,6 +21,8 @@ import { useCreateCampaign } from "@/services/api/hooks/campaign/useCreateCampai
 import { getNetworkTokens } from "@/services/contracts/tokensConfig";
 import { useWriteCampaign } from "@/services/contracts/hooks/useWriteCampaign";
 import { useAccount } from "wagmi";
+import { zeroAddress } from "viem";
+import { usePublish } from "@/services/api/hooks/campaign/usePublish";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -39,7 +41,7 @@ export default function MultiStepForm() {
   const { createCampaignFunc, isSaving } = useCreateCampaign();
   const { createChainFundMe } = useWriteCampaign();
   const { chainId, isConnected } = useAccount();
-
+  const { publish } = usePublish();
   const steps = [
     <StepOne key="s1" />,
     <StepTwo key="s2" />,
@@ -83,22 +85,16 @@ export default function MultiStepForm() {
     const chainTokens = getNetworkTokens();
 
     // Transform token strings to token objects using existing config
-    const transformedTokens = data.tokens.map((tokenValue) => {
-      const tokenInfo = chainTokens.find(
-        (token) =>
-          token.name.toLowerCase().includes(tokenValue.toLowerCase()) ||
-          tokenValue.toLowerCase().includes(token.name.toLowerCase())
-      );
-      return (
-        tokenInfo || {
-          name: tokenValue.toUpperCase(),
-          src: "/tokens/default.svg",
-          decimals: 18,
-          type: "Unknown",
-          address: "0x...",
-        }
-      );
-    });
+    const transformedTokens = data.tokens
+      .map((tokenValue) => {
+        const tokenInfo = chainTokens.find(
+          (token) =>
+            token.name.toLowerCase().includes(tokenValue.toLowerCase()) ||
+            tokenValue.toLowerCase().includes(token.name.toLowerCase())
+        );
+        return tokenInfo || "";
+      })
+      .filter((token) => token !== "");
 
     // Transform FormData to match CampaignFormSchema (what the hook expects)
     const transformedData = {
@@ -136,9 +132,9 @@ export default function MultiStepForm() {
             (new Date(data.startDate).getTime() + 3 * 60 * 1000) / 1000
           );
           const endTime = Math.floor(new Date(data.endDate).getTime() / 1000);
-          const tokenAddresses = transformedTokens.map(
-            (token) => token.address
-          );
+          const tokenAddresses = transformedTokens
+            .map((token) => token.address)
+            .filter((token) => token !== zeroAddress);
 
           console.log("Smart contract deployment params:", {
             uri: campaignId,
@@ -160,10 +156,28 @@ export default function MultiStepForm() {
                 toast.error(`Smart contract deployment failed: ${error}`);
                 throw new Error(`Smart contract deployment failed: ${error}`);
               }
+              publish(
+                { campaignId, tokens: tokenAddresses, networkId: chainId },
+                {
+                  onSuccess: () => {
+                    console.log("Campaign created successfully");
+
+                    const uri = localStorage.getItem("campaignId");
+                    if (uri) {
+                      localStorage.removeItem("campaignId");
+                    }
+
+                    toast.success(
+                      "Campaign created and deployed successfully! 🎉"
+                    );
+                  },
+                  onError: (err) => {
+                    console.log({ "Error publishing campaign": err });
+                  },
+                }
+              );
             }
           );
-
-          toast.success("Campaign created and deployed successfully! 🎉");
         } catch (error) {
           console.error("Blockchain deployment failed:", error);
           toast.error("Transaction Failed. Please try again.");
@@ -208,7 +222,7 @@ export default function MultiStepForm() {
                   </Button>
                 ) : (
                   <Button type="submit" disabled={isSaving}>
-                    {isSaving ? "Creating Campaign..." : "Submit"}
+                    {isSaving ? "Creating Campaign..." : "Create"}
                   </Button>
                 )}
               </div>
