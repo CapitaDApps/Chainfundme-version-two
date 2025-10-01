@@ -114,7 +114,7 @@ function ProfilePrivateClient() {
                 <Draftcard
                   key={campaign.id}
                   campaign={campaign}
-                  status="draft"
+                  status="explore"
                 />
               ))}
             </div>

@@ -9,20 +9,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 function Navdropdown() {
+    const [open, setOpen] = useState(false);
+  
+    const handleClose = () => setOpen(false);
   const pathname = usePathname();
   const slug = pathname.split("/").at(pathname.split("/").length >= 2 ? 1 : 1);
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger>
           {" "}
           <div
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="border border-[#2379bc]/40 px-5 py-1 rounded-2xl shadow-xl space-x-2 flex flex-row items-center justify-center text-sm text-white font-medium"
+            className="bg-[#003DEF] border border-[#2379bc]/40 px-5 py-1 rounded-2xl shadow-xl space-x-2 flex flex-row items-center justify-center text-sm text-white font-medium"
           >
             <Image
               src="/layout/avatarboy.svg"
@@ -45,6 +46,7 @@ function Navdropdown() {
                   <Link
                     key={index}
                     href={item.route}
+                    onClick={handleClose}
                     className={`
                      flex items-center px-4 py-3 gap-3 cursor-pointer rounded-md text-[12px]
                      hover:text-primary text-[#666666] transition-colors duration-200

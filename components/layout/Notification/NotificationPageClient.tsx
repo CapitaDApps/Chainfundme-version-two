@@ -100,6 +100,7 @@ function NotificationPageClient() {
                               alt="notification"
                               width={15}
                               height={15}
+                              className="text-[#003DEF]"
                             />
                           </div>
                         )}

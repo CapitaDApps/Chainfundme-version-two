@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Sora } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import ClientShell from "@/app/(explore)/ClientShell";
 import NextTopLoader from "nextjs-toploader";
 import "../globals.css";
 
-const sora = Sora({
-  variable: "--font-sora",
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
   subsets: ["latin"],
   fallback: ["system-ui", "arial"],
   weight: ["300", "400", "600", "700"],
@@ -23,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sora.className} antialiased min-h-screen`}>
-        <NextTopLoader color="#2379bc" height={4} showSpinner={false} />
+      <body className={`${urbanist.className} antialiased min-h-screen`}>
+        <NextTopLoader color="#003DEF" height={4} showSpinner={false} />
         <ClientShell>{children}</ClientShell>
       </body>
     </html>

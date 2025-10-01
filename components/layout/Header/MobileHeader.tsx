@@ -30,7 +30,8 @@ function MobileHeader() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="flex flex-row items-center justify-between px-4 pt-2">
+   <div className="fixed top-0 right- z-40 w-full bg-white/90 backdrop-blur-sm shadow-sm">
+     <div className="flex flex-row items-center justify-between px-4 py-2">
       <div className="flex flex-row space-x-4 items-center pb-2">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger>
@@ -131,15 +132,13 @@ function MobileHeader() {
 
       <div className="flex flex-row items-center gap-3">
         <Button
-          style={{
-            background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-          }}
-          className="rounded-2xl cursor-pointer shadow-xl px-3 py-1 text-xs"
+          className="rounded-2xl cursor-pointer shadow-xl px-3 py-1 text-xs bg-[#003DEF]"
         >
           Connect Wallet
         </Button>
       </div>
     </div>
+   </div>
   );
 }
 export default MobileHeader;

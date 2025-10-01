@@ -1,11 +1,20 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ComProfileModelProps {
   onClose: () => void;
 }
 
 function ComProfileModel({ onClose }: ComProfileModelProps) {
+  const router = useRouter();
+
+  const handleCompleteProfile = () => {
+    router.push("/profile"); 
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 z-50 w-full h-screen bg-white/5 backdrop-blur-sm transition-all duration-500">
       <div className="w-full max-w-[35rem] min-h-[300px] bg-white rounded-xl p-6 transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center text-center">
@@ -25,16 +34,14 @@ function ComProfileModel({ onClose }: ComProfileModelProps) {
         </p>
         <div className="flex flex-row space-x-4 mt-6">
           <Button
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer"
+            onClick={handleCompleteProfile}
+            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer bg-[#003DEF] text-xs md:text-sm"
           >
             Complete my Profile
           </Button>
           <Button
             variant="outline"
-            className="px-6 py-3 shadow-xl rounded-xl text-[#2379bc] cursor-pointer"
+            className="px-6 py-3 shadow-xl rounded-xl text-[#2379bc] cursor-pointer text-xs md:text-sm"
             onClick={onClose}
           >
             Skip for now

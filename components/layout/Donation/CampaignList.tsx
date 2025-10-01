@@ -33,7 +33,7 @@ function CampaignList({ status }: CampaignListProps) {
             href={`/my-donations/${list.id}`} 
             className="block"
           >
-            <div className="grid grid-cols-[480px_270px_230px_200px_100px] items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg border-b border-[#CDCDCD]/50 min-w-[1270px]">
+            <div className="grid grid-cols-[480px_270px_230px_210px_100px] items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg border-b border-[#CDCDCD]/50 min-w-[1270px]">
               <div className="flex flex-row items-center space-x-4">
                 <CiStar />
                 <Image
@@ -41,10 +41,10 @@ function CampaignList({ status }: CampaignListProps) {
                   alt="donation image"
                   width={125}
                   height={123}
-                  className="md:w-[125px] md:h-[123px] w-[50px] h-[50px]"
+                  className="md:w-[125px] md:h-[123px] w-[70px] h-[60px]"
                 />
                 <div>
-                  <h1 className="max-w-[200px] font-semibold text-[14px] md:text-[16px]">
+                  <h1 className="max-w-[200px] font-semibold text-[15px] md:text-[16px]">
                     {list.title}
                   </h1>
                   <p className="text-[#6B6B6573] text-[10px] md:text-xs">
@@ -73,7 +73,7 @@ function CampaignList({ status }: CampaignListProps) {
                 {list.status === "in-progress"
                   ? "In Progress"
                   : list.status === "completed"
-                  ? "Completed"
+                  ? "Ended"
                   : "Unknown"}
               </div>
             </div>

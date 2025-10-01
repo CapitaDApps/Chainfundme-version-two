@@ -25,10 +25,8 @@ function DonationModel({ onClose, text }: DonationModelProps) {
         <div className="flex flex-row space-x-4 mt-6">
           <Button
             onClick={onClose}
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer"
+
+            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer bg-[#003DEF] text-xs md:text-sm hover:bg-[#003DEF] focus:bg-[#003DEF] text-white"
           >
             Join or Sign In
           </Button>

@@ -22,7 +22,7 @@ function Campaigndetails() {
       </h1>
 
       <div className="pt-8">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between gap-x-8">
           <Leftpart />
 
           <div className="sticky top-6 h-fit hidden md:block">

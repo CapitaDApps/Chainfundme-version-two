@@ -28,7 +28,7 @@ function OtherCampaign() {
             <span className="text-lg">
               <BiSolidDashboard />
             </span>
-            <span className="truncate">other Campaign</span>
+            <span className="truncate hidden md:block">other Campaign</span>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

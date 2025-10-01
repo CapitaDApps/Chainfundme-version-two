@@ -1,14 +1,34 @@
-// import Profileform from "@/components/layout/profile/Profileform";
-import ProfilePrivateClient from "@/components/layout/profile/ProfilePrivate";
-import { Suspense } from "react";
+"use client";
 
-function ProfilePage() {
+import { Suspense, useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormSchema } from "@/lib/Profileschemas";
+import Profileform from "@/components/layout/profile/Profileform";
+import ProfilePrivateClient from "@/components/layout/profile/ProfilePrivate";
+
+export default function ProfilePage() {
+  const [isProfileSaved, setIsProfileSaved] = useState(false);
+
+  const methods = useForm({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {},
+  });
+
+  const handleSave = (data: any) => {
+    console.log("Profile submitted:", data);
+    setIsProfileSaved(true);
+  };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ProfilePrivateClient />
-      {/* <Profileform /> */}
+      <FormProvider {...methods}>
+        {!isProfileSaved ? (
+          <Profileform onSave={methods.handleSubmit(handleSave)} />
+        ) : (
+          <ProfilePrivateClient />
+        )}
+      </FormProvider>
     </Suspense>
   );
 }
-
-export default ProfilePage;

@@ -53,7 +53,7 @@ function PopupProfile() {
         </div>
 
         <Button
-          className="flex items-center gap-1 mt-4 py-1.5 px-4 text-xs rounded-2xl cursor-pointer"
+          className="flex items-center gap-1 mt-4 py-1.5 px-4 text-xs rounded-2xl cursor-pointer bg-[#003DEF] text-white hover:bg-sky-600"
           onClick={toggleFollow}
         >
           {isFollowing ? "Unfollow" : "Follow"}

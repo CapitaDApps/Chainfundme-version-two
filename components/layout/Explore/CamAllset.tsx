@@ -20,17 +20,12 @@ function ConAllset({ onClose }: ConAllsetProps) {
           How would you like to start your journey?
         </p>
         <div className="flex flex-row space-x-4 mt-6">
-          <Button
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer"
-          >
+          <Button className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer bg-[#003DEF] text-xs md:text-sm">
             I’m Donating
           </Button>
           <Button
             variant="outline"
-            className="px-6 py-3 shadow-xl rounded-xl text-[#2379bc] cursor-pointer"
+            className="px-6 py-3 shadow-xl rounded-xl text-[#2379bc] cursor-pointer text-xs md:text-sm"
             onClick={onClose}
           >
             I’m Creating a Campaign

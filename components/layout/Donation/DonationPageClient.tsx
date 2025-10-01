@@ -19,7 +19,7 @@ function DonationPageClient() {
         <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
           <span className="block md:inline">
-            <span className="text-[#2379bc] font-semibold">
+            <span className="text-[#003DEF] font-semibold">
               Contributions&nbsp;
             </span>{" "}
             & Impact

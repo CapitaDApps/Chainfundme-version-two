@@ -7,24 +7,16 @@ import { FaNetworkWired } from "react-icons/fa";
 // import { CiBookmark } from "react-icons/ci";
 export const menuItems = [
   {
-    title: "Explore Campaigns",
+    title: "Explore",
     icon: CiSearch,
-    route: "/Explore Campaigns",
-    slug: "Explore-Campaigns",
-    children: [
-      {
-        title: "Explore",
-        icon: CiSearch,
-        route: "/explore",
-        slug: "explore",
-      },
-      {
-        title: "How it works",
-        icon: FaNetworkWired,
-        route: "/how-it-works",
-        slug: "how-it-works",
-      },
-    ],
+    route: "/explore",
+    slug: "explore",
+  },
+  {
+    title: "How it works",
+    icon: FaNetworkWired,
+    route: "/how-it-works",
+    slug: "how-it-works",
   },
   {
     title: "Donations",
@@ -57,3 +49,24 @@ export const menuItems = [
     slug: "profile",
   },
 ];
+
+// {
+//   title: "Explore Campaigns",
+//   icon: CiSearch,
+//   route: "/Explore Campaigns",
+//   slug: "Explore-Campaigns",
+//   children: [
+//     {
+//       title: "Explore",
+//       icon: CiSearch,
+//       route: "/explore",
+//       slug: "explore",
+//     },
+//     {
+//       title: "How it works",
+//       icon: FaNetworkWired,
+//       route: "/how-it-works",
+//       slug: "how-it-works",
+//     },
+//   ],
+// },

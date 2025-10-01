@@ -5,7 +5,7 @@ import CampaignList from "./CampaignList";
 function Campaigns() {
   const campaignlist = [
     { name: "Active", value: "active" },
-    { name: "Completed", value: "completed" },
+    { name: "Ended", value: "completed" },
   ];
 
   return (
@@ -18,7 +18,7 @@ function Campaigns() {
                 <React.Fragment key={list.value}>
                   <TabsTrigger
                     value={list.value}
-                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#2379BC] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer md:px-4 px-2 text-[11px] font-bold md:text-sm text-[#6B6B65] whitespace-nowrap"
+                    className="bg-transparent border-none shadow-none data-[state=active]:text-[#003DEF] data-[state=active]:bg-transparent data-[state=active]:border-none data-[state=active]:shadow-none focus-visible:ring-0 cursor-pointer md:px-4 px-2 text-[15px] font-bold md:text-[17px] text-[#6B6B65] whitespace-nowrap"
                   >
                     {list.name}
                   </TabsTrigger>

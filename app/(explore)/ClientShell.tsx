@@ -22,7 +22,9 @@ export default function ClientShell({ children }: { children: ReactNode }) {
           <div className="lg:hidden">
             <MobileHeader />
           </div>
-          <main className="flex-1">{children}</main>
+          <div className="pt-16 flex flex-1 flex-col overflow-hidden">
+            <main className="flex-1">{children}</main>
+          </div>
           <Footer />
         </div>
       </div>

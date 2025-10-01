@@ -20,7 +20,10 @@ export default function SearchBar({ className }: SearchBarProps) {
 
   return (
     <div className={clsx("pt-4 w-full", className)}>
-      <div className="flex items-center w-full max-w-3xl mx-auto bg-white border border-gray-200 pl-2 rounded-xl shadow-lg focus-within:ring-2 focus-within:ring-blue-500">
+      <div className="flex items-center w-full max-w-3xl mx-auto bg-white border border-none pl-2 rounded-xl shadow-[0_0_5px_rgba(0,0,0,0.3)] focus-within:ring-2 focus-within:ring-blue-500">
+        <div className="flex items-center justify-center pl-2 py-3 md:py-4 cursor-pointer">
+          <Search className="w-4 md:w-5 h-5 text-[#292D32]" />
+        </div>
         <input
           type="text"
           placeholder="Search campaigns..."
@@ -33,9 +36,6 @@ export default function SearchBar({ className }: SearchBarProps) {
           className="flex-1 px-3 py-1 bg-transparent outline-none text-sm md:text-base text-gray-700 placeholder-gray-400 hidden md:block"
           onKeyDown={handleSearch}
         />
-        <div className="flex items-center justify-center px-5 py-3 md:py-4 bg-blue-50 cursor-pointer rounded-r-xl rounded-l-3xl">
-          <Search className="w-4 md:w-5 h-5 text-blue-500" />
-        </div>
       </div>
     </div>
   );

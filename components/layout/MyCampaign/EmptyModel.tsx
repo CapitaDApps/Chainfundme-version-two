@@ -21,7 +21,7 @@ function EmptyModel({ src, alt, text1, text2 }: EmptyModelProps) {
       <h1 className="font-bold text-lg mt-4">{text2}</h1>
       <p className="text-[#666666] text-sm mt-2 max-w-md">{text1}</p>
       <div className="flex flex-row space-x-4 mt-6">
-        <Button className="px-6 py-3 shadow-xl rounded-xl text-white cursor-pointer">
+        <Button className="px-6 py-3 shadow-xl rounded-xl text-white cursor-pointer text-xs md:text-sm bg-[#003DEF] hover:bg-[#003DEF] focus:bg-[#003DEF]">
           Create now
         </Button>
       </div>

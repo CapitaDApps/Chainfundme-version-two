@@ -25,7 +25,7 @@ function MyCampaignsPage() {
           Manage&nbsp;{" "}
           <span className="block md:inline">
             Your&nbsp;{" "}
-            <span className="text-[#2379bc] font-semibold">
+            <span className="text-[#003DEF] font-semibold">
               Campaigns&nbsp;
             </span>{" "}
           </span>

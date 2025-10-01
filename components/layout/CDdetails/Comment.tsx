@@ -235,11 +235,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
 
                 <button
                   onClick={addComment}
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 px-2 md:px-4 py-1 md:py-1.5 rounded-full text-white text-xs md:text-sm shadow"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                  }}
+                  className="absolute right-1 bg-[#003DEF] top-1/2 transform -translate-y-1/2 px-2 md:px-4 py-1 md:py-1.5 rounded-full text-white text-xs md:text-sm shadow"
+                 
                 >
                   Comment
                 </button>
@@ -329,11 +326,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                         <div className="mt-2 flex gap-2">
                           <button
                             onClick={() => saveEdit(c.id)}
-                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md text-white"
-                            style={{
-                              background:
-                                "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                            }}
+                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md text-white bg-[#003DEF]"
+                           
                           >
                             Save
                           </button>
@@ -530,11 +524,8 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                           <div className="absolute right-1 top-1/2 transform -translate-y-1/2 flex gap-1">
                             <button
                               onClick={() => addReply(c.id)}
-                              className="px-2 md:px-3 py-0.5 md:py-1 rounded-full text-white text-xs md:text-sm"
-                              style={{
-                                background:
-                                  "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                              }}
+                              className="px-2 md:px-3 py-0.5 md:py-1 rounded-full text-white text-xs md:text-sm bg-[#003DEF]"
+                    
                             >
                               Reply
                             </button>

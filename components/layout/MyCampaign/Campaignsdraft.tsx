@@ -17,7 +17,7 @@ function Campaignsdraft() {
   const campaignlist = [
     { name: "Drafts", value: "draft" },
     { name: "Active ", value: "active" },
-    { name: "Completed ", value: "completed" },
+    { name: "Ended ", value: "completed" },
   ];
 
   const [pages, setPages] = useState({
@@ -119,7 +119,7 @@ function Campaignsdraft() {
   return (
     <div className="pt-6">
       <div className="flex flex-row items-center justify-center gap-x-12">
-        <Tabs defaultValue="" className="w-full">
+        <Tabs defaultValue="draft" className="w-full">
           <div className="flex justify-center">
             <TabsList className="flex-nowrap">
               {campaignlist.map((list, index) => (

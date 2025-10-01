@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { IoIosNotifications } from "react-icons/io";
+import { IoNotificationsOutline } from "react-icons/io5";
 import { initialNotifications } from "@/lib/notification";
 
 function ToggleNotificationbar() {
@@ -17,22 +17,22 @@ function ToggleNotificationbar() {
   }, []);
 
   return (
-    <div className="w-full  px-9 flex items-center justify-between py-[14px]">
+    <div className="w-full flex items-center justify-between">
       <div className="flex items-center gap-3" ref={ref}>
         <div className="relative">
           <button
             aria-label="Notifications"
-            className="p-2 text-sidebar-content cursor-pointer  rounded-md"
+            className="text-sidebar-content cursor-pointer  rounded-md"
             onClick={() => setOpen((o) => !o)}
           >
-            <IoIosNotifications className="w-5 h-5" />
+            <IoNotificationsOutline className="w-5 h-5" />
           </button>
           <span
             style={{
               background:
                 "linear-gradient(270.05deg, #003def 68.33%, #001f7a 114.25%)",
             }}
-            className="absolute -top-0.5 right-1 bg-primary text-background text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center"
+            className="absolute -top-2 right-2 bg-primary text-background text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center"
           >
             {initialNotifications.filter((n) => !n.read).length}
           </span>
