@@ -74,7 +74,7 @@ const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
   return (
     <article className="block md:hidden w-full">
       {isClickable ? (
-        <Link href={`/my-campaigns/${campaign.id}`} className="block w-full">
+        <Link href={`/campaigns/${campaign.cmid}`} className="block w-full">
           <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row hover:shadow-md cursor-pointer">
             <div className="relative w-28 flex-shrink-0">
               <Image
@@ -124,10 +124,10 @@ const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
                 />
                 <div className="flex justify-start space-x-1 items-center text-[10px]">
                   <span className="text-muted-foreground/80">
-                    {campaign.fundrasied} raised
+                    {campaign.currentAmount} raised
                   </span>
                   <span className="text-muted-foreground">
-                    of {campaign.fundtarget}
+                    of {campaign.targetAmount}
                   </span>
                 </div>
               </div>

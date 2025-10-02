@@ -1,18 +1,13 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import MobileDraftCard from "./MobileCard";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ReturnCampaignDocument } from "@/types/api";
-
-export interface DraftCardProps {
-  campaign: ReturnCampaignDocument;
-  status: "draft" | "active" | "completed" | "explore";
-}
 
 const Draftcard = ({ campaign, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
