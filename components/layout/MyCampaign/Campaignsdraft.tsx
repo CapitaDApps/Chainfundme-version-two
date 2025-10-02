@@ -35,11 +35,12 @@ function Campaignsdraft() {
   if (fetchingProfile) return <CustomSpinner />;
 
   const userCampaigns = userProfile?.createdCampaigns;
+
   const unpublishedCampaigns = userCampaigns?.filter(
     (campaign) => !campaign.published
   );
-  const activeCampaign = userCampaigns?.filter((campaign) =>
-    isFuture(new Date(campaign.endDate))
+  const activeCampaign = userCampaigns?.filter(
+    (campaign) => isFuture(new Date(campaign.endDate)) && campaign.published
   );
   const completed = userCampaigns?.filter((campaign) =>
     isPast(new Date(campaign.endDate))
