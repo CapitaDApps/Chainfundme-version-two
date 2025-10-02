@@ -23,6 +23,7 @@ import { useWriteCampaign } from "@/services/contracts/hooks/useWriteCampaign";
 import { useAccount } from "wagmi";
 import { zeroAddress } from "viem";
 import { usePublish } from "@/services/api/hooks/campaign/usePublish";
+import { useRouter } from "next/navigation";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -41,7 +42,8 @@ export default function MultiStepForm() {
   const { createCampaignFunc, isSaving } = useCreateCampaign();
   const { createChainFundMe } = useWriteCampaign();
   const { chainId, isConnected } = useAccount();
-  const { publish } = usePublish();
+  const { publish, publishing } = usePublish();
+  const router = useRouter();
   const steps = [
     <StepOne key="s1" />,
     <StepTwo key="s2" />,
@@ -167,6 +169,8 @@ export default function MultiStepForm() {
                       localStorage.removeItem("campaignId");
                     }
 
+                    router.push(`/campaign/${campaignId}`);
+
                     toast.success(
                       "Campaign created and deployed successfully! 🎉"
                     );
@@ -222,7 +226,7 @@ export default function MultiStepForm() {
                   </Button>
                 ) : (
                   <Button type="submit" disabled={isSaving}>
-                    {isSaving ? "Creating Campaign..." : "Create"}
+                    {isSaving || publishing ? "Creating Campaign..." : "Create"}
                   </Button>
                 )}
               </div>

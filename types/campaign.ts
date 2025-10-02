@@ -17,8 +17,3 @@ export interface FundraisingCardProps {
 }
 
 //DraftCard.tsx
-
-export interface DraftCardProps {
-  campaign: CampaignItem;
-  status: "draft" | "active" | "completed" | "explore";
-}

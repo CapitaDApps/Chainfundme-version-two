@@ -16,10 +16,10 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
         {/* Main content area */}
         <div className="flex flex-1 flex-col w-full max-w-[1500px] mx-auto">
-          <div className="hidden lg:block">
+          <div className="hidden md:block">
             <Header />
           </div>
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <MobileHeader />
           </div>
           <div className=" flex flex-1 flex-col overflow-hidden">

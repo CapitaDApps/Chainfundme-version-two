@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${urbanist.className} antialiased min-h-screen`}>
         <Web3Provider>{children}</Web3Provider>
-        <Toaster />
+        <Toaster position="top-right" />
       </body>
     </html>
   );

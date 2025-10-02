@@ -10,7 +10,7 @@ interface EmptyModelProps {
 
 function EmptyModel({ src, alt, text1, text2 }: EmptyModelProps) {
   return (
-    <div className="w-full max-w-[45rem] min-h-[250px] bg-white rounded-xl p-6 pb-6 transition-all duration-500 shadow-2xl flex flex-col items-center justify-center text-center">
+    <div className="w-full max-w-[45rem] min-h-[250px] bg-white rounded-xl p-6 mb-16 transition-all duration-500 shadow-2xl flex flex-col items-center justify-center text-center mx-auto">
       <Image
         src={src}
         alt={alt}

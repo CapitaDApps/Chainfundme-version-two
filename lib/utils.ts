@@ -2,6 +2,13 @@ import { clsx, type ClassValue } from "clsx";
 import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  isPast,
+} from "date-fns";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -34,13 +41,6 @@ export async function urlToFile(url: string, filename: string): Promise<File> {
 
   return new File([blob], filename, { type: blob.type });
 }
-
-import {
-  differenceInDays,
-  differenceInHours,
-  differenceInMinutes,
-  isPast,
-} from "date-fns";
 
 export const formatTimeLeft = (endDate: string) => {
   // Ensure the inputs are valid Date objects
@@ -76,3 +76,12 @@ export const formatTimeLeft = (endDate: string) => {
   // 5. If less than a minute is left
   return "Less than a minute left";
 };
+
+export function formatPrice(num: number) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });
+
+  return formatter.format(num);
+}

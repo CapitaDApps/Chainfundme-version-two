@@ -7,7 +7,6 @@ import { base, baseSepolia, bsc, bscTestnet } from "wagmi/chains";
 import { WagmiProvider } from "@privy-io/wagmi";
 import { config } from "@/lib/networks/config";
 
-
 import { addRpcUrlOverrideToChain } from "@privy-io/chains";
 
 const baseOverride = addRpcUrlOverrideToChain(
@@ -56,7 +55,7 @@ function Web3Provider({ children }: { children: ReactNode }) {
           ethereum: { createOnLogin: "users-without-wallets" },
           showWalletUIs: true,
         },
-        loginMethods: ["wallet", "email"],
+        loginMethods: ["email"],
         defaultChain:
           process.env.NEXT_PUBLIC_PRODUCTION == "false"
             ? baseSepoliaOverride

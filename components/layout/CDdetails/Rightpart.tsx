@@ -11,15 +11,7 @@ import {
 import React from "react";
 import PopupProfile from "../profile/PopupProfile";
 import { ReturnCampaignDocument } from "@/types/api";
-
-function formatNumber(num: number) {
-  const formatter = new Intl.NumberFormat("en-US", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  });
-
-  return formatter.format(num);
-}
+import { formatPrice } from "@/lib/utils";
 
 function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   return (
@@ -29,8 +21,8 @@ function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
           ${campaign.currentAmount.toLocaleString()} USD raised
         </h1>
         <p className="text-[#6B6B65] text-xs pb-2">
-          ${formatNumber(campaign.targetAmount)} target |{" "}
-          {formatNumber(campaign.funders.length)} donations
+          ${formatPrice(campaign.targetAmount)} target |{" "}
+          {formatPrice(campaign.funders.length)} donations
         </p>
         <Progress
           value={(campaign.currentAmount / campaign.targetAmount) * 100}

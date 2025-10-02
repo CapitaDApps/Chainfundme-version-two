@@ -12,6 +12,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import CustomSpinner from "@/components/ui/customSpinner";
+import { ReturnCampaignDocument } from "@/types/api";
+import { isFuture, isPast } from "date-fns";
 
 function Campaignsdraft() {
   const campaignlist = [
@@ -26,14 +30,32 @@ function Campaignsdraft() {
     completed: 1,
   });
 
+  const { userProfile, fetchingProfile } = useUserProfile();
+
+  if (fetchingProfile) return <CustomSpinner />;
+
+  const userCampaigns = userProfile?.createdCampaigns;
+  const unpublishedCampaigns = userCampaigns?.filter(
+    (campaign) => !campaign.published
+  );
+  const activeCampaign = userCampaigns?.filter((campaign) =>
+    isFuture(new Date(campaign.endDate))
+  );
+  const completed = userCampaigns?.filter((campaign) =>
+    isPast(new Date(campaign.endDate))
+  );
+
   const itemsPerPage = 6;
 
   const handlePageChange = (tab: string, newPage: number) => {
     setPages((prev) => ({ ...prev, [tab]: newPage }));
   };
 
-  const renderCampaigns = (status: "draft" | "active" | "completed") => {
-    if (CategorisItem.length === 0) {
+  const renderCampaigns = (
+    status: "draft" | "active" | "completed",
+    campaigns: ReturnCampaignDocument[] | undefined
+  ) => {
+    if (campaigns?.length === 0) {
       return (
         <EmptyModel
           src="/layout/can.png"
@@ -59,15 +81,19 @@ function Campaignsdraft() {
     const currentPage = pages[status];
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const campaignsToShow = CategorisItem.slice(startIndex, endIndex);
+    const campaignsToShow = campaigns?.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(CategorisItem.length / itemsPerPage);
 
     return (
       <div className="flex justify-center flex-col items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-6 gap-x-20 max-w-6xl ">
-          {campaignsToShow.map((campaign) => (
-            <Draftcard key={campaign.id} campaign={campaign} status={status} />
+          {campaignsToShow?.map((campaign) => (
+            <Draftcard
+              key={campaign.cmid}
+              campaign={campaign}
+              status={status}
+            />
           ))}
         </div>
 
@@ -152,13 +178,13 @@ function Campaignsdraft() {
           </div>
 
           <TabsContent value="draft" className="w-full pt-6">
-            {renderCampaigns("draft")}
+            {renderCampaigns("draft", unpublishedCampaigns)}
           </TabsContent>
           <TabsContent value="active" className="w-full pt-6">
-            {renderCampaigns("active")}
+            {renderCampaigns("active", activeCampaign)}
           </TabsContent>
           <TabsContent value="completed" className="w-full pt-6">
-            {renderCampaigns("completed")}
+            {renderCampaigns("completed", completed)}
           </TabsContent>
         </Tabs>
       </div>
