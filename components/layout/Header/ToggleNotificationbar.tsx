@@ -19,10 +19,10 @@ function ToggleNotificationbar() {
   return (
     <div className="w-full flex items-center justify-between">
       <div className="flex items-center gap-3" ref={ref}>
-        <div className="relative">
+        <div className="relative pt-2">
           <button
             aria-label="Notifications"
-            className="text-sidebar-content cursor-pointer  rounded-md"
+            className="text-sidebar-content cursor-pointer  rounded-md "
             onClick={() => setOpen((o) => !o)}
           >
             <IoNotificationsOutline className="w-5 h-5" />
@@ -32,7 +32,7 @@ function ToggleNotificationbar() {
               background:
                 "linear-gradient(270.05deg, #003def 68.33%, #001f7a 114.25%)",
             }}
-            className="absolute -top-2 right-2 bg-primary text-background text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center"
+            className="absolute -top-1 right-2 bg-primary text-background text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center"
           >
             {initialNotifications.filter((n) => !n.read).length}
           </span>

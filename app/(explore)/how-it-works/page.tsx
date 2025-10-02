@@ -3,11 +3,11 @@ import Image from "next/image";
 
 function HowItWorksPage() {
   return (
-    <div>
-      <div className="min-h-full bg-[#59DEFF] p-0 pt-8">
+    <div className="relative">
+      <div className="min-h-[100%] bg-[#62d1ec] p-0 pt-10">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-between md:pl-15 text-center md:text-left">
-          <div className="md:max-w-xl">
-            <h1 className="text-[#1038A2] text-2xl md:text-3xl font-bold pb-6">
+          <div className="md:max-w-6xl">
+            <h1 className="text-[#1038A2] text-2xl md:text-[60px] font-bold pb-6">
               Your Step-by-Step Guide
               to Fundraising on ChainFundMe
             </h1>

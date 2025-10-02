@@ -1,32 +1,59 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { List } from "@/lib/Categories";
-import OtherCampaign from "./OtherCampaigns";
 import { CategorisItem } from "@/lib/CategoriesContent";
+import { ReturnCampaignDocument } from "@/types/api/campaign.types";
+import { CampaignItem } from "@/types/campaign";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Draftcard from "../Card";
+import OtherCampaign from "./OtherCampaigns";
+import CampaignCard from "./CampaignCard";
 
 interface Props {
   initialCategory: string;
+  campaigns: ReturnCampaignDocument[];
+  isLoading: boolean;
+  error?: Error | null;
 }
 
-function CategoriesTab({ initialCategory }: Props) {
+function CategoriesTab({
+  initialCategory,
+  campaigns,
+  isLoading,
+  error,
+}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(initialCategory);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  // Function to map API campaign data to the expected format
+  const mapCampaignData = (
+    apiCampaign: ReturnCampaignDocument,
+    index: number
+  ): CampaignItem => {
+    const endDate = new Date(apiCampaign.endDate);
+    const now = new Date();
+    const timeLeft =
+      endDate > now
+        ? Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+        : 0;
+
+    return {
+      id: apiCampaign.cmid || `fallback-${index}`, // Use the actual cmid from API
+      image: apiCampaign.image || apiCampaign.coverImage || "/layout/Frame.png",
+      timeleft: timeLeft > 0 ? `${timeLeft} days left` : "Expired",
+      title: apiCampaign.title,
+      creatorimage: apiCampaign.owner?.profilePicture || "/layout/Ellipse.png",
+      creatorname: apiCampaign.owner?.name || "Anonymous",
+      story: apiCampaign.description,
+      fundrasied: `$${apiCampaign.currentAmount.toLocaleString()}`,
+      fundtarget: `$${apiCampaign.targetAmount.toLocaleString()}`,
+      category: apiCampaign.category.toLowerCase(),
+    };
+  };
 
   useEffect(() => {
     const category = searchParams.get("category");
@@ -44,10 +71,16 @@ function CategoriesTab({ initialCategory }: Props) {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  // Use real campaign data if available, otherwise fallback to static data
+  const campaignData =
+    campaigns && campaigns.length > 0
+      ? campaigns.map((campaign, index) => mapCampaignData(campaign, index))
+      : CategorisItem.map((item) => ({ ...item, id: item.id.toString() }));
+
   const filteredCampaigns =
     activeTab === "for you"
-      ? CategorisItem
-      : CategorisItem.filter(
+      ? campaignData
+      : campaignData.filter(
           (campaign) =>
             campaign.category.toLowerCase() === activeTab.toLowerCase()
         );
@@ -100,69 +133,68 @@ function CategoriesTab({ initialCategory }: Props) {
 
         {List.map((list) => (
           <TabsContent key={list.value} value={list.value}>
-            <div className="w-full">
-              {currentCampaigns.length > 0 ? (
-                <div className="flex justify-center px-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-                    {currentCampaigns.map((campaign) => (
-                      <Draftcard
-                        key={campaign.id}
-                        campaign={campaign}
-                        status="explore"
-                      />
-                    ))}
+            <div className="flex flex-col items-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-5 w-full">
+                {isLoading ? (
+                  <div className="col-span-full flex justify-center items-center py-8">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2379BC] mx-auto mb-2"></div>
+                      <p className="text-gray-600">Loading campaigns...</p>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <p className="text-center">
-                  No campaigns found in this category.
-                </p>
-              )}
+                ) : error ? (
+                  <div className="col-span-full flex justify-center items-center py-8">
+                    <div className="text-center">
+                      <p className="text-red-600 mb-2">
+                        Failed to load campaigns
+                      </p>
+                      <p className="text-gray-600 text-sm">{error.message}</p>
+                    </div>
+                  </div>
+                ) : filteredCampaigns.length > 0 ? (
+                  filteredCampaigns.map((campaign) => (
+                    <CampaignCard key={campaign.id} campaign={campaign} />
+                  ))
+                ) : (
+                  <p className="col-span-full text-center text-gray-600 py-8">
+                    No campaigns found in this category.
+                  </p>
+                )}
+              </div>
+            </div>
+          </TabsContent>
+        ))}
 
-              {totalPages > 1 && (
-                <div className="mt-10 flex justify-center">
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (currentPage > 1)
-                              setCurrentPage(currentPage - 1);
-                          }}
-                        />
-                      </PaginationItem>
-
-                      {Array.from({ length: totalPages }, (_, i) => (
-                        <PaginationItem key={i}>
-                          <PaginationLink
-                            href="#"
-                            isActive={currentPage === i + 1}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setCurrentPage(i + 1);
-                            }}
-                          >
-                            {i + 1}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
-
-                      <PaginationItem>
-                        <PaginationNext
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (currentPage < totalPages)
-                              setCurrentPage(currentPage + 1);
-                          }}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                </div>
-              )}
+        {["community rescue", "crisis relief", "travel"].map((category) => (
+          <TabsContent key={category} value={category}>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-10 justify-items-center">
+                {isLoading ? (
+                  <div className="col-span-full flex justify-center items-center py-8">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2379BC] mx-auto mb-2"></div>
+                      <p className="text-gray-600">Loading campaigns...</p>
+                    </div>
+                  </div>
+                ) : error ? (
+                  <div className="col-span-full flex justify-center items-center py-8">
+                    <div className="text-center">
+                      <p className="text-red-600 mb-2">
+                        Failed to load campaigns
+                      </p>
+                      <p className="text-gray-600 text-sm">{error.message}</p>
+                    </div>
+                  </div>
+                ) : filteredCampaigns.length > 0 ? (
+                  filteredCampaigns.map((campaign) => (
+                    <CampaignCard key={campaign.id} campaign={campaign} />
+                  ))
+                ) : (
+                  <p className="col-span-full text-center text-gray-600 py-8">
+                    No campaigns found in this category.
+                  </p>
+                )}
+              </div>
             </div>
           </TabsContent>
         ))}

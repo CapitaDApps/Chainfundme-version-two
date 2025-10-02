@@ -24,7 +24,7 @@ function Profileform({ onSave }: ProfileformProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-row justify-between items-center py-8  px-4 md:px-16">
+      <div className="flex flex-row justify-between items-center py-16 px-4 md:px-16">
         <div className="border border-[#E2E2E2] rounded-2xl bg-[#F4F9FC] md:p-6 w-full lg:w-[70%] space-y-6">
           <CoverImage control={control} />
           <AvatarImage control={control} />

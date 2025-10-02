@@ -23,7 +23,7 @@ export default function CampaignCoverImage({ control }: FormInput) {
       name="cover"
       render={({ field }) => (
         <FormItem className="flex w-full items-center  flex-col">
-          <div className="w-full md:w-[60%] space-y-1">
+          <div className="w-full space-y-1">
             <div className="flex justify-between items-center">
               <FormLabel className="text-xs  text-sidebar-content font-normal">
                 Main Campaign Image<span className="text-red-500">*</span>

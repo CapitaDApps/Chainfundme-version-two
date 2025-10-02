@@ -17,6 +17,12 @@ import StepTwo from "@/components/create-campaign/StepTwo";
 import StepThree from "@/components/create-campaign/StepThree";
 import StepFour from "@/components/create-campaign/StepFour";
 import StepFive from "@/components/create-campaign/StepFive";
+import { useCreateCampaign } from "@/services/api/hooks/campaign/useCreateCampaign";
+import { getNetworkTokens } from "@/services/contracts/tokensConfig";
+import { useWriteCampaign } from "@/services/contracts/hooks/useWriteCampaign";
+import { useAccount } from "wagmi";
+import { zeroAddress } from "viem";
+import { usePublish } from "@/services/api/hooks/campaign/usePublish";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -32,7 +38,10 @@ export default function MultiStepForm() {
     mode: "onChange",
   });
   const [step, setStep] = useState(0);
-
+  const { createCampaignFunc, isSaving } = useCreateCampaign();
+  const { createChainFundMe } = useWriteCampaign();
+  const { chainId, isConnected } = useAccount();
+  const { publish } = usePublish();
   const steps = [
     <StepOne key="s1" />,
     <StepTwo key="s2" />,
@@ -71,7 +80,114 @@ export default function MultiStepForm() {
 
   const onSubmit = (data: FormData) => {
     console.log("Final Data:", data);
-    alert("Form submitted successfully!");
+
+    // Get tokens from existing token configuration
+    const chainTokens = getNetworkTokens();
+
+    // Transform token strings to token objects using existing config
+    const transformedTokens = data.tokens
+      .map((tokenValue) => {
+        const tokenInfo = chainTokens.find(
+          (token) =>
+            token.name.toLowerCase().includes(tokenValue.toLowerCase()) ||
+            tokenValue.toLowerCase().includes(token.name.toLowerCase())
+        );
+        return tokenInfo || "";
+      })
+      .filter((token) => token !== "");
+
+    // Transform FormData to match CampaignFormSchema (what the hook expects)
+    const transformedData = {
+      ...data,
+      fundingTarget: data.amount, // Map amount to fundingTarget
+      avatar: data.cover, // Use cover as avatar since FormSchema doesn't have avatar
+      tokens: transformedTokens, // Transform tokens to objects
+    };
+
+    console.log({ transformedData });
+
+    createCampaignFunc(transformedData, {
+      onSuccess: async (campaignId) => {
+        console.log("Campaign created successfully with ID:", campaignId);
+
+        try {
+          // Check if wallet is connected and on correct chain
+          if (!isConnected) {
+            toast.error("Please connect your wallet first");
+            return;
+          }
+
+          if (!chainId) {
+            toast.error(
+              "Unable to detect network. Please check your wallet connection"
+            );
+            return;
+          }
+
+          console.log("Deploying smart contract with chainId:", chainId);
+          console.log("Is connected:", isConnected);
+
+          // Deploy smart contract after backend campaign creation
+          const startTime = Math.floor(
+            (new Date(data.startDate).getTime() + 3 * 60 * 1000) / 1000
+          );
+          const endTime = Math.floor(new Date(data.endDate).getTime() / 1000);
+          const tokenAddresses = transformedTokens
+            .map((token) => token.address)
+            .filter((token) => token !== zeroAddress);
+
+          console.log("Smart contract deployment params:", {
+            uri: campaignId,
+            startTime,
+            endTime,
+            otherTokens: tokenAddresses,
+          });
+
+          await createChainFundMe(
+            {
+              uri: campaignId,
+              startTime,
+              endTime,
+              otherTokens: tokenAddresses,
+            },
+            (error) => {
+              if (error) {
+                console.error("Smart contract deployment failed:", error);
+                toast.error(`Smart contract deployment failed: ${error}`);
+                throw new Error(`Smart contract deployment failed: ${error}`);
+              }
+              publish(
+                { campaignId, tokens: tokenAddresses, networkId: chainId },
+                {
+                  onSuccess: () => {
+                    console.log("Campaign created successfully");
+
+                    const uri = localStorage.getItem("campaignId");
+                    if (uri) {
+                      localStorage.removeItem("campaignId");
+                    }
+
+                    toast.success(
+                      "Campaign created and deployed successfully! 🎉"
+                    );
+                  },
+                  onError: (err) => {
+                    console.log({ "Error publishing campaign": err });
+                  },
+                }
+              );
+            }
+          );
+        } catch (error) {
+          console.error("Blockchain deployment failed:", error);
+          toast.error("Transaction Failed. Please try again.");
+        }
+      },
+      onError: (error) => {
+        console.error("Campaign creation failed:", error);
+        toast.error("Failed to create campaign. Please try again.");
+      },
+    });
   };
 
   return (
@@ -95,6 +211,7 @@ export default function MultiStepForm() {
                   <Button
                     type="reset"
                     onClick={nextStep}
+                    disabled={isSaving}
                     style={{
                       background:
                         "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
@@ -104,7 +221,9 @@ export default function MultiStepForm() {
                     Next
                   </Button>
                 ) : (
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" disabled={isSaving}>
+                    {isSaving ? "Creating Campaign..." : "Create"}
+                  </Button>
                 )}
               </div>
               <Bottom setStep={setStep} step={step} />

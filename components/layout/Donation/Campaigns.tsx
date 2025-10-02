@@ -12,7 +12,7 @@ function Campaigns() {
     <div className="pt-6">
       <div className="flex flex-col items-center">
         <Tabs defaultValue="active" className="w-full">
-          <div className="flex justify-center">
+          <div className="">
             <TabsList className="flex-nowrap">
               {campaignlist.map((list, index) => (
                 <React.Fragment key={list.value}>

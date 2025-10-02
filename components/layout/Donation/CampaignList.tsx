@@ -18,7 +18,7 @@ function CampaignList({ status }: CampaignListProps) {
 
   return (
     <div className="w-full px-6">
-      <div className="grid grid-cols-[450px_250px_240px_260px_100px] text-[#6B6B6573] md:text-[16px] text-[14px] font-medium mb-6 min-w-[1270px]">
+      <div className="grid grid-cols-[450px_250px_240px_240px_100px] text-[#6B6B6573] md:text-[16px] text-[14px] font-medium mb-6 min-w-[1270px]">
         <span></span>
         <span className="text-left">Amount Donated</span>
         <span className="text-left">%Campaign Goal</span>
@@ -33,7 +33,7 @@ function CampaignList({ status }: CampaignListProps) {
             href={`/my-donations/${list.id}`} 
             className="block"
           >
-            <div className="grid grid-cols-[480px_270px_230px_210px_100px] items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg border-b border-[#CDCDCD]/50 min-w-[1270px]">
+            <div className="grid grid-cols-[480px_270px_230px_190px_100px] items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg border-b border-[#CDCDCD]/50 min-w-[1270px]">
               <div className="flex flex-row items-center space-x-4">
                 <CiStar />
                 <Image

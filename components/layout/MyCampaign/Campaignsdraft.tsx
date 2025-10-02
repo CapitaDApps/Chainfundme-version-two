@@ -64,8 +64,8 @@ function Campaignsdraft() {
     const totalPages = Math.ceil(CategorisItem.length / itemsPerPage);
 
     return (
-      <div className="flex flex-col items-center gap-6 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center max-w-6xl mx-auto w-full">
+      <div className="flex justify-center flex-col items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-6 gap-x-20 max-w-6xl ">
           {campaignsToShow.map((campaign) => (
             <Draftcard key={campaign.id} campaign={campaign} status={status} />
           ))}
@@ -130,7 +130,7 @@ function Campaignsdraft() {
                      data-[state=active]:text-[#2379BC] 
                      data-[state=active]:bg-transparent 
                      focus-visible:ring-0 cursor-pointer 
-                     md:px-4 px-2 text-[11px] font-bold md:text-sm 
+                     md:px-4 px-2 text-[11px] font-bold md:text-[16px]
                      text-[#6B6B65] whitespace-nowrap"
                   >
                     <span className="md:hidden">

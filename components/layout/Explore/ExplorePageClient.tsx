@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function ExplorePageClient() {
   return (
-    <div className="flex flex-col items-center justify-center pt-2 py-6 px-4">
+    <div className="flex flex-col items-center justify-center pt-16 py-6 px-4">
       <span className="border border-none bg-[#F5F7FA]  rounded-4xl px-4 py-2 mb-4">
         {" "}
         <h1 className="text-[24px] font-semibold text-[#292933]">

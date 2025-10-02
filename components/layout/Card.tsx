@@ -7,17 +7,21 @@ import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import MobileDraftCard from "./MobileCard";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Draftcard = ({ campaign, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
-  
+
   return (
     <>
       <article className="w-full h-full hidden md:block">
         {isClickable ? (
-          <Link href={`/my-campaigns/${campaign.id}`} className="block w-full h-full">
+          <Link
+            href={`/my-campaigns/${campaign.id}`}
+            className="block w-full h-full"
+          >
             <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer">
-              <div className="relative w-full h-50">
+              <div className="relative w-full h-60 rounded-[16px] overflow-hidden">
                 <Image
                   src={campaign.image}
                   alt={campaign.title}
@@ -56,10 +60,33 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                   {campaign.title}
                 </h3>
 
+                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale pb-2 ">
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/layout/i1.png" alt="SPC" />
+                    <AvatarFallback>SP</AvatarFallback>
+                  </Avatar>
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/layout/12.png" alt="CLOUDPLEXO" />
+                    <AvatarFallback>CL</AvatarFallback>
+                  </Avatar>
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/layout/13.png" alt="JAWGULAR" />
+                    <AvatarFallback>JA</AvatarFallback>
+                  </Avatar>
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/layout/14.png" alt="FRENCHIE" />
+                    <AvatarFallback>FR</AvatarFallback>
+                  </Avatar>
+                </div>
+
                 <div className="space-y-2">
                   <Progress
                     value={
-                      status === "completed" ? 100 : status === "active" ? 43 : 0
+                      status === "completed"
+                        ? 100
+                        : status === "active"
+                        ? 43
+                        : 0
                     }
                     className={`h-2 ${
                       status === "completed"
@@ -76,7 +103,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                     </span>
                   </div>
                 </div>
-{/* 
+                {/* 
                 <div className="flex flex-row justify-center items-center py-1 pt-2">
                   <Button
                     disabled
@@ -90,7 +117,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
           </Link>
         ) : (
           <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col">
-            <div className="relative w-full h-50">
+            <div className="relative w-full h-60 rounded-[16px] overflow-hidden">
               <Image
                 src={campaign.image}
                 alt={campaign.title}

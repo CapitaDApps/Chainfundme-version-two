@@ -10,18 +10,32 @@ import {
 } from "@/components/ui/popover";
 import React from "react";
 import PopupProfile from "../profile/PopupProfile";
+import { ReturnCampaignDocument } from "@/types/api";
 
-function Rightpart() {
+function formatNumber(num: number) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });
+
+  return formatter.format(num);
+}
+
+function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   return (
     <div>
       <div className="border border-none shadow-[0_0_15px_rgba(0,0,0,0.3)] p-6 rounded-xl w-full max-w-[430px]">
-        <h1 className="text-[20px] font-medium">$398,383 USD raised</h1>
+        <h1 className="text-[20px] font-medium">
+          ${campaign.currentAmount.toLocaleString()} USD raised
+        </h1>
         <p className="text-[#6B6B65] text-xs pb-2">
-          $500K target | 6.4K donations
+          ${formatNumber(campaign.targetAmount)} target |{" "}
+          {formatNumber(campaign.funders.length)} donations
         </p>
-        <span>
-          <Progress value={43} className="h-3 w-75" />
-        </span>
+        <Progress
+          value={(campaign.currentAmount / campaign.targetAmount) * 100}
+          className="h-3 w-full"
+        />
         <span className="flex flex-col space-y-4 pt-8 pb-8">
           <Button className="!px-24 !py-6 space-x-2 cursor-pointer rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.3)] ">
             Fund Now
@@ -43,10 +57,10 @@ function Rightpart() {
               className="shrink-0"
             />
             <p className="text-[#47698D] text-[14px] max-w-[12rem] font-medium">
-              519 people have just made a donation
+              {campaign.funders.length} people have just made a donation
             </p>
           </span>
-          {list.map((list) => (
+          {/* {list.map((list) => (
             <React.Fragment key={list.id}>
               <span className="flex flex-row items-center space-x-4 w-full pb-3 ">
                 <Popover>
@@ -80,15 +94,15 @@ function Rightpart() {
                 </span>
               </span>
             </React.Fragment>
-          ))}
-          <div className="flex flex-row items-center justify-between pt-6">
+          ))} */}
+          {/* <div className="flex flex-row items-center justify-between pt-6">
             <Button variant="outline" className="rounded-2xl cursor-pointer">
               See all
             </Button>
             <Button variant="outline" className="rounded-2xl cursor-pointer">
               See top
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

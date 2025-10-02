@@ -18,7 +18,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 function Header() {
   const pathname = usePathname();
   return (
-    <div className="flex items-center justify-center pt-8">
+    <div className="flex items-center justify-center pt-8 px-4">
       <div className="flex items-center justify-between px-6 py-4 border-b border-none bg-[#F5F7FA] rounded-4xl w-full max-w-7xl">
         <div>
           <Image
@@ -61,10 +61,12 @@ function Header() {
             <ToggleNotificationbar />
           </span>
           <span className="flex items-center space-x-1 cursor-pointer">
-            <Avatar>
-              <AvatarImage src="/layout/img3.png" />
-              <AvatarFallback>TK</AvatarFallback>
-            </Avatar>
+            <Link href="/profile">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="/layout/img3.png" alt="Profile" />
+                <AvatarFallback>TK</AvatarFallback>
+              </Avatar>
+            </Link>
             <ChevronDown className="w-4 h-4" />
           </span>
         </div>

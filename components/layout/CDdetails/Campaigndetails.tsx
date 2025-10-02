@@ -4,30 +4,76 @@ import Leftpart from "./Leftpart";
 import Rightpart from "./Rightpart";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Comments from "./Comment";
+import { useCampaign } from "@/services/api/hooks/campaign/useCampaign";
+import { Button } from "@/components/ui/button";
 
-function Campaigndetails() {
+function Campaigndetails({ campaignId }: { campaignId: string }) {
   const router = useRouter();
+  const { campaign, retrievingCampaign, error } = useCampaign(campaignId);
+
+  if (retrievingCampaign) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2379BC] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading campaign details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load campaign details</p>
+          <p className="text-gray-600 mb-4">{error.message}</p>
+          <Button onClick={() => router.back()}>Go Back</Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!campaign) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Campaign not found</p>
+          <Button onClick={() => router.back()}>Go Back</Button>
+        </div>
+      </div>
+    );
+  }
+
+  console.log(campaign);
+  // Calculate progress percentage
+  const progressPercentage =
+    (campaign.currentAmount / campaign.targetAmount) * 100;
 
   return (
-    <div className="md:px-12 px-4 ">
+    <div className="px-4 lg:px-12">
       <span
         className="flex md:hidden flex-row gap-x-2 text-[#2C2C2C] font-semibold pt-3 text-sm cursor-pointer items-center "
-        onClick={() => router.back()} 
+        onClick={() => router.back()}
       >
         <FaLongArrowAltLeft /> <p>Back</p>
       </span>
 
       <h1 className="text-[#2C2C2C] font-bold text-2xl md:text-4xl pt-6">
-        Help Bob Nagamallaiah’s Family Rebuild and Find Strength
+        {campaign.title}
       </h1>
 
       <div className="pt-8">
-        <div className="flex flex-row justify-between gap-x-8">
-          <Leftpart />
+        <div className="flex flex-row justify-between gap-6">
+          <Leftpart campaign={campaign} />
 
-          <div className="sticky top-6 h-fit hidden md:block">
-            <Rightpart />
+          <div className="h-fit hidden md:block">
+            <Rightpart campaign={campaign} />
           </div>
+        </div>
+        <div className="max-w-3xl">
+          <Comments />
         </div>
       </div>
     </div>
