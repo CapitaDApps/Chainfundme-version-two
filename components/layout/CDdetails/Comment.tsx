@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiMessageCircle } from "react-icons/fi";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import Avatar from "./Avatar";
 
 import {
@@ -12,7 +12,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import PopupProfile from "../profile/PopupProfile";
 
 type Reply = {
   id: number;
@@ -236,7 +235,6 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                 <button
                   onClick={addComment}
                   className="absolute right-1 bg-[#003DEF] top-1/2 transform -translate-y-1/2 px-2 md:px-4 py-1 md:py-1.5 rounded-full text-white text-xs md:text-sm shadow"
-                 
                 >
                   Comment
                 </button>
@@ -250,7 +248,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
           {visibleComments.map((c) => (
             <div key={c.id} className="pt-2 md:pt-4">
               <div className="flex items-start gap-2 md:gap-4">
-                <Popover>
+                {/* <Popover>
                   <PopoverTrigger asChild>
                     <button
                       className="rounded-full focus:outline-none flex-shrink-0"
@@ -273,7 +271,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                   >
                     <PopupProfile />
                   </PopoverContent>
-                </Popover>
+                </Popover> */}
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
@@ -327,7 +325,6 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                           <button
                             onClick={() => saveEdit(c.id)}
                             className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md text-white bg-[#003DEF]"
-                           
                           >
                             Save
                           </button>
@@ -398,7 +395,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                               key={r.id}
                               className="flex items-start gap-2 md:gap-3"
                             >
-                              <Popover>
+                              {/* <Popover>
                                 <PopoverTrigger asChild>
                                   <button
                                     className="rounded-full focus:outline-none flex-shrink-0"
@@ -421,7 +418,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                                 >
                                   <PopupProfile />
                                 </PopoverContent>
-                              </Popover>
+                              </Popover> */}
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between gap-2">
@@ -481,7 +478,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                   {/* Reply Input - Mobile Optimized */}
                   {replyOpen[c.id] && (
                     <div className="mt-3 flex items-start gap-2 md:gap-3">
-                      <Popover>
+                      {/* <Popover>
                         <PopoverTrigger asChild>
                           <button
                             className="rounded-full focus:outline-none flex-shrink-0"
@@ -504,7 +501,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                         >
                           <PopupProfile />
                         </PopoverContent>
-                      </Popover>
+                      </Popover> */}
 
                       <div className="flex-1">
                         <div className="relative">
@@ -525,7 +522,6 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                             <button
                               onClick={() => addReply(c.id)}
                               className="px-2 md:px-3 py-0.5 md:py-1 rounded-full text-white text-xs md:text-sm bg-[#003DEF]"
-                    
                             >
                               Reply
                             </button>

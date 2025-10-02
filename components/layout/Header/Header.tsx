@@ -23,7 +23,7 @@ function Header() {
   const connected = !!user;
 
   return (
-    <div className="flex items-center justify-center pt-8 px-14 lg:px-28">
+    <div className="flex items-center justify-center pt-8 px-14 lg:px-20">
       <div className="flex items-center justify-between px-6 py-4 border-b border-none bg-[#F5F7FA] rounded-4xl w-full max-w-7xl">
         <div>
           <Image

@@ -46,7 +46,7 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   //   (campaign.currentAmount / campaign.targetAmount) * 100;
 
   return (
-    <div className="px-4 lg:px-12">
+    <div className="px-4 lg:px-20">
       <span
         className="flex md:hidden flex-row gap-x-2 text-[#2C2C2C] font-semibold pt-3 text-sm cursor-pointer items-center "
         onClick={() => router.back()}
