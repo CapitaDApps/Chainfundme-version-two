@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
 import Image from "next/image";
-import { GoPlus } from "react-icons/go";
-import React from "react";
-import Draftcard from "../Card";
-import { CategorisItem } from "@/lib/CategoriesContent";
-import { FaFacebook } from "react-icons/fa";
-import { IoWalletOutline } from "react-icons/io5";
 import { BsTwitterX } from "react-icons/bs";
+import { FaFacebook } from "react-icons/fa";
+import { GoPlus } from "react-icons/go";
+import { IoWalletOutline } from "react-icons/io5";
+import Draftcard from "../Card";
 import Matrics from "./Metrics";
 import { ProgressIndicator } from "./ProgressIndicator";
 
 function ProfilePrivateClient() {
+  const { userProfile } = useUserProfile();
+  const campaigns = userProfile?.createdCampaigns;
   return (
     <div>
       <div className="relative w-full h-[200px] md:h-[250px] mt-2 md:-mt-2">
@@ -110,9 +111,9 @@ function ProfilePrivateClient() {
           <p className="text-2xl font-bold">Osama’s</p>
           <div className="flex justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-8 md:gap-25 pt-6 pb-10">
-              {CategorisItem.slice(0, 3).map((campaign) => (
+              {campaigns?.slice(0, 3).map((campaign) => (
                 <Draftcard
-                  key={campaign.id}
+                  key={campaign.cmid}
                   campaign={campaign}
                   status="explore"
                 />
