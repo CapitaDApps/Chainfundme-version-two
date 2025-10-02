@@ -1,20 +1,20 @@
 "use client";
 
-import { z } from "zod";
 import { useFormContext } from "react-hook-form";
+import { z } from "zod";
 
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { toast } from "sonner";
 import { FormSchema } from "@/lib/schemas";
-import { IoIosDocument, IoMdImages } from "react-icons/io";
-import UploadImages from "./UplodImages";
 import { useState } from "react";
-import { FaLink, FaVideo } from "react-icons/fa";
-import UploadVideo from "./UploadVideo";
-import UploadDocuments from "./UploadDocuments";
+import { FaVideo } from "react-icons/fa";
+import { IoIosDocument, IoMdImages } from "react-icons/io";
+import { toast } from "sonner";
 import AttachSocials from "./AttachSocials";
+import UploadDocuments from "./UploadDocuments";
+import UploadVideo from "./UploadVideo";
+import UploadImages from "./UplodImages";
 
 type SupportingImgType = {
   imgFile?: File;

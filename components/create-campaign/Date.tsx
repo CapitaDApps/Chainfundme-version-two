@@ -34,6 +34,7 @@ export default function DateField({
   placeholder = "dd/mm/yyyy",
   required,
 }: FormInput) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOpen, setIsOpen] = useState(false);
   return (
     <FormField

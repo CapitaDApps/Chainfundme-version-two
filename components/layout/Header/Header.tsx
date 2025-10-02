@@ -5,12 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ToggleNotificationbar from "./ToggleNotificationbar";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { usePrivy } from "@privy-io/react-auth";
+import { ChevronDown } from "lucide-react";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import ToggleNotificationbar from "./ToggleNotificationbar";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
