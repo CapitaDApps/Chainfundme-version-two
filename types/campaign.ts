@@ -1,3 +1,5 @@
+import { ReturnCampaignDocument } from "./api";
+
 //CampaignCard.tsx
 export interface CampaignItem {
   id: string;
@@ -17,3 +19,8 @@ export interface FundraisingCardProps {
 }
 
 //DraftCard.tsx
+
+export interface DraftCardProps {
+  campaign: ReturnCampaignDocument;
+  status: "draft" | "active" | "completed" | "explore";
+}
