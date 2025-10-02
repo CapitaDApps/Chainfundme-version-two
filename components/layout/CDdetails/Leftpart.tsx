@@ -6,11 +6,11 @@ import { formatTimeLeft } from "@/lib/utils";
 import { ReturnCampaignDocument } from "@/types/api";
 import { Clock } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { CiShare2 } from "react-icons/ci";
 import PreviewImages from "./PreviewImages";
 import Profile from "./Profile";
-import { useRouter } from "next/navigation";
 
 function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   const [expanded, setExpanded] = useState(false);

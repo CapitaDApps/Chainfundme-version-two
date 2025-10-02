@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { menuItems } from "@/lib/sidebarContent";
 import Image from "next/image";

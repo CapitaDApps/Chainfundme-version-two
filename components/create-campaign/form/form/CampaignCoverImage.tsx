@@ -1,16 +1,14 @@
-import React from "react";
-import { Camera } from "lucide-react";
-import z from "zod";
-import { Control } from "react-hook-form";
-import Image from "next/image";
-import { FormSchema } from "@/lib/schemas";
 import {
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { FormSchema } from "@/lib/schemas";
+import { Camera } from "lucide-react";
+import Image from "next/image";
+import { Control } from "react-hook-form";
+import z from "zod";
 
 interface FormInput {
   control: Control<z.infer<typeof FormSchema>>;

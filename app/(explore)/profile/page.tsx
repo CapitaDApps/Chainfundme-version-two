@@ -15,6 +15,7 @@ export default function ProfilePage() {
     defaultValues: {},
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSave = (data: any) => {
     console.log("Profile submitted:", data);
     setIsProfileSaved(true);

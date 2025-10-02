@@ -1,13 +1,13 @@
 "use client";
 
-import Leftpart from "./Leftpart";
-import Rightpart from "./Rightpart";
-import { FaLongArrowAltLeft } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import Comments from "./Comment";
-import { useCampaign } from "@/services/api/hooks/campaign/useCampaign";
 import { Button } from "@/components/ui/button";
 import CustomSpinner from "@/components/ui/customSpinner";
+import { useCampaign } from "@/services/api/hooks/campaign/useCampaign";
+import { useRouter } from "next/navigation";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import Comments from "./Comment";
+import Leftpart from "./Leftpart";
+import Rightpart from "./Rightpart";
 
 function Campaigndetails({ campaignId }: { campaignId: string }) {
   const router = useRouter();
@@ -42,8 +42,8 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
 
   console.log(campaign);
   // Calculate progress percentage
-  const progressPercentage =
-    (campaign.currentAmount / campaign.targetAmount) * 100;
+  // const progressPercentage =
+  //   (campaign.currentAmount / campaign.targetAmount) * 100;
 
   return (
     <div className="px-4 lg:px-12">

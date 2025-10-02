@@ -1,17 +1,9 @@
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { CiShare2 } from "react-icons/ci";
-import Image from "next/image";
-import { list } from "@/lib/donatelist";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import React from "react";
-import PopupProfile from "../profile/PopupProfile";
-import { ReturnCampaignDocument } from "@/types/api";
+import { Progress } from "@/components/ui/progress";
 import { formatPrice } from "@/lib/utils";
+import { ReturnCampaignDocument } from "@/types/api";
+import Image from "next/image";
+import { CiShare2 } from "react-icons/ci";
 
 function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   return (
