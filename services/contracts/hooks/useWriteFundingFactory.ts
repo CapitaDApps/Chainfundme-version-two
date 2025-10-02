@@ -9,8 +9,7 @@ import CapitaFundingFactoryABI from "../abi/CapitaFundingFactory.json";
 import { networkContractAddresses } from "../constants";
 
 function useWriteFundingFactory() {
-  const { chainId, address } = useAccount();
-  console.log({ chainId, address });
+  const { chainId } = useAccount();
 
   const { writeContractAsync } = useWriteContract();
 

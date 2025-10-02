@@ -3,7 +3,7 @@ import { publishCampaign } from "../../campaign";
 
 export function usePublish() {
   const queryClient = useQueryClient();
-  const { mutateAsync: publish } = useMutation({
+  const { mutateAsync: publish, isPending: publishing } = useMutation({
     mutationFn: async ({
       campaignId,
       tokens,
@@ -19,5 +19,5 @@ export function usePublish() {
     },
   });
 
-  return { publish };
+  return { publish, publishing };
 }

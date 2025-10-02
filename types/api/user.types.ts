@@ -1,4 +1,4 @@
-import { CampaignDocument } from "./campaign.types";
+import { ReturnCampaignDocument } from "./campaign.types";
 
 export type UserDocument = {
   privyId: string;
@@ -7,10 +7,10 @@ export type UserDocument = {
   walletAddress: string;
   profilePicture: string;
   bio: string;
-  createdCampaigns: CampaignDocument[];
+  createdCampaigns: ReturnCampaignDocument[];
   supportedCampaigns: string[];
   role: string;
   isVerified: boolean;
-  socialLinks: string[];
+  socialLinks: Map<string, string>;
   followers: number;
 };

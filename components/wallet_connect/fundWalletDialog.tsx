@@ -20,7 +20,7 @@ export default function FundWalletDialog() {
   const [amount, setAmount] = useState("0.01");
   const handleFund = () => {
     if (address) {
-      fundWallet(address, { amount });
+      fundWallet({ address, options: { amount } });
     }
   };
 

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { MoonLoader } from "react-spinners";
 import { Button } from "../ui/button";
 import { usePrivy } from "@privy-io/react-auth";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 function CustomConnectButton({
   text,
   func,
@@ -36,7 +37,7 @@ function CustomConnectButton({
 
   return (
     <Button
-      className="text-white min-w-24"
+      className="text-white min-w-24 rounded-full"
       onClick={func}
       disabled={!ready}
       style={{

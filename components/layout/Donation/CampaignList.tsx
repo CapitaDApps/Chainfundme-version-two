@@ -13,7 +13,7 @@ function CampaignList({ status }: CampaignListProps) {
   const filteredList = List.filter((list) => {
     if (status === "active") return list.status === "in-progress";
     if (status === "completed") return list.status === "completed";
-    return true; 
+    return true;
   });
 
   return (
@@ -28,11 +28,7 @@ function CampaignList({ status }: CampaignListProps) {
 
       {filteredList.length > 0 ? (
         filteredList.map((list) => (
-          <Link 
-            key={list.id} 
-            href={`/my-donations/${list.id}`} 
-            className="block"
-          >
+          <Link key={list.id} href={`/campaign/${list.id}`} className="block">
             <div className="grid grid-cols-[480px_270px_230px_190px_100px] items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg border-b border-[#CDCDCD]/50 min-w-[1270px]">
               <div className="flex flex-row items-center space-x-4">
                 <CiStar />
@@ -59,7 +55,7 @@ function CampaignList({ status }: CampaignListProps) {
                 {list.goal}%
               </div>
               <div className="text-[#1A1A1A] text-[14px] md:text-[16px] font-medium">
-                {millify(list.donoeNumber)} 
+                {millify(list.donoeNumber)}
               </div>
               <div
                 className={`text-[14px] font-semibold whitespace-nowrap ${

@@ -7,20 +7,14 @@ import { useRouter } from "next/navigation";
 import Comments from "./Comment";
 import { useCampaign } from "@/services/api/hooks/campaign/useCampaign";
 import { Button } from "@/components/ui/button";
+import CustomSpinner from "@/components/ui/customSpinner";
 
 function Campaigndetails({ campaignId }: { campaignId: string }) {
   const router = useRouter();
   const { campaign, retrievingCampaign, error } = useCampaign(campaignId);
 
   if (retrievingCampaign) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2379BC] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading campaign details...</p>
-        </div>
-      </div>
-    );
+    return <CustomSpinner />;
   }
 
   if (error) {

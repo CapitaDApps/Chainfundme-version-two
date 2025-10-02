@@ -1,17 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import SelectToken from "@/components/layout/CDdetails/SelectToken";
-import { CiShare2 } from "react-icons/ci";
-import Profile from "./Profile";
-import Comments from "./Comment";
-import PreviewImages from "./PreviewImages";
-import { useState } from "react";
+import { allowedChains } from "@/lib/networks/config";
+import { formatTimeLeft } from "@/lib/utils";
 import { ReturnCampaignDocument } from "@/types/api";
 import { Clock } from "lucide-react";
-import { formatTimeLeft } from "@/lib/utils";
-import { allowedChains } from "@/lib/networks/config";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { CiShare2 } from "react-icons/ci";
+import PreviewImages from "./PreviewImages";
+import Profile from "./Profile";
+import { useRouter } from "next/navigation";
 
 function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   const [expanded, setExpanded] = useState(false);
@@ -22,6 +21,10 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
 
   const timeLeft = formatTimeLeft(campaign.endDate);
 
+  const router = useRouter();
+
+  if (!campaign.published) router.back();
+
   const deployedChains = campaign.chains.map((chain) => {
     const allowedChain = allowedChains.find(
       (ac) => ac.networkId == chain.networkId
@@ -31,6 +34,8 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
       src: allowedChain?.image || "",
     };
   });
+
+  console.log({ deployedChains });
 
   const firstChain = deployedChains[0];
 

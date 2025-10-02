@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +7,12 @@ import { CiEdit } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import MobileDraftCard from "./MobileCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ReturnCampaignDocument } from "@/types/api";
+
+export interface DraftCardProps {
+  campaign: ReturnCampaignDocument;
+  status: "draft" | "active" | "completed" | "explore";
+}
 
 const Draftcard = ({ campaign, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
@@ -17,7 +22,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
       <article className="w-full h-full hidden md:block">
         {isClickable ? (
           <Link
-            href={`/my-campaigns/${campaign.id}`}
+            href={`/campaign/${campaign.cmid}`}
             className="block w-full h-full"
           >
             <div className="w-full h-full max-w-[330px] min-h-[260px] rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer">
@@ -96,10 +101,10 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                   />
                   <div className="flex justify-start space-x-1 items-center text-xs pb-2">
                     <span className="text-muted-foreground/80">
-                      {campaign.fundrasied} raised
+                      {campaign.currentAmount} raised
                     </span>
                     <span className="text-muted-foreground">
-                      of {campaign.fundtarget}
+                      of {campaign.targetAmount}
                     </span>
                   </div>
                 </div>
@@ -136,15 +141,13 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                 {campaign.title}
               </h3>
 
-              <div className="flex flex-row justify-center items-center py-1 pt-4">
-                <Button
-                  variant="outline"
-                  className="rounded-2xl shadow-lg/20 py-2 md:!px-6 text-xs !px-4 cursor-pointer"
-                >
-                  <CiEdit className="mr-1" />
-                  Edit
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                className="rounded-xl py-2 md:!px-6 text-xs !px-4 cursor-pointer w-fit"
+              >
+                <CiEdit className="mr-1" />
+                Edit
+              </Button>
             </div>
           </div>
         )}
