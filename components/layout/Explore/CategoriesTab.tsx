@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import OtherCampaign from "./OtherCampaigns";
 import CampaignCard from "./CampaignCard";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface Props {
   initialCategory: string;

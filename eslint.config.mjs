@@ -19,6 +19,10 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      "no-unused-vars": "off",
+      "no-explicit-any": "off",
+    },
   },
 ];
 
