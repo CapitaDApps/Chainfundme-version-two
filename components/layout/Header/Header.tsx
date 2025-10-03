@@ -26,7 +26,6 @@ function Header() {
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
-      console.log(scrollY);
       setScroll(scrollY);
     });
   }, []);
@@ -51,7 +50,7 @@ function Header() {
               alt="App Icon"
               width={200}
               height={30}
-              className="w-36"
+              className="w-24 lg:w-36"
             />
           </Link>
           <div

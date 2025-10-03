@@ -158,9 +158,9 @@ const Footer = () => {
               {[
                 { href: "", label: "Terms of Service" },
                 { href: "", label: "Privacy" },
-              ].map((link) => (
+              ].map((link, index) => (
                 <Link
-                  key={link.href}
+                  key={index}
                   href={link.href}
                   className="text-gray-300 hover:text-white"
                 >

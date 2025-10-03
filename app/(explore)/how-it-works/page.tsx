@@ -3,8 +3,8 @@ import Image from "next/image";
 
 function HowItWorksPage() {
   return (
-    <div className="relative mb-20 mt-8 md:mt-0">
-      <div className="h-[100dvh] sm:min-h-fit px-4 md:px-0 py-24 md:py-18 md:mt-8">
+    <div className="relative mb-20 mt-6 md:mt-0">
+      <div className="h-[100dvh] sm:min-h-fit px-4 sm:px-10 md:px-0 py-24 md:py-18 md:mt-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:gap-10 lg:gap-24 md:px-0 md:pl-14 lg:pl-20 text-center md:text-left ">
           <div className="">
             <h1 className="text-[#1038A2] text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold pb-6">
@@ -32,14 +32,14 @@ function HowItWorksPage() {
           </div>
         </div>
       </div>
-      <div className="px-4 md:px-14 lg:px-20 py-10 text-lg">
+      <div className="px-4 sm:px-10 md:px-14 lg:px-20 py-10 text-lg">
         <h1 className="font-semibold">
           Here’s what to expect when fundraising on ChainFundMe:
         </h1>
 
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-8 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           <div className="order-1 md:order-2">
-            <div className="bg-[#A9EEFF] rounded-xl p-8 max-w-[37rem] flex justify-center items-center mt-6">
+            <div className="bg-[#A9EEFF] rounded-xl p-4 sm:p-8 max-w-[37rem] w-fit md:w-full flex justify-center items-center mt-6">
               <Image
                 src="/layout/prof.png"
                 alt="Profile"
@@ -70,9 +70,9 @@ function HowItWorksPage() {
           </div>
         </div>
 
-        <div className="pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-16 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           <div className="order-1 md:order-2">
-            <div className="bg-[#FFEAA9] rounded-xl p-8 max-w-[37rem] flex justify-center items-center mt-6">
+            <div className="bg-[#FFEAA9] rounded-xl p-4 sm:p-8 max-w-[37rem] w-fit md:w-full flex justify-center items-center mt-6">
               <Image
                 src="/layout/ho1.png"
                 alt="Campaign"
@@ -111,9 +111,9 @@ function HowItWorksPage() {
         </div>
 
         {/* Step 3 */}
-        <div className="pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-16 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           <div className="order-1 md:order-2">
-            <div className="bg-[#C9FFA9] rounded-xl p-8 max-w-[37rem] flex justify-center items-center mt-6">
+            <div className="bg-[#C9FFA9] rounded-xl p-4 sm:p-8 max-w-[37rem] w-fit md:w-full flex justify-center items-center mt-6">
               <Image
                 src="/layout/ho2.png"
                 alt="Share Campaign"
@@ -147,9 +147,9 @@ function HowItWorksPage() {
           </div>
         </div>
 
-        <div className="pt-16 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="pt-16 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           <div className="order-1 md:order-2">
-            <div className="bg-[#F2A9FF] rounded-xl p-8 max-w-[37rem] flex justify-center items-center mt-6">
+            <div className="bg-[#F2A9FF] rounded-xl p-4 sm:p-8 max-w-[37rem] w-fit md:w-full flex justify-center items-center mt-6">
               <Image
                 src="/layout/ho3.png"
                 alt="Track Contributions"

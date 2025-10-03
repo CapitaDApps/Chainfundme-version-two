@@ -5,7 +5,6 @@ import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { IoWalletOutline } from "react-icons/io5";
-import Draftcard from "../Card";
 import Matrics from "./Metrics";
 import { ProgressIndicator } from "./ProgressIndicator";
 
@@ -110,15 +109,11 @@ function ProfilePrivateClient() {
         <div className="pt-8 px-10">
           <p className="text-2xl font-bold">Osama’s</p>
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-8 md:gap-25 pt-6 pb-10">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-8 md:gap-25 pt-6 pb-10">
               {campaigns?.slice(0, 3).map((campaign) => (
-                <Draftcard
-                  key={campaign.cmid}
-                  campaign={campaign}
-                  status="explore"
-                />
+                <Draftcard key={campaign.cmid} campaign={campaign} status="" />
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

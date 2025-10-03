@@ -7,9 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
 
 import { usePrivy } from "@privy-io/react-auth";
+import { Menu } from "lucide-react";
 import UserDropdownMenu from "./userDropdownMenu";
 
 function MobileHeader() {
@@ -26,10 +26,10 @@ function MobileHeader() {
   return (
     <div className="fixed top-0 right- z-40 w-full bg-white/90 backdrop-blur-sm shadow-sm h-14">
       <div className="flex flex-row items-center justify-between px-4 sm:px-10 py-3 w-full h-full">
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-2">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
-              <RxHamburgerMenu className="cursor-pointer w-6 h-6" />
+              <Menu className="cursor-pointer w-5 h-5 text-secondary-text mt-1" />
             </SheetTrigger>
             <SheetContent side="left" className="w-64">
               <div className="flex flex-col gap-2 w-full mt-14">
@@ -61,11 +61,11 @@ function MobileHeader() {
           <Link href="/">
             <div className="flex">
               <Image
-                src="/layout/appicon.png"
-                alt="capita_logo"
-                width={130}
-                height={60}
-                className="cursor-pointer w-6 h-6"
+                src="/layout/Logo.png"
+                alt="App Icon"
+                width={200}
+                height={30}
+                className="w-24"
               />
             </div>
           </Link>
