@@ -8,7 +8,7 @@ import Filter from "../Explore/Filter";
 function DonationPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
-    <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20">
+    <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20 min-h-[100dvh] md:h-auto">
       {isModalOpen && (
         <DonationModel
           text="Join or Sign In to Access Your Donations"
