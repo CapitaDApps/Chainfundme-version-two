@@ -57,23 +57,27 @@ export const allowedChains: ChainType[] = [
     symbol: "Base",
     image: "/tokens/base.svg",
     networkId: base.id,
+    testnet: false,
   },
   {
     value: "BNB Smart Chain",
     symbol: "BSC",
     image: "/tokens/binance.svg",
     networkId: bsc.id,
+    testnet: false,
   },
   {
     value: "Base Sepolia",
     symbol: "Base",
     image: "/tokens/base.svg",
     networkId: baseSepolia.id,
+    testnet: true,
   },
   {
     value: "BNB Smart Chain Testnet",
     symbol: "BSC",
     image: "/tokens/binance.svg",
     networkId: bscTestnet.id,
+    testnet: true,
   },
 ];

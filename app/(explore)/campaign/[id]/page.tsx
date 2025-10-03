@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Campaigndetails from "@/components/layout/CDdetails/Campaigndetails";
+import Loader from "@/components/layout/Loader";
 
 interface CampaignPageProps {
   params: Promise<{ id: string }>;
@@ -8,7 +9,7 @@ interface CampaignPageProps {
 async function CampaignPage({ params }: CampaignPageProps) {
   const id = (await params).id;
   return (
-    <Suspense fallback={<div>Loading campaign details...</div>}>
+    <Suspense fallback={<Loader />}>
       <Campaigndetails campaignId={id} />
     </Suspense>
   );

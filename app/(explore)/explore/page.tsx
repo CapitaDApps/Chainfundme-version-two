@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import ExplorePageClient from "@/components/layout/Explore/ExplorePageClient";
+import Loader from "@/components/layout/Loader";
 
 export default function ExploreCampaignPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <ExplorePageClient />
     </Suspense>
   );

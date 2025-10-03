@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { menuItems } from "@/lib/sidebarContent";
@@ -8,6 +14,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ChevronDown } from "lucide-react";
 
 function MobileHeader() {
   const pathname = usePathname();
@@ -18,8 +27,8 @@ function MobileHeader() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="fixed top-0 right- z-40 w-full bg-white/90 backdrop-blur-sm shadow-sm">
-      <div className="flex flex-row items-center justify-between px-4 py-3 ">
+    <div className="fixed top-0 right- z-40 w-full bg-white/90 backdrop-blur-sm shadow-sm h-14">
+      <div className="flex flex-row items-center justify-between px-4 py-3 w-full h-full">
         <div className="flex flex-row items-center gap-4">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
@@ -66,7 +75,23 @@ function MobileHeader() {
         </div>
 
         <div className="flex flex-row items-center gap-3">
-          <CreateWalletButton />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex items-center space-x-1 cursor-pointer">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src="/layout/img3.png" alt="Profile" />
+                  <AvatarFallback>TK</AvatarFallback>
+                </Avatar>
+
+                <ChevronDown className="w-4 h-4" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>
+                <CreateWalletButton />
+              </DropdownMenuLabel>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>

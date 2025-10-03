@@ -6,6 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { usePrivy } from "@privy-io/react-auth";
 import { ChevronDown } from "lucide-react";
@@ -62,14 +68,24 @@ function Header() {
           {connected ? (
             <>
               <ToggleNotificationbar />
-              <div className="flex items-center space-x-1 cursor-pointer">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/layout/img3.png" alt="Profile" />
-                  <AvatarFallback>TK</AvatarFallback>
-                </Avatar>
 
-                <ChevronDown className="w-4 h-4" />
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <div className="flex items-center space-x-1 cursor-pointer">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/layout/img3.png" alt="Profile" />
+                      <AvatarFallback>TK</AvatarFallback>
+                    </Avatar>
+
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>
+                    <CreateWalletButton />
+                  </DropdownMenuLabel>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           ) : (
             <CreateWalletButton />

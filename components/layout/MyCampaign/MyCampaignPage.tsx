@@ -6,21 +6,22 @@ import Campaignsdraft from "@/components/layout/MyCampaign/Campaignsdraft";
 import SearchBar from "@/components/layout/SearchBar";
 import DonationModel from "../Donation/DonationModel";
 import { useState } from "react";
+
 function MyCampaignsPage() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
-    <div className="p-6 pt-16">
+    <div className="pt-16 px-4 md:px-14 lg:px-20">
       {isModalOpen && (
         <DonationModel
           text="Join or Sign In to Access Your Campaigns"
           onClose={() => setIsModalOpen(false)}
         />
       )}
-      <div className="md:flex flex-row justify-between items-center mt-4 px-4 hidden">
+      <div className="md:flex flex-row justify-between items-center mt-4 hidden">
         <CreateCamBtn />
         <Filter />
       </div>
-      <div className="flex flex-col items-center justify-center pt-6">
+      <div className="flex flex-col items-center justify-center mt-10">
         <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[24px] md:text-[32px] text-[#101828]">
           Manage&nbsp;{" "}
           <span className="block md:inline">

@@ -9,19 +9,21 @@ import { Button } from "../ui/button";
 const Footer = () => {
   return (
     <footer className="relative">
-      <div className="w-full  bg-[#00111F] pt-16 pb-8">
-        <div className="flex flex-row justify-between px-12 ">
+      <div className="w-full bg-[#00111F] pt-16 pb-8 px-4 md:px-14 xl:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[300px_1fr_1fr_300px] w-full gap-10">
           <div className=" space-y-4">
             <Link href="/">
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2">
                 <Image
                   src="/layout/appicon.png"
                   alt="capita_logo"
                   width={32}
                   height={32}
-                  className="cursor-pointer relative"
+                  className="cursor-pointer relative w-8"
                 />
-                <p className="font-bold text-3xl text-[#FFFFFF]">ChainFundMe</p>
+                <p className="font-bold text-xl lg:text-3xl text-[#FFFFFF]">
+                  ChainFundMe
+                </p>
               </div>
             </Link>
             <p className="text-[#FFFFFF] text-xs max-w-[15rem] pt-4">
@@ -38,7 +40,7 @@ const Footer = () => {
               {[
                 { href: "/explore", label: "Explore" },
                 { href: "/how-it-works", label: "How it works" },
-                { href: "/why-us", label: "Why choose us" },
+                // { href: "/why-us", label: "Why choose us" },
                 { href: "/my-donations", label: "Donations" },
               ].map((link) => (
                 <li key={link.href}>
@@ -61,9 +63,9 @@ const Footer = () => {
             </h3>
             <ul className="space-y-1 md:space-y-2">
               {[
-                { href: "/help", label: "Help Center" },
-                { href: "/faq", label: "FAQs" },
-                { href: "/contact", label: "Contact Us" },
+                { href: "", label: "Help Center" },
+                { href: "", label: "FAQs" },
+                { href: "", label: "Contact Us" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -87,7 +89,7 @@ const Footer = () => {
               Stay Informed: Subscribe to our Newsletter
             </p>
 
-            <div className="flex flex-col items-center sm:items-start space-y-2 md:space-y-2 max-w-xs mx-auto sm:mx-0">
+            <div className="flex flex-col items-center sm:items-start space-y-2 md:space-y-2 max-w-xs sm:mx-0">
               <div className="relative w-full">
                 <input
                   type="email"
@@ -105,56 +107,58 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center pt-10 pb-6 text-[24px]">
-          <p className="text-[#808080] font-bold">
+        <div className="flex flex-col md:items-center md:justify-center mt-16 mb-6 sm:mb-12 ">
+          <p className="text-[#808080] font-bold text-lg md:text-[24px]">
             Our partners at ChainFundMe
           </p>
-          <div className="space-x-10 mt-4 ">
+          <div className="mt-8 flex flex-wrap gap-8">
             {[
-              { src: "/layout/Group.png", alt: "Partner 1" },
-              { src: "/layout/Conrad.png", alt: "Partner 2" },
-              { src: "/layout/N.png", alt: "Partner 3" },
-              { src: "/layout/Vector.png", alt: "Partner 4" },
-              { src: "/layout/C.png", alt: "Partner 5" },
+              { src: "/partners/spc.jpg", alt: "Partner 1" },
+              { src: "/partners/cloudplexo.jpg", alt: "Partner 2" },
+              { src: "/partners/base.jpg", alt: "Partner 3" },
+              { src: "/partners/frenchie.jpg", alt: "Partner 4" },
             ].map((partner, index) => (
               <Image
                 key={index}
                 src={partner.src}
                 alt={partner.alt}
-                width={130}
-                height={40}
-                className="mx-4 my-2 inline-block"
+                width={500}
+                height={500}
+                className="rounded-full w-24 h-24 sm:w-32 sm:h-32 grayscale"
               />
             ))}
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
           <hr className="border-[#9AA1A6]" />
         </div>
-        <div className="max-w-7xl mx-auto mt-4 md:mt-8 flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-8 text-center md:text-left">
-          <div className="flex flex-wrap justify-center space-x-3 md:space-x-6">
-            {[
-              { href: "/terms", label: "Terms of Service" },
-              { href: "/privacy", label: "Privacy" },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-gray-300 hover:text-white text-xs md:text-[18px]"
-              >
-                <p className="text-gray-300">{link.label}</p>
-              </Link>
-            ))}
-          </div>
+        <div className="flex md:items-center flex-col md:flex-row mt-5 sm:mt-10 gap-4 lg:gap-8 text-xs sm:text-sm lg:text-base w-full md:w-fit md:mx-auto">
+          <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-center gap-4 lg:gap-8">
+            <div className="flex flex-col md:flex-row md:justify-center gap-4 lg:gap-8">
+              {[
+                { href: "", label: "Terms of Service" },
+                { href: "", label: "Privacy" },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-300 hover:text-white"
+                >
+                  <p className="text-gray-300">{link.label}</p>
+                </Link>
+              ))}
+            </div>
 
-          {/* Copyright */}
-          <div className="text-gray-300 text-xs md:text-[18px]">
-            © ChainFundMe, Inc. {new Date().getFullYear()} | All Rights Reserved
+            {/* Copyright */}
+            <div className="text-gray-300">
+              © ChainFundMe, Inc. {new Date().getFullYear()} | All Rights
+              Reserved
+            </div>
           </div>
 
           {/* Social Icons */}
-          <div className="flex justify-center md:justify-end space-x-4">
+          <div className="flex space-x-4">
             <a
               href="#"
               className="text-white hover:text-blue-300 transition-colors"
