@@ -146,7 +146,7 @@ function Campaignsdraft() {
   return (
     <div className="mt-12 mb-20">
       <Tabs defaultValue="draft" className="w-full">
-        <TabsList className="flex-nowrap">
+        <TabsList className="flex-nowrap gap-2">
           {campaignTabs.map((tab) => (
             <React.Fragment key={tab.value}>
               <TabsTrigger
@@ -155,7 +155,7 @@ function Campaignsdraft() {
                      data-[state=active]:text-[#2379BC] 
                      data-[state=active]:bg-transparent 
                      focus-visible:ring-0 cursor-pointer 
-                     md:px-4 px-2 text-sm font-bold md:text-[16px]
+                     px-4 text-sm font-bold md:text-[16px]
                      text-[#6B6B65]/50 whitespace-nowrap mt-8"
               >
                 <span>{tab.name}</span>
