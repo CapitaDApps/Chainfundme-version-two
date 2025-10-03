@@ -16,7 +16,8 @@ async function getCoinBalance(
       address: address as `0x${string}`,
     });
     console.log({ data });
-    return formatEther(data.value);
+    const numList = formatEther(data.value).split(".");
+    return `${numList[0]}${numList[1] ? "." + numList[1].slice(0, 5) : ""}`;
   }
   // ERC 20
   const tokenAddress = getTokenAddress(coin);
@@ -28,7 +29,8 @@ async function getCoinBalance(
       args: [address],
     });
 
-    return formatEther(result as bigint);
+    const numList = formatEther(result as bigint).split(".");
+    return `${numList[0]}${numList[1] ? "." + numList[1].slice(0, 5) : ""}`;
   }
 
   return "0";

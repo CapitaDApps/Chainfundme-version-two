@@ -3,13 +3,12 @@ import Image from "next/image";
 
 function HowItWorksPage() {
   return (
-    <div className="relative">
-      <div className="min-h-[100%] bg-[#62d1ec] p-0 pt-10">
-        <div className="flex flex-col md:flex-row items-center justify-center md:justify-between md:pl-15 text-center md:text-left">
-          <div className="md:max-w-6xl">
-            <h1 className="text-[#1038A2] text-2xl md:text-[60px] font-bold pb-6">
-              Your Step-by-Step Guide
-              to Fundraising on ChainFundMe
+    <div className="relative mb-20">
+      <div className="min-h-[100dvh] sm:min-h-fit px-4 md:px-0 py-24 md:py-18 md:mt-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between md:gap-10 lg:gap-24 md:px-0 md:pl-14 lg:pl-20 text-center md:text-left ">
+          <div className="">
+            <h1 className="text-[#1038A2] text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold pb-6">
+              Your Step-by-Step Guide to Fundraising on ChainFundMe
             </h1>
             <p className="max-w-md mx-auto md:mx-0 pb-8 text-sm md:text-base md:px-0 px-4">
               ChainFundMe — a new way to make a bigger impact on the causes you
@@ -18,12 +17,13 @@ function HowItWorksPage() {
             <CreateCamBtn />
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:block w-fit">
             <Image
               src="/layout/iPhone.png"
               alt="iPhone"
-              width={1350}
-              height={600}
+              width={1000}
+              height={1000}
+              className="w-4xl h-4xl"
             />
           </div>
 
@@ -32,7 +32,7 @@ function HowItWorksPage() {
           </div>
         </div>
       </div>
-      <div className="px-6 md:px-16 py-10 text-lg">
+      <div className="px-4 md:px-14 lg:px-20 py-10 text-lg">
         <h1 className="font-semibold">
           Here’s what to expect when fundraising on ChainFundMe:
         </h1>

@@ -31,37 +31,37 @@ function Header() {
   return (
     <div className="flex items-center justify-center pt-8 px-14 lg:px-20">
       <div className="flex items-center justify-between px-6 py-4 border-b border-none bg-[#F5F7FA] rounded-4xl w-full max-w-7xl">
-        <div>
+        <div className="flex items-center gap-18">
           <Image
-            src="/layout/appicon.png"
+            src="/layout/Logo.png"
             alt="App Icon"
-            width={32}
-            height={32}
+            width={200}
+            height={30}
+            className="w-36"
           />
-        </div>
-        <div
-          className={`flex items-center justify-center gap-x-6 lg:gap-x-12 ${plusJakartaSans.className}`}
-        >
-          {menuItems.slice(0, -2).map((link) => {
-            const isActive =
-              link.route === "/"
-                ? pathname.startsWith("/explore")
-                : pathname === link.route;
+          <div
+            className={`flex items-center justify-center gap-x-6 lg:gap-x-12 ${plusJakartaSans.className} mt-1`}
+          >
+            {menuItems.slice(0, -2).map((link) => {
+              const isActive = pathname == link.route;
 
-            return (
-              <Link
-                key={link.route}
-                href={link.route}
-                className={`relative text-sm lg:text-[16px] font-medium ${
-                  isActive
-                    ? "text-[#2379bc]"
-                    : "text-[#2379bc] hover:text-[#2379bc]/90"
-                }`}
-              >
-                {link.title}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={link.route}
+                  href={link.route}
+                  className={`relative text-sm lg:text-[16px] font-medium `}
+                >
+                  <p
+                    className={` hover:text-blue-700 ${
+                      isActive ? "text-blue-700" : "text-secondary-text"
+                    }`}
+                  >
+                    {link.title}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <div className="flex items-center gap-x-4 text-gray-600">

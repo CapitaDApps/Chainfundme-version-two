@@ -51,7 +51,11 @@ import {
   PhoneOutgoing,
 } from "lucide-react";
 
-export default function WalletWrapper() {
+export default function WalletWrapper({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const { chainId } = useAccount();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -72,10 +76,14 @@ export default function WalletWrapper() {
         <div className="flex items-center gap-5">
           <div className="hidden sm:block">
             <WalletSheet>
-              <CustomConnectButton
-                text={truncateAddr(address)}
-                asTrigger={true}
-              />
+              {children ? (
+                children
+              ) : (
+                <CustomConnectButton
+                  text={truncateAddr(address)}
+                  asTrigger={true}
+                />
+              )}
             </WalletSheet>
           </div>
           <div className="block sm:hidden">
@@ -86,9 +94,6 @@ export default function WalletWrapper() {
               />
             </UserMobileSheet>
           </div>
-          <UserMenu>
-            <Settings color="#000" />
-          </UserMenu>
         </div>
       ) : (
         <CustomConnectButton text="Sign in" func={login} />

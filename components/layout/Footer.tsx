@@ -6,6 +6,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
+const partners = [
+  { src: "/partners/spc.jpg", alt: "Partner 1", name: "SPC" },
+  {
+    src: "/partners/cloudplexo.jpg",
+    alt: "Partner 2",
+    name: "Cloudplexo",
+  },
+  { src: "/partners/base.jpg", alt: "Partner 3", name: "Base" },
+  {
+    src: "/partners/frenchie.jpg",
+    alt: "Partner 4",
+    name: "Frenchie",
+  },
+  {
+    src: "/partners/jawgular.jpg",
+    alt: "Partner 5",
+    name: "Jawgular",
+  },
+];
+
 const Footer = () => {
   return (
     <footer className="relative">
@@ -107,25 +127,24 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:items-center md:justify-center mt-16 mb-12 ">
-          <p className="text-[#808080] font-bold text-lg md:text-[24px]">
+        <div className="flex flex-col  mt-16 mb-12 w-full">
+          <p className="text-[#808080] font-bold text-lg md:text-[24px] md:text-center">
             Our partners at ChainFundMe
           </p>
-          <div className="mt-4 md:mt-8 flex flex-wrap gap-8">
-            {[
-              { src: "/partners/spc.jpg", alt: "Partner 1" },
-              { src: "/partners/cloudplexo.jpg", alt: "Partner 2" },
-              { src: "/partners/base.jpg", alt: "Partner 3" },
-              { src: "/partners/frenchie.jpg", alt: "Partner 4" },
-            ].map((partner, index) => (
-              <Image
-                key={index}
-                src={partner.src}
-                alt={partner.alt}
-                width={500}
-                height={500}
-                className="rounded-full w-16 h-16 sm:w-32 sm:h-32 grayscale"
-              />
+          <div className="mt-4 md:mt-8 flex flex-wrap gap-8 lg:gap-10 md:max-w-[655px] lg:max-w-fit mx-auto md:justify-center">
+            {partners.map((partner, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Image
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={500}
+                  height={500}
+                  className="rounded-full min-w-12 min-h-12 max-w-12 max-h-12 sm:min-w-16 sm:min-h-16 sm:max-w-16 sm:max-h-16 grayscale"
+                />
+                <p className="text-white text-base sm:text-xl font-bold">
+                  {partner.name}
+                </p>
+              </div>
             ))}
           </div>
         </div>

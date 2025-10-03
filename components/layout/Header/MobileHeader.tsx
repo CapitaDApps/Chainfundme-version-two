@@ -32,7 +32,7 @@ function MobileHeader() {
 
   return (
     <div className="fixed top-0 right- z-40 w-full bg-white/90 backdrop-blur-sm shadow-sm h-14">
-      <div className="flex flex-row items-center justify-between px-4 py-3 w-full h-full">
+      <div className="flex flex-row items-center justify-between px-4 sm:px-10 py-3 w-full h-full">
         <div className="flex flex-row items-center gap-4">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
