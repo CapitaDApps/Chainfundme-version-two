@@ -107,11 +107,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:items-center md:justify-center mt-16 mb-6 sm:mb-12 ">
+        <div className="flex flex-col md:items-center md:justify-center mt-16 mb-12 ">
           <p className="text-[#808080] font-bold text-lg md:text-[24px]">
             Our partners at ChainFundMe
           </p>
-          <div className="mt-8 flex flex-wrap gap-8">
+          <div className="mt-4 md:mt-8 flex flex-wrap gap-8">
             {[
               { src: "/partners/spc.jpg", alt: "Partner 1" },
               { src: "/partners/cloudplexo.jpg", alt: "Partner 2" },
@@ -124,7 +124,7 @@ const Footer = () => {
                 alt={partner.alt}
                 width={500}
                 height={500}
-                className="rounded-full w-24 h-24 sm:w-32 sm:h-32 grayscale"
+                className="rounded-full w-16 h-16 sm:w-32 sm:h-32 grayscale"
               />
             ))}
           </div>

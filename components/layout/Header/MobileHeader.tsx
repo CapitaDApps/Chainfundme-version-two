@@ -17,10 +17,14 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronDown } from "lucide-react";
+import { usePrivy } from "@privy-io/react-auth";
 
 function MobileHeader() {
   const pathname = usePathname();
   const slug = pathname.split("/").at(pathname.split("/").length >= 2 ? 1 : 1);
+
+  const { user } = usePrivy();
+  const connected = !!user;
 
   const [open, setOpen] = useState(false);
 
@@ -75,23 +79,27 @@ function MobileHeader() {
         </div>
 
         <div className="flex flex-row items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex items-center space-x-1 cursor-pointer">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/layout/img3.png" alt="Profile" />
-                  <AvatarFallback>TK</AvatarFallback>
-                </Avatar>
+          {connected ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex items-center space-x-1 cursor-pointer">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="/layout/img3.png" alt="Profile" />
+                    <AvatarFallback>TK</AvatarFallback>
+                  </Avatar>
 
-                <ChevronDown className="w-4 h-4" />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>
-                <CreateWalletButton />
-              </DropdownMenuLabel>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>
+                  <CreateWalletButton />
+                </DropdownMenuLabel>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <CreateWalletButton />
+          )}
         </div>
       </div>
     </div>
