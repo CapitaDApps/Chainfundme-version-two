@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSchema } from "@/lib/Profileschemas";
 import Profileform from "@/components/layout/profile/Profileform";
 import ProfilePrivateClient from "@/components/layout/profile/ProfilePrivate";
+import Loader from "@/components/layout/Loader";
 
 export default function ProfilePage() {
   const [isProfileSaved, setIsProfileSaved] = useState(false);
@@ -22,7 +23,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <FormProvider {...methods}>
         {!isProfileSaved ? (
           <Profileform onSave={methods.handleSubmit(handleSave)} />

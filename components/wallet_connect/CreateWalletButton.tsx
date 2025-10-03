@@ -6,7 +6,7 @@ export default function CreateWalletButton({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="relative z-50">
+    <div className="relative z-50 w-full">
       {children ? <WalletWrapper>{children}</WalletWrapper> : <WalletWrapper />}
     </div>
   );
