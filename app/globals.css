@@ -100,6 +100,8 @@ a {
 
   --color-secondary-text: var(--secondary-text);
   --color-secondary-text-muted: var(--secondary-text-muted);
+
+  --breakpoint-lg: 66rem;
 }
 
 /* :root {

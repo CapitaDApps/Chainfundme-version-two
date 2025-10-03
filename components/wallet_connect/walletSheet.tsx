@@ -37,7 +37,7 @@ function WalletSheet({ children }: { children: ReactNode }) {
 
   return (
     <Sheet>
-      <SheetTrigger>{children}</SheetTrigger>
+      <SheetTrigger className="w-full text-left">{children}</SheetTrigger>
 
       <SheetContent className="hidden sm:block h-[95%] top-[3%] right-3 bg-sidebar border-[1px] border-white/20 rounded-2xl">
         <WalletSheetContent
@@ -68,7 +68,7 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
 
   return (
     <Sheet>
-      <SheetTrigger>{children}</SheetTrigger>
+      <SheetTrigger className="w-full text-left">{children}</SheetTrigger>
 
       <SheetContent
         side="bottom"

@@ -24,8 +24,8 @@ function Profileform({ onSave }: ProfileformProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-row justify-between items-center py-16 px-4 md:px-16">
-        <div className="border border-[#E2E2E2] rounded-2xl bg-[#F4F9FC] md:p-6 w-full lg:w-[70%] space-y-6">
+      <div className="flex flex-row justify-between items-center py-24 md:py-16 px-4 md:px-14 lg:px-20">
+        <div className="border border-[#E2E2E2] rounded-2xl bg-[#F4F9FC] w-full space-y-6">
           <CoverImage control={control} />
           <AvatarImage control={control} />
           <ProfileInputs control={control} />
@@ -38,14 +38,14 @@ function Profileform({ onSave }: ProfileformProps) {
           </Button>
         </div>
 
-        <div className="hidden lg:flex flex-col items-center space-y-4">
+        {/* <div className="hidden lg:flex flex-col items-center space-y-4">
           <ProgressIndicator value={50} size={130} />
           <span>
             <p className="text-xs text-center max-w-[200px] text-gray-600">
               Complete your Profile to attain High Trust Score
             </p>
           </span>
-        </div>
+        </div> */}
       </div>
     </form>
   );

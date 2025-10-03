@@ -5,18 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { usePrivy } from "@privy-io/react-auth";
-import { ChevronDown } from "lucide-react";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useEffect, useState } from "react";
 import ToggleNotificationbar from "./ToggleNotificationbar";
+import UserDropdownMenu from "./userDropdownMenu";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -28,40 +22,59 @@ function Header() {
   const { user } = usePrivy();
   const connected = !!user;
 
-  return (
-    <div className="flex items-center justify-center pt-8 px-14 lg:px-20">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-none bg-[#F5F7FA] rounded-4xl w-full max-w-7xl">
-        <div>
-          <Image
-            src="/layout/appicon.png"
-            alt="App Icon"
-            width={32}
-            height={32}
-          />
-        </div>
-        <div
-          className={`flex items-center justify-center gap-x-6 lg:gap-x-12 ${plusJakartaSans.className}`}
-        >
-          {menuItems.slice(0, -2).map((link) => {
-            const isActive =
-              link.route === "/"
-                ? pathname.startsWith("/explore")
-                : pathname === link.route;
+  const [scroll, setScroll] = useState(0);
 
-            return (
-              <Link
-                key={link.route}
-                href={link.route}
-                className={`relative text-sm lg:text-[16px] font-medium ${
-                  isActive
-                    ? "text-[#2379bc]"
-                    : "text-[#2379bc] hover:text-[#2379bc]/90"
-                }`}
-              >
-                {link.title}
-              </Link>
-            );
-          })}
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      console.log(scrollY);
+      setScroll(scrollY);
+    });
+  }, []);
+
+  return (
+    <div
+      className={`${
+        scroll > 100
+          ? "fixed w-full z-50 bg-[#F5F7FA] py-5 shadow-xl"
+          : "pt-8 px-14 lg:px-20"
+      } flex items-center justify-center transition-all duration-500  px-14 lg:px-20`}
+    >
+      <div
+        className={`flex items-center justify-between border-b border-none  w-full ${
+          scroll > 100 ? "rounded-none" : "rounded-4xl px-8 py-4 bg-[#F5F7FA]"
+        }`}
+      >
+        <div className="flex items-center gap-8 lg:gap-14">
+          <Image
+            src="/layout/Logo.png"
+            alt="App Icon"
+            width={200}
+            height={30}
+            className="w-36"
+          />
+          <div
+            className={`flex items-center justify-center gap-x-4 lg:gap-x-10 ${plusJakartaSans.className}  mt-1`}
+          >
+            {menuItems.slice(0, -2).map((link) => {
+              const isActive = pathname == link.route;
+
+              return (
+                <Link
+                  key={link.route}
+                  href={link.route}
+                  className={`relative text-xs lg:text-[16px] font-medium `}
+                >
+                  <p
+                    className={` hover:text-blue-700 ${
+                      isActive ? "text-blue-700" : "text-secondary-text"
+                    }`}
+                  >
+                    {link.title}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <div className="flex items-center gap-x-4 text-gray-600">
@@ -69,23 +82,7 @@ function Header() {
             <>
               <ToggleNotificationbar />
 
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <div className="flex items-center space-x-1 cursor-pointer">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/layout/img3.png" alt="Profile" />
-                      <AvatarFallback>TK</AvatarFallback>
-                    </Avatar>
-
-                    <ChevronDown className="w-4 h-4" />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>
-                    <CreateWalletButton />
-                  </DropdownMenuLabel>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserDropdownMenu />
             </>
           ) : (
             <CreateWalletButton />
