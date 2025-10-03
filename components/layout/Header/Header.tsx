@@ -45,13 +45,15 @@ function Header() {
         }`}
       >
         <div className="flex items-center gap-8 lg:gap-14">
-          <Image
-            src="/layout/Logo.png"
-            alt="App Icon"
-            width={200}
-            height={30}
-            className="w-36"
-          />
+          <Link href={"/"}>
+            <Image
+              src="/layout/Logo.png"
+              alt="App Icon"
+              width={200}
+              height={30}
+              className="w-36"
+            />
+          </Link>
           <div
             className={`flex items-center justify-center gap-x-4 lg:gap-x-10 ${plusJakartaSans.className}  mt-1`}
           >

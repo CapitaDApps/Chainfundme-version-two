@@ -42,7 +42,7 @@ function ExplorePageClient() {
 
       {/* Campaigns */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 px-4 sm:px-10 lg:px-14 xl:px-20 mt-24 mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-12 md:gap-8 lg:gap-12 px-4 sm:px-10 lg:px-14 xl:px-20 mt-24 mb-20">
         <div className="lg:col-span-2">
           <Image
             src={"/explore/explore-1.jpg"}
@@ -75,7 +75,7 @@ function ExplorePageClient() {
             </div>
           </div>
 
-          <div className="text-xl sm:text-2xl lg:text-[40px] mt-12 md:mt-16 text-[#292933] italic">
+          <div className="hidden md:block text-xl sm:text-2xl lg:text-[40px] mt-12 md:mt-16 text-[#292933] italic">
             <p>
               &quot; The Future of crowdfunding is Borderless and Frictionless
               &quot;
@@ -151,6 +151,14 @@ function ExplorePageClient() {
                 <p>$100,000</p>
               </div>
             </div>
+          </div>
+
+          <div className="block md:hidden text-xl sm:text-2xl lg:text-[40px] mt-12 md:mt-16 text-[#292933] italic">
+            <p>
+              &quot; The Future of crowdfunding is Borderless and Frictionless
+              &quot;
+            </p>
+            <p className="mt-4 md:mt-9">- Brainmaniac</p>
           </div>
         </div>
       </div>

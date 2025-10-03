@@ -1,5 +1,4 @@
 import { clsx, type ClassValue } from "clsx";
-import { toast } from "react-toastify";
 import { twMerge } from "tailwind-merge";
 
 import {
@@ -8,6 +7,7 @@ import {
   differenceInMinutes,
   isPast,
 } from "date-fns";
+import { toast } from "sonner";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,11 +23,7 @@ export function truncateAddr(addr: string | undefined, length = 5) {
 export const handleCopyAddress = async (address: string | undefined) => {
   if (!address) return;
   await navigator.clipboard.writeText(address);
-  toast.success("Address copied to clipboard", {
-    autoClose: 2000,
-    hideProgressBar: true,
-    closeOnClick: true,
-  });
+  toast.success("Address copied to clipboard");
 };
 
 export async function urlToFile(url: string, filename: string): Promise<File> {

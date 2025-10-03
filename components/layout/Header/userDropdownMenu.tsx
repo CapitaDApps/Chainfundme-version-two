@@ -24,13 +24,13 @@ function UserDropdownMenu() {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 mr-2">
-        <DropdownMenuLabel className="w-full rounded-md hover:bg-gray-100 hover:py-1 transition-all duration-200">
+        <DropdownMenuLabel className="w-full rounded-md hover:bg-gray-100 hover:py-2 transition-all duration-200">
           <CreateWalletButton>
             <div className="cursor-pointer">My wallet</div>
           </CreateWalletButton>
         </DropdownMenuLabel>
 
-        <DropdownMenuItem className="rounded-md hover:bg-gray-100 hover:py-1 hover:px-2 transition-all duration-200">
+        <DropdownMenuItem>
           <Link href={"/profile"} className="w-full">
             Profile
           </Link>

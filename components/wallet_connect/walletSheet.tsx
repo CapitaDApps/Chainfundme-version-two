@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { tokenNames } from "@/services/contracts/tokensConfig";
 import { handleCopyAddress, truncateAddr } from "@/lib/utils";
 import { usePrivy } from "@privy-io/react-auth";
-import { Copy, WalletIcon } from "lucide-react";
+import { Copy, Settings, WalletIcon } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
 import { MoonLoader } from "react-spinners";
@@ -21,6 +21,7 @@ import { useWalletBalance } from "./hooks/useWalletBalance";
 import TransferDialog from "./transferDialog";
 import FundWalletDialog from "./fundWalletDialog";
 import { IToken } from "@/types/token.types";
+import UserWalletSettings from "./userWalletSettings";
 
 function WalletSheet({ children }: { children: ReactNode }) {
   const { user } = usePrivy();
@@ -72,7 +73,7 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
 
       <SheetContent
         side="bottom"
-        className="bg-sidebar border-t-[1px] border-white/20 rounded-3xl block sm:hidden"
+        className="bg-sidebar border-t-[1px] border-white/20 rounded-3xl block sm:hidden pb-10"
       >
         <WalletSheetContent
           address={address}
@@ -146,8 +147,13 @@ function WalletSheetContent({
           </div>
         </div>
       </div>
+      <div className="text-right px-3 mt-2">
+        <UserWalletSettings>
+          <Settings />
+        </UserWalletSettings>
+      </div>
 
-      <div className="mt-8 px-3">
+      <div className="mt-2 px-3">
         <div>
           <p className="text-gray-600 font-bold">Portfolio</p>
         </div>
