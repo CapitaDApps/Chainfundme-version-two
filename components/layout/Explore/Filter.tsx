@@ -3,7 +3,7 @@ import DropdownFilter from "./DropdownFilter";
 
 function Filter() {
   return (
-    <div className="space-x-4">
+    <div className="">
       {/* <DropdownCategory /> */}
       <DropdownFilter />
     </div>

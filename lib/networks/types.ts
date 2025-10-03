@@ -17,4 +17,5 @@ export type ChainType = {
   image: string;
   symbol: string;
   networkId: NetworkId;
+  testnet: boolean;
 };

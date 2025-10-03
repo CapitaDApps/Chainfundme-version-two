@@ -39,11 +39,12 @@ function Campaignsdraft() {
   const unpublishedCampaigns = userCampaigns?.filter(
     (campaign) => !campaign.published
   );
+
   const activeCampaign = userCampaigns?.filter(
     (campaign) => isFuture(new Date(campaign.endDate)) && campaign.published
   );
-  const completed = userCampaigns?.filter((campaign) =>
-    isPast(new Date(campaign.endDate))
+  const completed = userCampaigns?.filter(
+    (campaign) => isPast(new Date(campaign.endDate)) && campaign.published
   );
 
   const itemsPerPage = 6;
@@ -87,8 +88,8 @@ function Campaignsdraft() {
     const totalPages = Math.ceil(CategorisItem.length / itemsPerPage);
 
     return (
-      <div className="flex justify-center flex-col items-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(3,minmax(330px,1fr))] gap-6 gap-x-20 max-w-6xl ">
+      <div className="flex justify-center flex-col items-center gap-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {campaignsToShow?.map((campaign) => (
             <Draftcard
               key={campaign.cmid}
@@ -99,7 +100,7 @@ function Campaignsdraft() {
         </div>
 
         {totalPages > 1 && (
-          <Pagination>
+          <Pagination className="mb-10">
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
@@ -158,7 +159,7 @@ function Campaignsdraft() {
                      data-[state=active]:bg-transparent 
                      focus-visible:ring-0 cursor-pointer 
                      md:px-4 px-2 text-[11px] font-bold md:text-[16px]
-                     text-[#6B6B65] whitespace-nowrap"
+                     text-[#6B6B65]/50 whitespace-nowrap"
                   >
                     <span className="md:hidden">
                       {list.value === "draft"
@@ -169,10 +170,6 @@ function Campaignsdraft() {
                     </span>
                     <span className="hidden md:inline">{list.name}</span>
                   </TabsTrigger>
-
-                  {index < campaignlist.length - 1 && (
-                    <div className="w-px h-10 bg-gray-300 md:block"></div>
-                  )}
                 </React.Fragment>
               ))}
             </TabsList>

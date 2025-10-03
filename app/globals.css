@@ -97,6 +97,9 @@ a {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-secondary-text: var(--secondary-text);
+  --color-secondary-text-muted: var(--secondary-text-muted);
 }
 
 /* :root {
@@ -143,6 +146,9 @@ a {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --secondary-text: #292933;
+  --secondary-text-muted: #8b929e;
 }
 
 .dark {
