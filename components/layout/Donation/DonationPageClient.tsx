@@ -8,14 +8,14 @@ import Filter from "../Explore/Filter";
 function DonationPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
-    <div className="p-6 pt-16">
+    <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20">
       {isModalOpen && (
         <DonationModel
           text="Join or Sign In to Access Your Donations"
           onClose={() => setIsModalOpen(false)}
         />
       )}
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center mt-10">
         <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
           <span className="block md:inline">

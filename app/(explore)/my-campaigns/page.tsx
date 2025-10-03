@@ -1,10 +1,10 @@
+import Loader from "@/components/layout/Loader";
 import MyCampaignsPage from "@/components/layout/MyCampaign/MyCampaignPage";
-import CustomSpinner from "@/components/ui/customSpinner";
 import { Suspense } from "react";
 
 export default function ExploreCampaignPage() {
   return (
-    <Suspense fallback={<CustomSpinner />}>
+    <Suspense fallback={<Loader />}>
       <MyCampaignsPage />
     </Suspense>
   );

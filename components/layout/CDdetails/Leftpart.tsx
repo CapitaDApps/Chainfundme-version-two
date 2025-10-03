@@ -41,7 +41,7 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
 
   return (
     <div>
-      <div className="w-full h-[500px]">
+      <div className="w-full h-[350px] md:h-[400px] lg:h-[500px]">
         <Image
           src={campaign.coverImage}
           alt=""

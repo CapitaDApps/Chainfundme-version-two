@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import CustomSpinner from "@/components/ui/customSpinner";
 import { useCampaign } from "@/services/api/hooks/campaign/useCampaign";
 import { useRouter } from "next/navigation";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import Loader from "../Loader";
 import Comments from "./Comment";
 import Leftpart from "./Leftpart";
 import Rightpart from "./Rightpart";
@@ -14,7 +14,7 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   const { campaign, retrievingCampaign, error } = useCampaign(campaignId);
 
   if (retrievingCampaign) {
-    return <CustomSpinner />;
+    return <Loader />;
   }
 
   if (error) {
@@ -46,7 +46,7 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   //   (campaign.currentAmount / campaign.targetAmount) * 100;
 
   return (
-    <div className="px-4 lg:px-20">
+    <div className="px-4 sm:px-10 md:px-14 lg:px-20 mt-20 md:mt-0">
       <span
         className="flex md:hidden flex-row gap-x-2 text-[#2C2C2C] font-semibold pt-3 text-sm cursor-pointer items-center "
         onClick={() => router.back()}

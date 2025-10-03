@@ -1,3 +1,4 @@
+import { FunderDocument } from ".";
 import { ReturnCampaignDocument } from "./campaign.types";
 
 export type UserDocument = {
@@ -8,7 +9,7 @@ export type UserDocument = {
   profilePicture: string;
   bio: string;
   createdCampaigns: ReturnCampaignDocument[];
-  supportedCampaigns: string[];
+  supportedCampaigns: FunderDocument[];
   role: string;
   isVerified: boolean;
   socialLinks: Map<string, string>;

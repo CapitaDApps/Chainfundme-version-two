@@ -45,7 +45,7 @@ export const formatTimeLeft = (endDate: string) => {
 
   // 1. Check if the event has already passed
   if (isPast(end)) {
-    return "Event has ended";
+    return "Ended";
   }
 
   // 2. Calculate the difference in days

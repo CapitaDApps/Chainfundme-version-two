@@ -10,7 +10,7 @@ import { useState } from "react";
 function MyCampaignsPage() {
   const [isModalOpen, setIsModalOpen] = useState(true);
   return (
-    <div className="pt-16 px-4 md:px-14 lg:px-20">
+    <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20">
       {isModalOpen && (
         <DonationModel
           text="Join or Sign In to Access Your Campaigns"

@@ -1,10 +1,5 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useState } from "react";
-import Draftcard from "../Card";
-import { CategorisItem } from "@/lib/CategoriesContent";
-import EmptyModel from "./EmptyModel";
 import {
   Pagination,
   PaginationContent,
@@ -12,13 +7,17 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
-import CustomSpinner from "@/components/ui/customSpinner";
 import { ReturnCampaignDocument } from "@/types/api";
 import { isFuture, isPast } from "date-fns";
+import React, { useState } from "react";
+import Draftcard from "../Card";
+import Loader from "../Loader";
+import EmptyModel from "./EmptyModel";
 
 function Campaignsdraft() {
-  const campaignlist = [
+  const campaignTabs = [
     { name: "Drafts", value: "draft" },
     { name: "Active ", value: "active" },
     { name: "Ended ", value: "completed" },
@@ -32,7 +31,7 @@ function Campaignsdraft() {
 
   const { userProfile, fetchingProfile } = useUserProfile();
 
-  if (fetchingProfile) return <CustomSpinner />;
+  if (fetchingProfile) return <Loader />;
 
   const userCampaigns = userProfile?.createdCampaigns;
 
@@ -47,7 +46,7 @@ function Campaignsdraft() {
     (campaign) => isPast(new Date(campaign.endDate)) && campaign.published
   );
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   const handlePageChange = (tab: string, newPage: number) => {
     setPages((prev) => ({ ...prev, [tab]: newPage }));
@@ -57,7 +56,7 @@ function Campaignsdraft() {
     status: "draft" | "active" | "completed",
     campaigns: ReturnCampaignDocument[] | undefined
   ) => {
-    if (campaigns?.length === 0) {
+    if (!campaigns || campaigns?.length === 0) {
       return (
         <EmptyModel
           src="/layout/can.png"
@@ -83,14 +82,14 @@ function Campaignsdraft() {
     const currentPage = pages[status];
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const campaignsToShow = campaigns?.slice(startIndex, endIndex);
+    const campaignsToShow = campaigns.slice(startIndex, endIndex);
 
-    const totalPages = Math.ceil(CategorisItem.length / itemsPerPage);
+    const totalPages = Math.ceil(campaigns.length / itemsPerPage);
 
     return (
       <div className="flex justify-center flex-col items-center gap-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          {campaignsToShow?.map((campaign) => (
+          {campaignsToShow.map((campaign) => (
             <Draftcard
               key={campaign.cmid}
               campaign={campaign}
@@ -145,47 +144,38 @@ function Campaignsdraft() {
   };
 
   return (
-    <div className="pt-6">
-      <div className="flex flex-row items-center justify-center gap-x-12">
-        <Tabs defaultValue="draft" className="w-full">
-          <div className="flex justify-center">
-            <TabsList className="flex-nowrap">
-              {campaignlist.map((list, index) => (
-                <React.Fragment key={list.value}>
-                  <TabsTrigger
-                    value={list.value}
-                    className="bg-transparent border-none shadow-none 
+    <div className="mt-12 mb-20">
+      <Tabs defaultValue="draft" className="w-full">
+        <TabsList className="flex-nowrap">
+          {campaignTabs.map((tab) => (
+            <React.Fragment key={tab.value}>
+              <TabsTrigger
+                value={tab.value}
+                className="bg-transparent border-none shadow-none 
                      data-[state=active]:text-[#2379BC] 
                      data-[state=active]:bg-transparent 
                      focus-visible:ring-0 cursor-pointer 
-                     md:px-4 px-2 text-[11px] font-bold md:text-[16px]
-                     text-[#6B6B65]/50 whitespace-nowrap"
-                  >
-                    <span className="md:hidden">
-                      {list.value === "draft"
-                        ? "Draft"
-                        : list.value === "active"
-                        ? "Active"
-                        : "Completed"}
-                    </span>
-                    <span className="hidden md:inline">{list.name}</span>
-                  </TabsTrigger>
-                </React.Fragment>
-              ))}
-            </TabsList>
-          </div>
+                     md:px-4 px-2 text-sm font-bold md:text-[16px]
+                     text-[#6B6B65]/50 whitespace-nowrap mt-8"
+              >
+                <span>{tab.name}</span>
+              </TabsTrigger>
+            </React.Fragment>
+          ))}
+        </TabsList>
 
-          <TabsContent value="draft" className="w-full pt-6">
+        <div className="mt-8">
+          <TabsContent value="draft" className="w-full">
             {renderCampaigns("draft", unpublishedCampaigns)}
           </TabsContent>
-          <TabsContent value="active" className="w-full pt-6">
+          <TabsContent value="active" className="w-full ">
             {renderCampaigns("active", activeCampaign)}
           </TabsContent>
-          <TabsContent value="completed" className="w-full pt-6">
+          <TabsContent value="completed" className="w-full">
             {renderCampaigns("completed", completed)}
           </TabsContent>
-        </Tabs>
-      </div>
+        </div>
+      </Tabs>
     </div>
   );
 }
