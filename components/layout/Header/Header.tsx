@@ -44,7 +44,7 @@ function Header() {
         }`}
       >
         <div className="flex items-center gap-8 lg:gap-14">
-          <Link href={"/"}>
+          <Link href={"/explore"}>
             <Image
               src="/layout/Logo.png"
               alt="App Icon"
