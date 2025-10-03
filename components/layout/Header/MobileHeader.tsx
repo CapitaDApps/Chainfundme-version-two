@@ -58,7 +58,7 @@ function MobileHeader() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/">
+          <Link href="/explore">
             <div className="flex">
               <Image
                 src="/layout/Logo.png"

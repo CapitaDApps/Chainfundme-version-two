@@ -15,7 +15,7 @@ function DonationPageClient() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
-      <div className="flex flex-col items-center justify-center mt-10">
+      <div className="flex flex-col items-center justify-center mt-28 md:mt-18">
         <h1 className="text-sidebar-content text-center leading-tight mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}
           <span className="block md:inline">
