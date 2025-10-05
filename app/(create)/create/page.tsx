@@ -72,7 +72,7 @@ export default function MultiStepForm() {
     if (step === 1) fieldsToValidate = ["cover", "supportingImages", "twitter"];
     if (step === 2) fieldsToValidate = ["bio"];
     if (step === 3) fieldsToValidate = ["amount", "tokens", "chain"];
-    if (step === 4) fieldsToValidate = ["agree"];
+    if (step === 4) fieldsToValidate = ["agree", "read"];
 
     const isValid = await methods.trigger(fieldsToValidate);
 

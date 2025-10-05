@@ -19,8 +19,11 @@ export interface FundraisingCardProps {
 }
 
 //DraftCard.tsx
-
-export interface DraftCardProps {
+export type FundedCampaignType = {
   campaign: ReturnCampaignDocument;
+  amount?: number;
+};
+export interface DraftCardProps {
+  campaignData: FundedCampaignType;
   status: "draft" | "active" | "completed" | "active";
 }

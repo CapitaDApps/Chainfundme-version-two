@@ -81,3 +81,8 @@ export const allowedChains: ChainType[] = [
     testnet: true,
   },
 ];
+
+export function getChainImage(networkId: number) {
+  const chain = allowedChains.find((chain) => chain.networkId === networkId);
+  return chain?.image || "";
+}

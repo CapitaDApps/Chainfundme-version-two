@@ -74,7 +74,10 @@ const Step4Schema = z.object({
 });
 const Step5Schema = z.object({
   agree: z.boolean().refine((val) => val === true, {
-    message: "You must accept terms",
+    message: "You must accept terms and conditions",
+  }),
+  read: z.boolean().refine((val) => val === true, {
+    message: "You must read terms and conditions",
   }),
 });
 

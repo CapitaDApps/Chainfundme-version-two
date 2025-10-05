@@ -92,7 +92,7 @@ function Campaignsdraft() {
           {campaignsToShow.map((campaign) => (
             <Draftcard
               key={campaign.cmid}
-              campaign={campaign}
+              campaignData={{ campaign }}
               status={status}
             />
           ))}

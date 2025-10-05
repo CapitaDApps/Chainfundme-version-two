@@ -86,8 +86,8 @@ const Footer = () => {
                 { href: "", label: "Help Center" },
                 { href: "", label: "FAQs" },
                 { href: "", label: "Contact Us" },
-              ].map((link) => (
-                <li key={link.href}>
+              ].map((link, i) => (
+                <li key={i}>
                   <Link
                     href={link.href}
                     className="text-gray-200 hover:text-white flex items-center text-sm md:text-base"

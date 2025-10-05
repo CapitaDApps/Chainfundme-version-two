@@ -38,11 +38,27 @@ export async function urlToFile(url: string, filename: string): Promise<File> {
   return new File([blob], filename, { type: blob.type });
 }
 
-export const formatTimeLeft = (endDate: string) => {
+export const formatTimeLeft = (startDate: string, endDate: string) => {
   // Ensure the inputs are valid Date objects
-  const end = new Date(endDate);
-  const start = new Date();
 
+  let end = new Date(endDate);
+  const start = new Date(startDate);
+
+  const now = new Date();
+
+  if (start.getTime() > now.getTime()) {
+    end = start;
+    const message = `starts in ${formatTimeMessage(end, now)
+      .replace("left", "")
+      .toLowerCase()
+      .trimEnd()}`;
+    return message;
+  }
+  const message = formatTimeMessage(end, now);
+  return message;
+};
+
+function formatTimeMessage(end: Date, start: Date) {
   // 1. Check if the event has already passed
   if (isPast(end)) {
     return "Ended";
@@ -71,7 +87,7 @@ export const formatTimeLeft = (endDate: string) => {
 
   // 5. If less than a minute is left
   return "Less than a minute left";
-};
+}
 
 export function formatPrice(num: number) {
   const formatter = new Intl.NumberFormat("en-US", {
