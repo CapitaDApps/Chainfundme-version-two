@@ -26,9 +26,7 @@ function MyCampaignsPage() {
           Manage&nbsp;{" "}
           <span className="block md:inline">
             Your&nbsp;{" "}
-            <span className="text-[#003DEF] font-semibold">
-              Campaigns&nbsp;
-            </span>{" "}
+            <span className="text-primary font-semibold">Campaigns&nbsp;</span>{" "}
           </span>
         </h1>
         <div className="hidden md:block w-full max-w-3xl">

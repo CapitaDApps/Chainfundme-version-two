@@ -4,7 +4,7 @@ import Image from "next/image";
 function HowItWorksPage() {
   return (
     <div className="relative mb-20 mt-6 md:mt-0">
-      <div className="h-[100dvh] sm:min-h-fit px-4 sm:px-10 md:px-0 py-24 md:py-18 md:mt-8">
+      <div className="min-h-[100dvh] sm:min-h-fit px-4 sm:px-10 md:px-0 py-24 md:py-18 md:mt-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:gap-10 lg:gap-24 md:px-0 md:pl-14 lg:pl-20 text-center md:text-left ">
           <div className="">
             <h1 className="text-[#1038A2] text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold pb-6">
@@ -33,7 +33,7 @@ function HowItWorksPage() {
         </div>
       </div>
       <div className="px-4 sm:px-10 md:px-14 lg:px-20 py-10 text-lg">
-        <h1 className="font-semibold">
+        <h1 className="font-semibold text-2xl">
           Here’s what to expect when fundraising on ChainFundMe:
         </h1>
 

@@ -202,7 +202,7 @@ export default function MultiStepForm() {
         <FormProvider {...methods}>
           <Form {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="">
-              {steps[step]}
+              <div className="max-w-3xl mx-auto">{steps[step]}</div>
               {/* <StepTwo key="s2" /> */}
 
               <div className="flex items-center mt-4 justify-center gap-4 pt-4">

@@ -1,20 +1,16 @@
 "use client";
 import { FormSchema } from "@/lib/schemas";
+import { ArrowUpRightFromSquare } from "lucide-react";
 import Image from "next/image";
-import React from "react";
 import { useFormContext } from "react-hook-form";
 import z from "zod";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
 import { Checkbox } from "../ui/checkbox";
-import UploadImages from "./UplodImages";
-import UploadVideo from "./UploadVideo";
+import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Progress } from "../ui/progress";
 import UploadDocuments from "./UploadDocuments";
+import UploadVideo from "./UploadVideo";
+import UploadImages from "./UplodImages";
+import Link from "next/link";
 
 export default function StepFive() {
   type FormData = z.infer<typeof FormSchema>;
@@ -100,7 +96,7 @@ export default function StepFive() {
         </div>
 
         {/* Campaign Description */}
-        <p className="font-normal text-[#262626] text-xs md:text-sm leading-relaxed whitespace-pre-line">
+        <p className="font-normal bg-gray-100 px-4 py-6 rounded-lg max-h-[200px] overflow-y-auto text-[#262626] text-xs md:text-sm leading-relaxed whitespace-pre-line overflow-clip mb-5">
           {campaignData.bio}
         </p>
 
@@ -136,14 +132,9 @@ export default function StepFive() {
             <p>Progress</p>
             <p>Target Amount: {campaignData.amount} USD</p>
           </div>
-          <div
-            style={
-              {
-                "--progress-width": `${20}%`,
-              } as React.CSSProperties
-            }
-            className={`w-full transition-all duration-500 h-2 after:rounded-2xl rounded-2xl line`}
-          />
+
+          <Progress value={20} />
+
           <div className="flex justify-between items-center gap-2">
             <p className="text-xs text-[#111111] font-normal">
               Amount raised: {0} USD
@@ -211,9 +202,19 @@ export default function StepFive() {
             </FormControl>
             <div className="space-y-1 leading-none text-xs">
               <FormLabel className="text-xs">
-                I have reviewed campaign creation.
+                I have reviewed Chainfundme{" "}
+                <span className="text-primary-accent hover:underline cursor-pointer">
+                  <Link href={"/"} target="_blank">
+                    terms and conditions
+                  </Link>
+                </span>
+                <span className="text-primary-accent cursor-pointer">
+                  <Link href={"/"} target="_blank">
+                    {" "}
+                    <ArrowUpRightFromSquare className="w-4 h-4" />
+                  </Link>
+                </span>
               </FormLabel>
-              <FormMessage />
             </div>
           </FormItem>
         )}

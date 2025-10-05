@@ -68,7 +68,7 @@ export default function Bottom({
                 </div>
                 <div
                   onClick={() => setStep(bot.step - 1)}
-                  className="border bottom-2 absolute w-[90%] cursor-pointer right-2 left- border-[#D1D5DB] rounded-full p-1 text-xs text-center text-[#6B7280] "
+                  className="border bottom-2 absolute w-[90%] cursor-pointer right-2 left- border-[#D1D5DB] rounded-full p-1 text-xs text-center text-[#6B7280]"
                 >
                   {bot.butName}
                 </div>

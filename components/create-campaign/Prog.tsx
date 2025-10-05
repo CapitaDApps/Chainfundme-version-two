@@ -2,6 +2,7 @@
 
 import { Check } from "lucide-react";
 import clsx from "clsx";
+import { Button } from "../ui/button";
 
 type Step = {
   label: string;
@@ -14,7 +15,7 @@ interface StepperProps {
 
 export function Prog({ steps, currentStep }: StepperProps) {
   return (
-    <div className="w-full pb-10 lg:pb-16 space-y-3">
+    <div className="w-full pb-8 space-y-3">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => {
           const isCompleted = index < currentStep;
@@ -61,9 +62,11 @@ export function Prog({ steps, currentStep }: StepperProps) {
           );
         })}
       </div>
-      <p className="underline text-[#878787] text-end text-xs  lg:hidden  max-w-3xl mx-auto">
-        Save to draft
-      </p>
+      <div className="flex justify-end lg:hidden max-w-3xl mx-auto mt-8">
+        <Button variant={"outline"} className="text-sm">
+          Save to draft
+        </Button>
+      </div>
     </div>
   );
 }

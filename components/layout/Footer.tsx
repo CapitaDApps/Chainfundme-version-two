@@ -127,11 +127,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col  mt-16 mb-12 w-full">
-          <p className="text-[#808080] font-bold text-lg md:text-[24px] md:text-center">
+        <div className="flex flex-col mt-16 md:mt-20 mb-12 w-full">
+          <p className="text-[#808080] font-bold text-lg md:text-[24px] lg:text-center">
             Our partners at ChainFundMe
           </p>
-          <div className="mt-4 md:mt-8 flex flex-wrap gap-8 lg:gap-10 md:max-w-[655px] lg:max-w-fit mx-auto md:justify-center">
+          <div className="mt-4 md:mt-6 flex flex-wrap gap-8 lg:gap-10 md:max-w-[655px] lg:max-w-fit lg:mx-auto lg:justify-center">
             {partners.map((partner, index) => (
               <div key={index} className="flex items-center gap-2">
                 <Image

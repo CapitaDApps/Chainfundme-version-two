@@ -36,7 +36,7 @@ function Header() {
         scroll > 100
           ? "fixed w-full z-50 bg-[#F5F7FA] py-5 shadow-xl"
           : "pt-8 px-14 lg:px-20"
-      } flex items-center justify-center transition-all duration-500  px-14 lg:px-20`}
+      } flex items-center justify-center transition-all duration-500  px-14 lg:px-20 max-w-[1500px]`}
     >
       <div
         className={`flex items-center justify-between border-b border-none  w-full ${

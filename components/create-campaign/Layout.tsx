@@ -10,12 +10,12 @@ export default function Layout({
   step: number;
 }) {
   return (
-    <div className="flex h-full lg:h-screen w-full max-w-[1500px]  mx-auto">
+    <div className="flex h-full lg:h-screen w-full max-w-[1500px] mx-auto bg-gray-100">
       <FormUpdate step={step} />
       <div className="bg-white  flex-1 lg:rounded-tl-[150px] ">
         <div className="lg:pt-8 lg:px-16">
           <Header step={step} />
-          <div className="  lg:overflow-y-scroll no-scrollbar  pb-8 pt-24 lg:pt-0 lg:h-[73vh]  px-4 ">
+          <div className="  lg:overflow-y-scroll no-scrollbar  pb-8 pt-24 lg:pt-0 lg:h-[73vh] px-5 sm:px-8">
             {children}
           </div>
         </div>
