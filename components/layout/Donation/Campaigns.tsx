@@ -15,6 +15,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { isFuture, isPast } from "date-fns";
+import { FundedCampaignType } from "@/types/campaign";
 
 function Campaigns() {
   const campaignTabs = [
@@ -34,18 +35,17 @@ function Campaigns() {
 
   const userSupportedCampaigns = userProfile?.supportedCampaigns;
 
-  console.log({ userSupportedCampaigns });
-
-  const supportedCampaigns = userSupportedCampaigns?.map(
-    (campaign) => campaign.campaign
-  );
+  const supportedCampaigns = userSupportedCampaigns?.map((campaign) => ({
+    campaign: campaign.campaign,
+    amount: campaign.amountInUsd,
+  }));
 
   const activeCampaigns = supportedCampaigns?.filter((campaign) =>
-    isFuture(new Date(campaign.endDate))
+    isFuture(new Date(campaign.campaign.endDate))
   );
 
   const endedCampaigns = supportedCampaigns?.filter((campaign) =>
-    isPast(new Date(campaign.endDate))
+    isPast(new Date(campaign.campaign.endDate))
   );
 
   const itemsPerPage = 10;
@@ -56,7 +56,7 @@ function Campaigns() {
 
   const renderCampaigns = (
     status: "active" | "completed",
-    campaigns: ReturnCampaignDocument[] | undefined
+    campaigns: FundedCampaignType[] | undefined
   ) => {
     if (!campaigns || campaigns?.length === 0) {
       return (
@@ -91,8 +91,8 @@ function Campaigns() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {campaignsToShow.map((campaign) => (
             <Draftcard
-              key={campaign.cmid}
-              campaign={campaign}
+              key={campaign.campaign.cmid}
+              campaignData={campaign}
               status={status}
             />
           ))}

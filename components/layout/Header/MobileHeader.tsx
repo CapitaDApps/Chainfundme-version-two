@@ -11,6 +11,7 @@ import { useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { Menu } from "lucide-react";
 import UserDropdownMenu from "./userDropdownMenu";
+import { Button } from "@/components/ui/button";
 
 function MobileHeader() {
   const pathname = usePathname();
@@ -31,7 +32,7 @@ function MobileHeader() {
             <SheetTrigger>
               <Menu className="cursor-pointer w-5 h-5 text-secondary-text mt-1" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-64">
+            <SheetContent side="left" className="w-64 px-4">
               <div className="flex flex-col gap-2 w-full mt-14">
                 {menuItems.map((item) => {
                   return (
@@ -40,7 +41,7 @@ function MobileHeader() {
                       href={item.route}
                       onClick={handleClose}
                       className={`
-                          flex items-center px-4 py-3 gap-3 cursor-pointer rounded-md text-[12px]
+                          flex items-center py-3 gap-3 cursor-pointer rounded-md text-xs
                           hover:text-primary text-[#666666] transition-colors duration-200
                           ${
                             slug === item.slug
@@ -54,6 +55,9 @@ function MobileHeader() {
                     </Link>
                   );
                 })}
+                <Link href={"/create"}>
+                  <Button>Create Campaign</Button>
+                </Link>
               </div>
             </SheetContent>
           </Sheet>

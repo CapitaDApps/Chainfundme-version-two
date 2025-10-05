@@ -1,22 +1,26 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { formatPrice, formatTimeLeft } from "@/lib/utils";
 import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
-import { IoIosCheckmarkCircle } from "react-icons/io";
 import MobileDraftCard from "./MobileCard";
-import { formatPrice, formatTimeLeft } from "@/lib/utils";
+import { getChainImage } from "@/lib/networks/config";
 
-const Draftcard = ({ campaign, status }: DraftCardProps) => {
+const Draftcard = ({ campaignData, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
   const router = useRouter();
 
   const handleClick = (campaignId: string) => {
     router.push(`/campaign/${campaignId}`);
   };
+  const campaign = campaignData.campaign;
+  const amountFunded = campaignData.amount;
+
+  const chains = campaign.chains.map((chain) => getChainImage(chain.networkId));
 
   return (
     <>
@@ -45,32 +49,24 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
                     : "text-[#666666]"
                 }`}
               >
-                {formatTimeLeft(campaign.endDate)}
+                {formatTimeLeft(campaign.startDate, campaign.endDate)}
               </div>
 
               <h3 className="font-bold line-clamp-1 mb-2">{campaign.title}</h3>
 
-              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2  pb-2 ">
-                {campaign.tokens.map((token) => (
-                  <Avatar className="h-6 w-6" key={token.address}>
-                    <AvatarImage src={token.imagePath} alt={token.name} />
-                    <AvatarFallback>
-                      {token.name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                ))}
-                {/* <Avatar className="h-6 w-6">
-                  <AvatarImage src="/layout/12.png" alt="CLOUDPLEXO" />
-                  <AvatarFallback>CL</AvatarFallback>
-                </Avatar>
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="/layout/13.png" alt="JAWGULAR" />
-                  <AvatarFallback>JA</AvatarFallback>
-                </Avatar>
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="/layout/14.png" alt="FRENCHIE" />
-                  <AvatarFallback>FR</AvatarFallback>
-                </Avatar> */}
+              <div className="flex justify-between items-center pb-1">
+                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+                  {chains.map((chain, i) => (
+                    <Avatar className="h-5 w-5" key={i}>
+                      <AvatarImage src={chain} alt="" />
+                    </Avatar>
+                  ))}
+                </div>
+                {amountFunded && (
+                  <p className="text-xs text-green-600">
+                    Donated ${formatPrice(amountFunded)}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -127,7 +123,7 @@ const Draftcard = ({ campaign, status }: DraftCardProps) => {
       </article>
 
       <div className="block md:hidden">
-        <MobileDraftCard campaign={campaign} status={status} />
+        <MobileDraftCard campaignData={campaignData} status={status} />
       </div>
     </>
   );

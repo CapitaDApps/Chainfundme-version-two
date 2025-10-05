@@ -191,30 +191,48 @@ export default function StepFive() {
 
       <FormField
         control={control}
+        name="read"
+        render={({ field }) => (
+          <FormItem className="flex cursor-pointer space-y-0 pt-4">
+            <FormControl>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                className="w-4 h-4"
+              />
+            </FormControl>
+
+            <FormLabel className="text-[10px] sm:text-xs">
+              <div className="flex items-center gap-1 flex-wrap">
+                <p> I have reviewed Chainfundme</p>
+                <p className="text-primary-accent hover:underline cursor-pointer flex gap-1">
+                  <Link href={"/"} target="_blank">
+                    terms and conditions{" "}
+                  </Link>
+                  <Link href={"/"} target="_blank">
+                    <ArrowUpRightFromSquare className="w-4 h-4" />
+                  </Link>
+                </p>
+              </div>
+            </FormLabel>
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
         name="agree"
         render={({ field }) => (
-          <FormItem className="flex flex-row items-start cursor-pointer space-y-0 pt-4">
+          <FormItem className="flex flex-row items-start cursor-pointer mt-2">
             <FormControl>
               <Checkbox
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
             </FormControl>
-            <div className="space-y-1 leading-none text-xs">
-              <FormLabel className="text-xs">
-                <div className="flex items-center gap-1 flex-wrap">
-                  <p> I have reviewed Chainfundme</p>
-                  <p className="text-primary-accent hover:underline cursor-pointer flex gap-1">
-                    <Link href={"/"} target="_blank">
-                      terms and conditions{" "}
-                    </Link>
-                    <Link href={"/"} target="_blank">
-                      <ArrowUpRightFromSquare className="w-4 h-4" />
-                    </Link>
-                  </p>
-                </div>
-              </FormLabel>
-            </div>
+
+            <FormLabel className="text-[10px] sm:text-xs">
+              I accept terms and conditions
+            </FormLabel>
           </FormItem>
         )}
       />

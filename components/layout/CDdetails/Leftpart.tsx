@@ -19,7 +19,7 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
 
   const previewText = fullText.slice(0, 250) + "...";
 
-  const timeLeft = formatTimeLeft(campaign.endDate);
+  const timeLeft = formatTimeLeft(campaign.startDate, campaign.endDate);
 
   const router = useRouter();
 

@@ -1,16 +1,21 @@
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { getChainImage } from "@/lib/networks/config";
+import { formatPrice, formatTimeLeft } from "@/lib/utils";
 import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
-import { IoIosCheckmarkCircle } from "react-icons/io";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatPrice, formatTimeLeft } from "@/lib/utils";
 
-const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
+const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
+
+  const campaign = campaignData.campaign;
+  const amountFunded = campaignData.amount;
+
+  const chains = campaign.chains.map((chain) => getChainImage(chain.networkId));
 
   return (
     <article className="block md:hidden w-full">
@@ -35,20 +40,24 @@ const MobileDraftCard = ({ campaign, status }: DraftCardProps) => {
                     : "text-[#666666]"
                 }`}
               >
-                {formatTimeLeft(campaign.endDate)}
+                {formatTimeLeft(campaign.startDate, campaign.endDate)}
               </div>
               <h3 className="font-bold line-clamp-2 mb-2 text-sm max-w-50">
                 {campaign.title}
               </h3>
-              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 pb-2 ">
-                {campaign.tokens.map((token) => (
-                  <Avatar className="h-4 w-4" key={token.address}>
-                    <AvatarImage src={token.imagePath} alt="SPC" />
-                    <AvatarFallback>
-                      {token.name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                ))}
+              <div className="flex justify-between items-center pb-1">
+                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+                  {chains.map((chain, i) => (
+                    <Avatar className="h-4 w-4" key={i}>
+                      <AvatarImage src={chain} alt="" />
+                    </Avatar>
+                  ))}
+                </div>
+                {amountFunded && (
+                  <p className="text-[10px] text-green-600">
+                    Donated ${formatPrice(amountFunded)}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Progress
