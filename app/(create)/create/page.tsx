@@ -44,6 +44,9 @@ export default function MultiStepForm() {
   const { chainId, isConnected } = useAccount();
   const { publish, publishing } = usePublish();
   const router = useRouter();
+
+  const [fulfilledSteps, setFulFillSteps] = useState(0);
+
   const steps = [
     <StepOne key="s1" />,
     <StepTwo key="s2" />,
@@ -75,7 +78,12 @@ export default function MultiStepForm() {
 
     console.log("Step validation:", isValid);
 
-    if (isValid) setStep((s) => s + 1);
+    if (isValid) {
+      setStep((s) => s + 1);
+      if (step >= fulfilledSteps) {
+        setFulFillSteps((curr) => curr + 1);
+      }
+    }
   };
 
   const prevStep = () => setStep((s) => s - 1);
@@ -216,11 +224,7 @@ export default function MultiStepForm() {
                     type="reset"
                     onClick={nextStep}
                     disabled={isSaving}
-                    style={{
-                      background:
-                        "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-                    }}
-                    className="rounded-2xl cursor-pointer  px-6 py-3"
+                    className="rounded-2xl cursor-pointer  px-6 py-3 bg-primary-accent"
                   >
                     Next
                   </Button>
@@ -230,7 +234,11 @@ export default function MultiStepForm() {
                   </Button>
                 )}
               </div>
-              <Bottom setStep={setStep} step={step} />
+              <Bottom
+                setStep={setStep}
+                step={step}
+                fulfilledSteps={fulfilledSteps}
+              />
             </form>
           </Form>
         </FormProvider>

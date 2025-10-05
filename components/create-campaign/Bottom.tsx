@@ -4,8 +4,10 @@ import { GiCheckMark } from "react-icons/gi";
 export default function Bottom({
   step,
   setStep,
+  fulfilledSteps,
 }: {
   step: number;
+  fulfilledSteps: number;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
   const bottomSteps = [
@@ -53,7 +55,7 @@ export default function Bottom({
             key={i}
             className={` w-full h-[150px] scale-[0.9] space-y-2 relative p-2.5 sm:p-4  rounded-lg border max-w-[250px] mx-auto border-dashed border-[#ADADAD] bg-white`}
           >
-            {step >= i ? (
+            {fulfilledSteps >= i ? (
               <>
                 <h6 className="text-sm font-semibold">{bot.name}</h6>
                 <div className="flex flex-col gap-0.5 sm:gap-1.5">

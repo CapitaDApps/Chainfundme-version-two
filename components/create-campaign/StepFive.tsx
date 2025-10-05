@@ -202,18 +202,17 @@ export default function StepFive() {
             </FormControl>
             <div className="space-y-1 leading-none text-xs">
               <FormLabel className="text-xs">
-                I have reviewed Chainfundme{" "}
-                <span className="text-primary-accent hover:underline cursor-pointer">
-                  <Link href={"/"} target="_blank">
-                    terms and conditions
-                  </Link>
-                </span>
-                <span className="text-primary-accent cursor-pointer">
-                  <Link href={"/"} target="_blank">
-                    {" "}
-                    <ArrowUpRightFromSquare className="w-4 h-4" />
-                  </Link>
-                </span>
+                <div className="flex items-center gap-1 flex-wrap">
+                  <p> I have reviewed Chainfundme</p>
+                  <p className="text-primary-accent hover:underline cursor-pointer flex gap-1">
+                    <Link href={"/"} target="_blank">
+                      terms and conditions{" "}
+                    </Link>
+                    <Link href={"/"} target="_blank">
+                      <ArrowUpRightFromSquare className="w-4 h-4" />
+                    </Link>
+                  </p>
+                </div>
               </FormLabel>
             </div>
           </FormItem>
