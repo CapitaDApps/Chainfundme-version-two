@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { FaWallet } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
+import UserDropdownMenu from "../layout/Header/userDropdownMenu";
 
 export default function Header({ step }: { step: number }) {
   const arr = [
@@ -19,44 +20,35 @@ export default function Header({ step }: { step: number }) {
     <>
       <div className="space-y-3 hidden lg:block pb-16 px-2">
         <div className="flex justify-end">
-          {/* <Button
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="rounded-2xl cursor-pointer  px-6 py-3"
-          >
-            Connect Wallet
-          </Button> */}
-          <CreateWalletButton />
+          <div className="max-w-xs">
+            <CreateWalletButton>
+              <UserDropdownMenu />
+            </CreateWalletButton>
+          </div>
         </div>
 
-        <p className="underline text-[#878787] text-sm">Save to draft</p>
+        <Button variant={"outline"} className="text-sm">
+          Save to draft
+        </Button>
       </div>
-      <div className="space-y-3 lg:hidden fixed w-full bg-[#F4F9FC] pt-4 z-50  px-2 ">
-        <div className="flex justify-between items-center">
+      <div className="lg:hidden fixed flex items-center   w-full bg-[#F4F9FC] z-50 px-5 sm:px-8 h-14">
+        <div className="flex justify-between items-center  w-full">
           <div className="flex items-center gap-5">
             <div
               className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center"
-              onClick={() => router.push("/explore")}
+              onClick={() => router.back()}
             >
               <MdOutlineKeyboardArrowLeft />
             </div>
             <h6 className="text-sm font-medium">{arr.at(step)}</h6>
           </div>
-          {/* <button
-            style={{
-              background: "linear-gradient(180deg, #1E5AA8 0%, #2379BC 100%)",
-            }}
-            className="cursor-pointer  size-8 rounded-full flex items-center justify-center"
-          >
-            <FaWallet className="text-white text-xs" />
-          </button> */}
-          <CreateWalletButton />
-        </div>
 
-        <p className="underline text-[#878787] text-sm hidden lg:block">
-          Save to draft
-        </p>
+          <div className="max-w-xs mt-2">
+            <CreateWalletButton>
+              <UserDropdownMenu />
+            </CreateWalletButton>
+          </div>
+        </div>
       </div>
     </>
   );

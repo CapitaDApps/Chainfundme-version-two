@@ -79,7 +79,7 @@ export default function ChainSelect({
       <p className="text-xs text-[var(--form-label)] font-normal">
         Network & Chain
       </p>
-      <div className="flex w-ful cursor-pointer w-[98%]  mx-auto">
+      <div className="flex gap-2 w-full cursor-pointer  mx-auto">
         <SelectNetwork
           control={control}
           name="chain"

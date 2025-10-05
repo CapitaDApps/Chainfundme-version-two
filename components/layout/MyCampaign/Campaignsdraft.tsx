@@ -116,7 +116,7 @@ function Campaignsdraft() {
                     onClick={() => handlePageChange(status, i + 1)}
                     className={`px-3 py-1 rounded-md text-sm font-medium ${
                       currentPage === i + 1
-                        ? "bg-[#2379BC] text-white"
+                        ? "bg-primary text-white"
                         : "text-gray-600 hover:bg-gray-100"
                     }`}
                   >
@@ -152,7 +152,7 @@ function Campaignsdraft() {
               <TabsTrigger
                 value={tab.value}
                 className="bg-transparent border-none shadow-none 
-                     data-[state=active]:text-[#2379BC] 
+                     data-[state=active]:text-primary-accent
                      data-[state=active]:bg-transparent 
                      focus-visible:ring-0 cursor-pointer 
                      px-4 text-sm font-bold md:text-[16px]

@@ -78,7 +78,7 @@ export default function SelectNetwork({
               }}
             >
               <FormControl>
-                <SelectTrigger className=" !py-5 rounded-l-[6px] rounded-r-none cursor-pointer   w-full lg:w-full bg-primary/5 outline-primary/30 outline focus-visible:outline-primary  p-3 text-xs text-black  data-[placeholder]:text-gray-500">
+                <SelectTrigger className=" !py-5 cursor-pointer  w-full lg:w-full bg-primary/5 outline-primary/30 outline focus-visible:outline-primary  p-3 text-xs text-black  data-[placeholder]:text-gray-500">
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
               </FormControl>

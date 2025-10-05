@@ -63,7 +63,7 @@ export function CampaignTokens({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "!w-full  !py-5  rounded-r-[6px] rounded-l-none bg-primary/5 border-none outline-primary/30 outline focus-visible:outline-primary  cursor-pointer  rounded-[8px text-xs",
+                    "!w-full  !py-5 bg-primary/5 border-none outline-primary/30 outline focus-visible:outline-primary  cursor-pointer  rounded-[8px text-xs",
                     !field.value && "text-gray-500 font-normal"
                   )}
                 >

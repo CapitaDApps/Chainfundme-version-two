@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -59,14 +59,14 @@ export default function FormUpdate({ step }: { step: number }) {
     },
   ];
   return (
-    <div className="lg:flex w-[20rem] flex-col  justify-cente pt-36 relative hidden ">
+    <div className="lg:flex w-[20rem] flex-col justify-center relative hidden bg-gray-100">
       <div
         className="absolute top-5 left-4 bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
         onClick={() => {
           router.back();
         }}
       >
-        <X className="w-5 h-5" />
+        <ArrowLeft className="w-5 h-5" />
       </div>
       <div className="space-y-1 px-4 relative">
         <p className="text-[#6B7280] text-xs font-semibold">

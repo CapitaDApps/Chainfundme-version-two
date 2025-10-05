@@ -12,7 +12,7 @@ export default function StepOne() {
   type FormData = z.infer<typeof FormSchema>;
   const { control } = useFormContext<FormData>();
   return (
-    <div className="space-y-6 sm:space-y-10 max-w-3xl mx-auto">
+    <div className="space-y-6 sm:space-y-10">
       <div className="flex lg:flex-row gap-6 flex-col justify-between items-center w-full">
         <div className="w-full">
           <CampaignInput
