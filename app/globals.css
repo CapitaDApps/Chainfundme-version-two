@@ -201,3 +201,8 @@ a {
     @apply bg-background text-foreground;
   }
 }
+
+/* allow scroll even when dialog is open */
+body[data-radix-dialog-open] {
+  overflow: auto !important;
+}

@@ -86,3 +86,9 @@ export function getChainImage(networkId: number) {
   const chain = allowedChains.find((chain) => chain.networkId === networkId);
   return chain?.image || "";
 }
+
+export function getChainData(networkId: number) {
+  const chain = allowedChains.find((chain) => chain.networkId === networkId);
+  if (!chain) throw new Error(`chain with id [${networkId}] not found`);
+  return chain;
+}

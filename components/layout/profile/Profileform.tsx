@@ -1,25 +1,19 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { FormSchema } from "@/lib/Profileschemas";
 import { useFormContext } from "react-hook-form";
 import z from "zod";
-import CoverImage from "./CoverImage";
 import AvatarImage from "./AvatarImage";
-import { ProgressIndicator } from "./ProgressIndicator";
+import CoverImage from "./CoverImage";
 import ProfileInputs from "./ProfileInputs";
-import { Button } from "@/components/ui/button";
 
-interface ProfileformProps {
-  onSave: () => void;
-}
-
-function Profileform({ onSave }: ProfileformProps) {
+function Profileform() {
   type FormData = z.infer<typeof FormSchema>;
   const { control, handleSubmit } = useFormContext<FormData>();
 
   const onSubmit = (data: FormData) => {
     console.log("Form submitted:", data);
-    onSave();
   };
 
   return (

@@ -9,9 +9,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { usePrivy } from "@privy-io/react-auth";
-import { Menu } from "lucide-react";
+import { Menu, Settings } from "lucide-react";
 import UserDropdownMenu from "./userDropdownMenu";
 import { Button } from "@/components/ui/button";
+import UserWalletSettings from "@/components/wallet_connect/userWalletSettings";
 
 function MobileHeader() {
   const pathname = usePathname();
@@ -76,7 +77,16 @@ function MobileHeader() {
         </div>
 
         <div className="flex flex-row items-center gap-3">
-          {connected ? <UserDropdownMenu /> : <CreateWalletButton />}
+          {connected ? (
+            <div className="flex gap-2">
+              <UserDropdownMenu />
+              <UserWalletSettings>
+                <Settings className="w-4 h-4" />
+              </UserWalletSettings>
+            </div>
+          ) : (
+            <CreateWalletButton />
+          )}
         </div>
       </div>
     </div>
