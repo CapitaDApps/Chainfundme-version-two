@@ -40,7 +40,7 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
           <h3 className="text-xl font-semibold">{owner.name}</h3>
           <span className="flex flex-row items-center justify-center space-x-1">
             <Image src="/layout/bag.png" alt="bag" width={20} height={20} />
-            <p className="text-xs">45% Trust score</p>
+            <p className="text-xs">{owner.isVerified ? "Verified" : "Unverified"}</p>
           </span>
         </div>
 
@@ -54,7 +54,7 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
             <p className="text-gray-500 text-xs">Followers</p>
           </div>
           <div className="text-center">
-            <p className="font-bold text-sm">284</p>
+            <p className="font-bold text-sm">{owner.supportedCampaigns?.length || 0}</p>
             <p className="text-gray-500 text-xs">Following</p>
           </div>
         </div>
