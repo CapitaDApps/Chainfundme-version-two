@@ -11,6 +11,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import ToggleNotificationbar from "./ToggleNotificationbar";
 import UserDropdownMenu from "./userDropdownMenu";
+import { Settings } from "lucide-react";
+import UserWalletSettings from "@/components/wallet_connect/userWalletSettings";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -83,7 +85,12 @@ function Header() {
             <>
               <ToggleNotificationbar />
 
-              <UserDropdownMenu />
+              <div className="flex gap-2">
+                <UserDropdownMenu />
+                <UserWalletSettings>
+                  <Settings className="w-5 h-5" />
+                </UserWalletSettings>
+              </div>
             </>
           ) : (
             <CreateWalletButton />

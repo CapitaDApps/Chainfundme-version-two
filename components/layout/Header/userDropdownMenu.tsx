@@ -23,7 +23,7 @@ function UserDropdownMenu() {
           <ChevronDown className="w-4 h-4" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 mr-2">
+      <DropdownMenuContent className="w-48 mr-2 pointer-events-auto">
         <DropdownMenuLabel className="w-full rounded-md hover:bg-gray-100 hover:py-2 transition-all duration-200">
           <CreateWalletButton>
             <div className="cursor-pointer">My wallet</div>

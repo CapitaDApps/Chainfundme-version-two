@@ -6,17 +6,14 @@ import Campaignsdraft from "@/components/layout/MyCampaign/Campaignsdraft";
 import SearchBar from "@/components/layout/SearchBar";
 import DonationModel from "../Donation/DonationModel";
 import { useState } from "react";
+import { useUser } from "@privy-io/react-auth";
 
 function MyCampaignsPage() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const { user } = useUser();
+  if (!user)
+    return <DonationModel text="Join or Sign In to Access Your Campaigns" />;
   return (
     <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20 min-h-[100dvh] md:h-auto">
-      {isModalOpen && (
-        <DonationModel
-          text="Join or Sign In to Access Your Campaigns"
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
       <div className="md:flex flex-row justify-between items-center mt-4 hidden">
         <CreateCamBtn />
         <Filter />

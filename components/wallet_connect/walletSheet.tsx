@@ -147,11 +147,6 @@ function WalletSheetContent({
           </div>
         </div>
       </div>
-      <div className="text-right px-3 mt-2">
-        <UserWalletSettings>
-          <Settings />
-        </UserWalletSettings>
-      </div>
 
       <div className="mt-2 px-3">
         <div>

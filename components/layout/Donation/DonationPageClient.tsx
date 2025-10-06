@@ -2,19 +2,17 @@
 
 import Campaigns from "@/components/layout/Donation/Campaigns";
 import SearchBar from "@/components/layout/SearchBar";
-import DonationModel from "./DonationModel";
-import { useState } from "react";
+import { useUser } from "@privy-io/react-auth";
 import Filter from "../Explore/Filter";
+import DonationModel from "./DonationModel";
 function DonationPageClient() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const { user } = useUser();
+
+  if (!user)
+    return <DonationModel text="Join or Sign In to Access Your Donations" />;
+
   return (
     <div className="mt-16 px-4 sm:px-10 md:px-14 lg:px-20 min-h-[100dvh] md:h-auto">
-      {isModalOpen && (
-        <DonationModel
-          text="Join or Sign In to Access Your Donations"
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
       <div className="flex flex-col items-center justify-center mt-28 md:mt-18">
         <h1 className="text-sidebar-content text-center leading-tight mt-5 mb-3 font-semibold text-[22px] md:text-[32px] text-[#101828]">
           Track Your&nbsp;{" "}

@@ -41,9 +41,6 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   }
 
   console.log(campaign);
-  // Calculate progress percentage
-  // const progressPercentage =
-  //   (campaign.currentAmount / campaign.targetAmount) * 100;
 
   return (
     <div className="px-4 sm:px-10 md:px-14 lg:px-20 mt-20 md:mt-0">

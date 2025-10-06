@@ -56,7 +56,7 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className="bg-sidebar max-w-[90%] sm:max-w-[400px]  md:max-w-[400px] rounded-2xl">
+      <DialogContent className="bg-sidebar max-w-[90%] sm:max-w-[400px] md:max-w-[400px] rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-sidebar-content text-left">
             Transfer
@@ -74,7 +74,7 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
               value={transferAmount}
               onChange={(e) => setTransferAmount(e.target.value)}
             />
-            {/* Select coin */}
+
             <SelectCoin
               selectedToken={selectedToken}
               setSelectedToken={setSelectedToken}
@@ -110,12 +110,8 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
         </div>
 
         <Button
-          className="mt-3 w-full border-none bg-primary text-gray-200"
+          className="mt-3 w-full border-none text-gray-200 bg-primary-accent"
           onClick={handleConfirmation}
-          style={{
-            background:
-              "linear-gradient(270.05deg, #003def 68.33%, #001f7a 114.25%)",
-          }}
         >
           Confirm
         </Button>

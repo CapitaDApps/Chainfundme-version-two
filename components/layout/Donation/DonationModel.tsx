@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
+import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import Image from "next/image";
 
 interface DonationModelProps {
-  onClose: () => void;
   text: string;
 }
 
-function DonationModel({ onClose, text }: DonationModelProps) {
+function DonationModel({ text }: DonationModelProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 z-50 w-full h-screen bg-white/5 backdrop-blur-sm transition-all duration-500">
       <div className="w-full max-w-[45rem] min-h-[250px] bg-white rounded-xl p-6 transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center text-center">
@@ -23,13 +23,7 @@ function DonationModel({ onClose, text }: DonationModelProps) {
           campaigns you care about.
         </p>
         <div className="flex flex-row space-x-4 mt-6">
-          <Button
-            onClick={onClose}
-
-            className="rounded-xl shadow-xl !px-6 !py-3 cursor-pointer bg-[#003DEF] text-xs md:text-sm hover:bg-[#003DEF] focus:bg-[#003DEF] text-white"
-          >
-            Join or Sign In
-          </Button>
+          <CreateWalletButton />
         </div>
       </div>
     </div>

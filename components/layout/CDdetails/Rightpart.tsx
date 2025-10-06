@@ -1,3 +1,4 @@
+import FundDialog from "@/components/fund/fundDialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatPrice } from "@/lib/utils";
@@ -20,17 +21,19 @@ function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
           value={(campaign.currentAmount / campaign.targetAmount) * 100}
           className="h-3 w-full"
         />
-        <span className="flex flex-col space-y-4 pt-8 pb-8">
-          <Button className="!px-24 !py-6 space-x-2 cursor-pointer rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.3)] ">
-            Fund Now
-          </Button>
+        <div className="flex flex-col space-y-4 pt-8 pb-8">
+          <FundDialog campaign={campaign}>
+            <Button className="!px-24 !py-6 space-x-2 cursor-pointer rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.3)] w-full">
+              Fund Now
+            </Button>
+          </FundDialog>
           <Button
             variant="outline"
             className="!px-20 !py-6 space-x-2 cursor-pointer rounded-2xl text-[#2379BC] shadow-[0_0_15px_rgba(0,0,0,0.3)] "
           >
             <CiShare2 /> <span>Share Campaigns</span>
           </Button>
-        </span>
+        </div>
         <div>
           <span className="flex flex-row items-center space-x-4 w-full pb-3">
             <Image
