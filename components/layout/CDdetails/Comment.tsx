@@ -1,72 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiMessageCircle } from "react-icons/fi";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import Avatar from "./Avatar";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import PopupProfile from "../profile/PopupProfile";
+import { useAddComment } from "@/services/api/hooks/campaign/useAddComment";
+import { useAddReply } from "@/services/api/hooks/campaign/useAddReply";
+import { Comment, Reply } from "@/types/api";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { dateFormat } from "@/lib/utils";
+import { PulseLoader } from "react-spinners";
 
-type Reply = {
-  id: number;
-  name: string;
-  date: string;
-  text: string;
-  likes: number;
-};
-
-type Comment = {
-  id: number;
-  name: string;
-  date: string;
-  text: string;
-  likes: number;
-  replies: Reply[];
-};
-
-export default function Comments({ initial = [] }: { initial?: Comment[] }) {
+export default function Comments({
+  initial,
+  campaignId,
+}: {
+  initial?: Comment[];
+  campaignId: string;
+}) {
   const [comments, setComments] = useState<Comment[]>(
-    initial.length
-      ? initial
-      : [
-          {
-            id: 1,
-            name: "User Name",
-            date: "June 22",
-            text: "This Campaign will go a Long way in ending the famine in Gaza. Those Little kids deserve to be happy. No amount is too small",
-            likes: 45,
-            replies: [
-              {
-                id: 11,
-                name: "Reply User",
-                date: "June 23",
-                text: "Absolutely — glad to help!",
-                likes: 2,
-              },
-              {
-                id: 12,
-                name: "Another",
-                date: "June 24",
-                text: "Such an important cause.",
-                likes: 1,
-              },
-            ],
-          },
-          {
-            id: 2,
-            name: "Another User",
-            date: "June 20",
-            text: "Amazing project — happy to support.",
-            likes: 12,
-            replies: [],
-          },
-        ]
+    initial ? initial : ([] as Comment[])
   );
 
   const [visibleCommentsCount, setVisibleCommentsCount] = useState<number>(5);
@@ -85,24 +48,35 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
   );
   const [likedReplies, setLikedReplies] = useState<Record<number, boolean>>({});
 
+  const { addCommentFunc, addingComment } = useAddComment();
+  const { addReplyFunc } = useAddReply();
+
+  const { userProfile } = useUserProfile();
+
+  useEffect(() => {
+    if (initial) {
+      setComments(initial);
+    }
+  }, [initial]);
+
   function addComment() {
+    if (!userProfile)
+      return toast.error("You must be logged in to leave a comment");
     if (!newText.trim()) return;
-    const next: Comment = {
-      id: Date.now(),
-      name: "You",
-      date: new Date().toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-      }),
-      text: newText.trim(),
-      likes: 0,
-      replies: [],
-    };
-    setComments([next, ...comments]);
+    // const next: Comment = {
+    //   id: Date.now(),
+    //   name: "You",
+    //   date: dateFormat(),
+    //   text: newText.trim(),
+    //   likes: 0,
+    //   replies: [],
+    //   user: userProfile,
+    // };
+    addCommentFunc({ campaignId, comment: newText });
+    // setComments([next, ...comments]);
     setNewText("");
     setVisibleCommentsCount((v) => Math.max(v, 1));
   }
-
   function deleteComment(id: number) {
     setComments((s) => s.filter((c) => c.id !== id));
     setVisibleRepliesCount((s) => {
@@ -136,19 +110,21 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
     setVisibleRepliesCount((s) => ({ ...s, [id]: s[id] ?? 2 }));
   }
 
-  function addReply(parentId: number) {
+  function addReply(parentId: number, commentId: string) {
+    if (!userProfile)
+      return toast.error("You must be logged in to leave a reply");
     const text = (replyText[parentId] || "").trim();
     if (!text) return;
     const newReply: Reply = {
       id: Date.now(),
       name: "You",
-      date: new Date().toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-      }),
+      date: dateFormat(),
       text,
       likes: 0,
+      user: userProfile,
     };
+
+    addReplyFunc({ commentId, reply: text });
 
     setComments((s) =>
       s.map((c) =>
@@ -159,7 +135,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
     setReplyOpen((s) => ({ ...s, [parentId]: true }));
     setVisibleRepliesCount((s) => ({
       ...s,
-      [parentId]: (s[parentId] || 2) + 1,
+      [parentId]: (s[parentId] || 3) + 1,
     }));
   }
 
@@ -215,12 +191,14 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
         {/* Add Comment Input - Mobile Optimized */}
         <div className="mb-4 md:mb-6">
           <div className="flex items-center gap-2 md:gap-3">
-            <Avatar
-              src="/layout/avatarboy.svg"
-              alt="you"
-              size={32}
-              className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
-            />
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={userProfile?.profilePicture} />
+              <AvatarFallback>
+                {userProfile?.name
+                  ? userProfile.name.slice(0, 2).toUpperCase()
+                  : userProfile?.walletAddress.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
 
             <div className="flex-1">
               <div className="relative">
@@ -234,9 +212,14 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
 
                 <button
                   onClick={addComment}
-                  className="absolute right-1 bg-[#003DEF] top-1/2 transform -translate-y-1/2 px-2 md:px-4 py-1 md:py-1.5 rounded-full text-white text-xs md:text-sm shadow"
+                  className="absolute right-1 bg-[#003DEF] top-1/2 transform -translate-y-1/2 px-2 md:px-4 py-1 md:py-1.5 rounded-full text-white text-xs md:text-sm shadow disabled:bg-primary/80 flex items-center justify-center"
+                  disabled={addingComment}
                 >
-                  Comment
+                  {addingComment ? (
+                    <PulseLoader color="#fff" size={8} />
+                  ) : (
+                    "Comment"
+                  )}
                 </button>
               </div>
             </div>
@@ -244,22 +227,24 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
         </div>
 
         {/* Comments List */}
-        <div className="space-y-4 md:space-y-6">
+        <div className="space-y-4 md:space-y-6 mt-10">
           {visibleComments.map((c) => (
-            <div key={c.id} className="pt-2 md:pt-4">
+            <div key={c.id} className="border-b border-gray-200 pb-5">
               <div className="flex items-start gap-2 md:gap-4">
-                {/* <Popover>
+                <Popover>
                   <PopoverTrigger asChild>
                     <button
                       className="rounded-full focus:outline-none flex-shrink-0"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Avatar
-                        src="/layout/avatarboy.svg"
-                        alt="you"
-                        size={32}
-                        className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
-                      />
+                      <Avatar className="w-10 h-10">
+                        <AvatarImage src={c.user.profilePicture} />
+                        <AvatarFallback>
+                          {c.user.name
+                            ? c.user.name.slice(0, 2).toUpperCase()
+                            : c.user.walletAddress.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
                     </button>
                   </PopoverTrigger>
 
@@ -269,9 +254,9 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                     sideOffset={5}
                     className="bg-white rounded-xl shadow-md p-4 w-[90vw] max-w-[300px] md:w-[350px]"
                   >
-                    <PopupProfile />
+                    <PopupProfile owner={c.user} />
                   </PopoverContent>
-                </Popover> */}
+                </Popover>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
@@ -279,7 +264,9 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                       <div className="text-sm font-semibold text-gray-900 truncate">
                         {c.name}
                       </div>
-                      <div className="text-xs text-gray-500">{c.date}</div>
+                      <div className="text-[10px] sm:text-xs text-gray-500">
+                        {c.date}
+                      </div>
                     </div>
 
                     <div className="relative flex-shrink-0">
@@ -395,18 +382,26 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                               key={r.id}
                               className="flex items-start gap-2 md:gap-3"
                             >
-                              {/* <Popover>
+                              <Popover>
                                 <PopoverTrigger asChild>
                                   <button
                                     className="rounded-full focus:outline-none flex-shrink-0"
                                     onClick={(e) => e.stopPropagation()}
                                   >
-                                    <Avatar
-                                      src="/layout/avatarboy.svg"
-                                      alt="reply"
-                                      size={28}
-                                      className="w-6 h-6 md:w-8 md:h-8 mt-1 flex-shrink-0"
-                                    />
+                                    <Avatar className="w-10 h-10">
+                                      <AvatarImage
+                                        src={r.user.profilePicture}
+                                      />
+                                      <AvatarFallback>
+                                        {r.user.name
+                                          ? r.user.name
+                                              .slice(0, 2)
+                                              .toUpperCase()
+                                          : r.user.walletAddress
+                                              .slice(0, 2)
+                                              .toUpperCase()}
+                                      </AvatarFallback>
+                                    </Avatar>
                                   </button>
                                 </PopoverTrigger>
 
@@ -416,9 +411,9 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                                   sideOffset={5}
                                   className="bg-white rounded-xl shadow-md p-4 w-[90vw] max-w-[300px] md:w-[350px]"
                                 >
-                                  <PopupProfile />
+                                  <PopupProfile owner={r.user} />
                                 </PopoverContent>
-                              </Popover> */}
+                              </Popover>
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between gap-2">
@@ -426,7 +421,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                                     <div className="text-xs md:text-sm font-semibold text-gray-900 truncate">
                                       {r.name}
                                     </div>
-                                    <div className="text-xs text-gray-500">
+                                    <div className="text-[10px] sm:text-xs text-gray-500">
                                       {r.date}
                                     </div>
                                   </div>
@@ -520,7 +515,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
 
                           <div className="absolute right-1 top-1/2 transform -translate-y-1/2 flex gap-1">
                             <button
-                              onClick={() => addReply(c.id)}
+                              onClick={() => addReply(c.id, c._id!)}
                               className="px-2 md:px-3 py-0.5 md:py-1 rounded-full text-white text-xs md:text-sm bg-[#003DEF]"
                             >
                               Reply
@@ -538,8 +533,6 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
                   )}
                 </div>
               </div>
-
-              <div className="border-t border-gray-200 mt-3 md:mt-4 pt-3 md:pt-4" />
             </div>
           ))}
 

@@ -14,14 +14,14 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
 
   return (
     <div className="relative">
-      <button
+      {/* <button
         aria-label="Report profile"
         className="absolute top-4 right-4 cursor-pointer"
       >
         <FaExclamationTriangle className="md:text-xl text-lg text-red-500" />
-      </button>
+      </button> */}
 
-      <div className="flex flex-col items-center justify-center gap-3">
+      <div className="flex flex-col items-center justify-center">
         {owner.profilePicture ? (
           <Image
             src={owner.profilePicture}
@@ -32,10 +32,11 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
           />
         ) : (
           <div className="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full shadow-sm bg-gray-200 flex items-center justify-center">
-            <p className="text-xl text-gray-800">{owner.name.slice(0, 2)}</p>
+            <p className="text-xl text-gray-800">
+              {owner.name.slice(0, 2).toUpperCase()}
+            </p>
           </div>
         )}
-
         <div className="text-center flex flex-row gap-x-2 items-center justify-center mt-2">
           <h3 className="text-xl font-semibold">{owner.name}</h3>
           <span className="flex flex-row items-center justify-center space-x-1">
@@ -44,30 +45,32 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
           </span>
         </div>
 
-        <p className="text-sm text-[#6D6D6D] line-clamp-2 text-center">
-          {owner.bio}
-        </p>
+        {owner.bio && (
+          <p className="text-sm text-[#6D6D6D] line-clamp-2 text-center">
+            {owner.bio}
+          </p>
+        )}
 
-        <div className="flex justify-center pt-6 space-x-8">
+        <div className="flex justify-center mt-5 space-x-8">
           <div className="text-center">
             <p className="font-bold text-sm">{owner.followers}</p>
             <p className="text-gray-500 text-xs">Followers</p>
           </div>
-          <div className="text-center">
+          {/* <div className="text-center">
             <p className="font-bold text-sm">284</p>
             <p className="text-gray-500 text-xs">Following</p>
-          </div>
+          </div> */}
         </div>
-
         <Button
-          className="flex items-center gap-1 mt-4 py-1.5 px-4 text-xs rounded-2xl cursor-pointer bg-[#003DEF] text-white hover:bg-sky-600"
+          className="flex items-center gap-1 mt-2 px-4 text-xs rounded-2xl cursor-pointer bg-[#003DEF] text-white hover:bg-sky-600 h-7"
           onClick={toggleFollow}
         >
           {isFollowing ? "Unfollow" : "Follow"}
           <GoPlus className="text-sm" />
         </Button>
-
-        <Socials />
+        <div className="mt-4">
+          <Socials />
+        </div>
       </div>
     </div>
   );

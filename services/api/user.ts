@@ -15,8 +15,6 @@ async function getProfile() {
     },
   });
 
-  console.log(resp.data);
-
   return resp.data.data as UserDocument;
 }
 
