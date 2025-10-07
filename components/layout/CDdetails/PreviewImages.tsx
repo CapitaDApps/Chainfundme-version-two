@@ -17,7 +17,7 @@ export default function PreviewImages({ images }: { images: string[] }) {
   return (
     <div>
       <div className="space-y-2">
-        <p className="font-normal text-xs text-white">Supporting Images</p>
+        <p className="font-normal">Supporting Images</p>
         <div className="flex gap-2.5 items-center">
           {images.length > 0
             ? images.map((item, i) => (

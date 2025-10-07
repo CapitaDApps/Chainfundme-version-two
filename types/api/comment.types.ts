@@ -20,4 +20,5 @@ export type Comment = {
   text: string;
   likes: number;
   replies: Reply[];
+  user: UserDocument;
 };

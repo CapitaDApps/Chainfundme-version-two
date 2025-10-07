@@ -8,6 +8,9 @@ import Loader from "../Loader";
 import Comments from "./Comment";
 import Leftpart from "./Leftpart";
 import Rightpart from "./Rightpart";
+import { compareAsc } from "date-fns";
+import { Comment, Reply } from "@/types/api";
+import { dateFormat, truncateAddr } from "@/lib/utils";
 
 function Campaigndetails({ campaignId }: { campaignId: string }) {
   const router = useRouter();
@@ -41,9 +44,34 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   }
 
   console.log(campaign);
+  const campaignComments = campaign.comments
+    .sort((a, b) => compareAsc(new Date(b.createdAt), new Date(a.createdAt)))
+    .map((comment, commentIndex) => {
+      const replies: Reply[] = comment.replies.map((reply, replyIndex) => ({
+        text: reply.reply,
+        _id: reply._id,
+        name: reply.user.name || truncateAddr(reply.user.walletAddress),
+        date: dateFormat(new Date(reply.createdAt)),
+        likes: reply.likes,
+        id: replyIndex,
+        user: reply.user,
+      }));
+      const c: Comment = {
+        id: commentIndex,
+        _id: comment._id,
+        name: comment.user.name || truncateAddr(comment.user.walletAddress),
+        likes: comment.likes,
+        text: comment.comment,
+        date: dateFormat(new Date(comment.createdAt)),
+        replies,
+        user: comment.user,
+      };
+
+      return c;
+    });
 
   return (
-    <div className="px-4 sm:px-10 md:px-14 lg:px-20 mt-20 md:mt-0">
+    <div className="px-4 sm:px-10 md:px-14 lg:px-20 mt-20 md:mt-4">
       <span
         className="flex md:hidden flex-row gap-x-2 text-[#2C2C2C] font-semibold pt-3 text-sm cursor-pointer items-center "
         onClick={() => router.back()}
@@ -64,8 +92,8 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
             <Rightpart campaign={campaign} />
           </div>
         </div>
-        <div className="max-w-3xl mt-20 lg:mt-8">
-          <Comments />
+        <div className="max-w-3xl mt-20 lg:mt-8  mb-20">
+          <Comments initial={campaignComments} campaignId={campaignId} />
         </div>
       </div>
     </div>

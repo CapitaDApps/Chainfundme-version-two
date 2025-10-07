@@ -1,7 +1,7 @@
 import FundDialog from "@/components/fund/fundDialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { formatPrice, formatTimeLeft } from "@/lib/utils";
+import { formatNumber, formatTimeLeft } from "@/lib/utils";
 import { ReturnCampaignDocument } from "@/types/api";
 import { Clock } from "lucide-react";
 import Image from "next/image";
@@ -19,8 +19,8 @@ function Rightpart({ campaign }: { campaign: ReturnCampaignDocument }) {
         ${campaign.currentAmount.toLocaleString()} USD raised
       </h1>
       <p className="text-[#6B6B65] text-xs pb-2">
-        ${formatPrice(campaign.targetAmount)} target |{" "}
-        {formatPrice(campaign.funders.length)} donations
+        ${formatNumber(campaign.targetAmount)} target |{" "}
+        {formatNumber(campaign.funders.length)} donations
       </p>
       <Progress
         value={(campaign.currentAmount / campaign.targetAmount) * 100}

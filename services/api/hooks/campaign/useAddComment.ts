@@ -3,21 +3,23 @@ import { addComment } from "../../comment";
 
 export function useAddComment() {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate, isPending: addingComment } = useMutation({
     mutationFn: async ({
       campaignId,
       comment,
     }: {
       campaignId: string;
       comment: string;
-    }) => addComment(campaignId, comment),
+    }) => await addComment(campaignId, comment),
 
     onSuccess: () => {
       queryClient.invalidateQueries();
+      console.log("Queries successfully invalidated");
     },
   });
 
   return {
     addCommentFunc: mutate,
+    addingComment,
   };
 }

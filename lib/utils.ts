@@ -89,11 +89,24 @@ function formatTimeMessage(end: Date, start: Date) {
   return "Less than a minute left";
 }
 
-export function formatPrice(num: number) {
+export function formatNumber(num: number) {
   const formatter = new Intl.NumberFormat("en-US", {
     notation: "compact",
     maximumFractionDigits: 1,
   });
 
   return formatter.format(num);
+}
+
+export function dateFormat(date?: Date) {
+  const d = date ? date.toISOString() : new Date().toISOString();
+  const df = new Date(d).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const tf = new Date(d).toLocaleTimeString();
+
+  return `${df} - ${tf}`;
 }

@@ -16,4 +16,5 @@ export type Reply = {
   date: string;
   text: string;
   likes: number;
+  user: UserDocument;
 };

@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { formatPrice, formatTimeLeft } from "@/lib/utils";
+import { formatNumber, formatTimeLeft } from "@/lib/utils";
 import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
@@ -54,7 +54,7 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
                 </div>
                 {amountFunded && (
                   <p className="text-[10px] text-green-600">
-                    Donated ${formatPrice(amountFunded)}
+                    Donated ${formatNumber(amountFunded)}
                   </p>
                 )}
               </div>
@@ -69,10 +69,10 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
                 />
                 <div className="flex justify-start space-x-1 items-center text-[10px]">
                   <span className="text-muted-foreground/80">
-                    {formatPrice(campaign.currentAmount)} raised
+                    {formatNumber(campaign.currentAmount)} raised
                   </span>
                   <span className="text-muted-foreground">
-                    of {formatPrice(campaign.targetAmount)}
+                    of {formatNumber(campaign.targetAmount)}
                   </span>
                 </div>
               </div>

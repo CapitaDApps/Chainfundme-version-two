@@ -50,7 +50,9 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
       </div>
       <div className="flex items-center gap-2 text-gray-600 mt-3 bg-gray-100 w-fit px-3 py-2 rounded-2xl">
         <Clock className="w-5 h-5" />
-        <span className="text-primary-accent">{timeLeft}</span>
+        <span className="text-primary-accent text-sm md:text-base">
+          {timeLeft}
+        </span>
       </div>
       <hr className="border-[#CDCDCD]/40 w-full mt-8" />
 
@@ -58,7 +60,7 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
         <Profile owner={campaign.owner} />
       </div>
 
-      <div className="mt-1 md:mt-1 bg-gray-100 px-3 py-2 md:px-5 md:py-5 rounded-2xl">
+      <div className="mt-1 md:mt-1 bg-gray-100 p-5 rounded-2xl">
         <p className="text-xs md:text-sm whitespace-pre-line leading-5 md:leading-7">
           {expanded ? fullText : previewText}
           <span
@@ -77,10 +79,10 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
           accept="image/*"
           className="hidden"
         />
-        <div className="flex flex-row space-x-4 mt-[-10] mb-3 md:mt-4">
+        <div className="mt-6">
           <PreviewImages images={campaign.otherImages} />
         </div>
-        <div className="mt-4">
+        <div className="mt-6">
           <div>
             <p className="font-medium">Network</p>
             <div className="flex flex-row gap-2 items-center bg-gray-100 px-3 py-2 rounded-2xl w-fit">
@@ -123,7 +125,7 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
             )}
           </div>
         </div>
-        <hr className="border-[#CDCDCD]/40 w-full my-8" />
+        <hr className="border-[#CDCDCD]/40 w-full mt-8 mb-4" />
       </div>
     </>
   );
