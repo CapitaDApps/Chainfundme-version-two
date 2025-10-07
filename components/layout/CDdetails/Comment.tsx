@@ -207,7 +207,7 @@ export default function Comments({ initial = [] }: { initial?: Comment[] }) {
 
   return (
     <div className="bg-white text-gray-900">
-      <div className="pt-4 px-2 md:px-0">
+      <div className="">
         <h3 className="text-base md:text-lg mb-3 md:mb-4 font-semibold">
           Comments ({comments.length})
         </h3>

@@ -1,41 +1,29 @@
-import { config } from "@/lib/networks/config";
-import { getChainId } from "@wagmi/core";
-import { parseUnits } from "viem";
-import { networkContractAddresses } from "../constants";
+import { IToken } from "@/types/token.types";
+import { parseUnits, zeroAddress } from "viem";
 import { useWriteFundingFactory } from "./useWriteFundingFactory";
-import { getNetworkTokens, getTokenAddress } from "../tokensConfig";
-import { useSwitchChain } from "wagmi";
 
 export function useFund() {
   const fundContractFunc = useWriteFundingFactory();
-  const { switchChain } = useSwitchChain();
 
   async function fundCampaign(
     campaignAddress: string,
     amount: string,
-    token: string,
-    campaignNetworkId: number,
-    txValue?: string,
+    token: IToken,
+
     options?: {
       errorCb?: () => Promise<void>;
       successCb?: () => Promise<void>;
     }
   ) {
-    const chainId = getChainId(config);
+    const tokenAddress = token.address;
 
-    if (chainId !== campaignNetworkId) {
-      switchChain({ chainId: campaignNetworkId });
-    }
+    const parsedAmount = parseUnits(amount, token.decimals);
 
-    const tokenAddress = getTokenAddress(token);
-    const tokens = getNetworkTokens(campaignNetworkId);
-    const foundToken = tokens.find((token) => token.address == tokenAddress);
-    if (!foundToken)
-      throw new Error(`token with address ${tokenAddress} not found`);
+    console.log({ token, campaignAddress, parsedAmount, amount });
 
-    const parsedAmount = parseUnits(amount, foundToken.decimals);
-
-    console.log({ foundToken, campaignAddress, parsedAmount, amount });
+    let txValue: bigint | undefined;
+    if (token.address === zeroAddress)
+      txValue = parseUnits(amount, token.decimals);
 
     const { hash } = await fundContractFunc(
       "chainFundMe_fundChainFundMe",
@@ -46,7 +34,7 @@ export function useFund() {
         },
         onSuccess: async () => {
           console.log(
-            `Funded campaign ${campaignAddress} with ${amount} ${token}`
+            `Funded campaign ${campaignAddress} with ${amount} ${token.name}`
           );
           await options?.successCb?.();
         },

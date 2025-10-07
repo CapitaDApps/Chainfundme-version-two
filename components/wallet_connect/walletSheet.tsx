@@ -21,7 +21,7 @@ import { useWalletBalance } from "./hooks/useWalletBalance";
 import TransferDialog from "./transferDialog";
 import FundWalletDialog from "./fundWalletDialog";
 import { IToken } from "@/types/token.types";
-import UserWalletSettings from "./userWalletSettings";
+import { zeroAddress } from "viem";
 
 function WalletSheet({ children }: { children: ReactNode }) {
   const { user } = usePrivy();
@@ -32,10 +32,6 @@ function WalletSheet({ children }: { children: ReactNode }) {
 
   const connectorType = user?.wallet?.connectorType;
 
-  const userETHBalance = tokenBalances.find(
-    (token) => token.name === tokenNames.eth
-  )?.balance;
-
   return (
     <Sheet>
       <SheetTrigger className="w-full text-left">{children}</SheetTrigger>
@@ -44,7 +40,6 @@ function WalletSheet({ children }: { children: ReactNode }) {
         <WalletSheetContent
           address={address}
           connectorType={connectorType}
-          userETHBalance={userETHBalance}
           tokenBalances={tokenBalances}
         />
       </SheetContent>
@@ -63,10 +58,6 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
 
   const connectorType = user?.wallet?.connectorType;
 
-  const userETHBalance = tokenBalances.find(
-    (token) => token.name === tokenNames.eth
-  )?.balance;
-
   return (
     <Sheet>
       <SheetTrigger className="w-full text-left">{children}</SheetTrigger>
@@ -78,7 +69,6 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
         <WalletSheetContent
           address={address}
           connectorType={connectorType}
-          userETHBalance={userETHBalance}
           tokenBalances={tokenBalances}
         />
       </SheetContent>
@@ -88,17 +78,16 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
 
 type WalletSheetProps = {
   address: string | undefined;
-  userETHBalance: string | undefined;
   connectorType: string | undefined;
   tokenBalances: IToken[];
 };
 
 function WalletSheetContent({
   address,
-  userETHBalance,
   connectorType,
   tokenBalances,
 }: WalletSheetProps) {
+  const token = tokenBalances.find((token) => token.address === zeroAddress);
   return (
     <>
       <SheetHeader>
@@ -123,7 +112,7 @@ function WalletSheetContent({
           </div>
 
           <p className="text-lg sm:text-2xl mt-6 text-sidebar-content">
-            {userETHBalance?.slice(0, 8)} ETH
+            {token?.balance?.slice(0, 8)} {token?.symbol}
           </p>
 
           <div className="flex items-center gap-3 sm:gap-2 mt-6">

@@ -1,7 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { getChainImage } from "@/lib/networks/config";
 import { formatPrice, formatTimeLeft } from "@/lib/utils";
 import { DraftCardProps } from "@/types/campaign";
 import { Clock } from "lucide-react";
@@ -15,7 +14,7 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
   const campaign = campaignData.campaign;
   const amountFunded = campaignData.amount;
 
-  const chains = campaign.chains.map((chain) => getChainImage(chain.networkId));
+  const chains = campaign.chains;
 
   return (
     <article className="block md:hidden w-full">
@@ -49,7 +48,7 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
                 <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
                   {chains.map((chain, i) => (
                     <Avatar className="h-4 w-4" key={i}>
-                      <AvatarImage src={chain} alt="" />
+                      <AvatarImage src={chain.imagePath} alt="" />
                     </Avatar>
                   ))}
                 </div>

@@ -10,7 +10,7 @@ import { UserDocument } from "@/types/api";
 
 function Profile({ owner }: { owner: UserDocument }) {
   return (
-    <div className="mt-6 mb-6">
+    <div className="">
       <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-3">
         <div className="flex items-center space-x-3 mb-2 md:mb-0">
           <Avatar className="w-12 h-12 md:w-10 md:h-10">
@@ -26,7 +26,7 @@ function Profile({ owner }: { owner: UserDocument }) {
         </div>
       </div>
 
-      <div className="pl-10">
+      <div>
         <Popover>
           <PopoverTrigger asChild>
             <Button

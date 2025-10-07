@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Control,
   FieldPath,
@@ -23,6 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ChainDocument } from "@/types/api";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
+import { useSwitchChain } from "wagmi";
 
 interface NetworkOption {
   name: string;
@@ -38,7 +41,7 @@ interface FormInput {
   watch: UseFormWatch<z.infer<typeof FormSchema>>;
   label: string;
   placeholder: string;
-  array: NetworkOption[];
+  array: ChainDocument[];
 }
 
 export default function SelectNetwork({
@@ -48,13 +51,15 @@ export default function SelectNetwork({
   setValue,
   array,
 }: FormInput) {
-  const solanaTokens: z.infer<typeof FormSchema>["tokens"] = ["usdc", "usdt"];
-  const baseTokens: z.infer<typeof FormSchema>["tokens"] = [
-    "usdc",
-    "cngn",
-    "eth(base)",
-  ];
-  const bnbTokens: z.infer<typeof FormSchema>["tokens"] = ["usdt"];
+  // const solanaTokens: z.infer<typeof FormSchema>["tokens"] = ["usdc", "usdt"];
+  // const baseTokens: z.infer<typeof FormSchema>["tokens"] = [
+  //   "usdc",
+  //   "cngn",
+  //   "eth(base)",
+  // ];
+  // const bnbTokens: z.infer<typeof FormSchema>["tokens"] = ["usdt"];
+
+  const { switchChain } = useSwitchChain();
 
   return (
     <FormField
@@ -65,15 +70,8 @@ export default function SelectNetwork({
           <div className="w-full flex-1 flex justify-center items-center">
             <Select
               onValueChange={(val) => {
-                if (val === "solana") {
-                  setValue("tokens", solanaTokens);
-                }
-                if (val === "base") {
-                  setValue("tokens", baseTokens);
-                }
-                if (val === "bnb") {
-                  setValue("tokens", bnbTokens);
-                }
+                setValue("tokens", []);
+                switchChain({ chainId: +val });
                 return field.onChange(val);
               }}
             >
@@ -86,17 +84,17 @@ export default function SelectNetwork({
                 {array.map((select) => (
                   <SelectItem
                     className="cursor-pointer text-xs hover:bg-primary hover:text-white"
-                    key={select.value}
-                    value={select.value}
+                    key={select.networkId}
+                    value={select.networkId.toString()}
                   >
                     <Image
-                      src={select.image}
-                      alt={`${select.label ?? select.name} icon`}
+                      src={select.imagePath}
+                      alt={select.symbol}
                       width={20}
                       height={20}
                       className="inline-block mr-2"
                     />
-                    {select.name}
+                    {select.chain}
                   </SelectItem>
                 ))}
               </SelectContent>

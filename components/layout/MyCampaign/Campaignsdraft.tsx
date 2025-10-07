@@ -88,7 +88,7 @@ function Campaignsdraft() {
 
     return (
       <div className="flex justify-center flex-col items-center gap-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-20">
           {campaignsToShow.map((campaign) => (
             <Draftcard
               key={campaign.cmid}
@@ -144,7 +144,7 @@ function Campaignsdraft() {
   };
 
   return (
-    <div className="mt-12 mb-20">
+    <div className="mt-12">
       <Tabs defaultValue="draft" className="w-full">
         <TabsList className="flex-nowrap gap-2">
           {campaignTabs.map((tab) => (

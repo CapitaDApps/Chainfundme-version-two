@@ -11,11 +11,26 @@ import UploadDocuments from "./UploadDocuments";
 import UploadVideo from "./UploadVideo";
 import UploadImages from "./UplodImages";
 import Link from "next/link";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 
 export default function StepFive() {
   type FormData = z.infer<typeof FormSchema>;
   const { getValues, control } = useFormContext<FormData>();
   const campaignData = getValues();
+  const { defaultTokens, tokens: networkTokens } = useNetworkTokens();
+
+  const tokens = (campaignData.tokens || [])
+    .map((token) => {
+      const netToken = networkTokens.find((t) => t.address === token);
+      if (netToken) {
+        return netToken;
+      } else {
+        return "";
+      }
+    })
+    .filter((token) => token !== "");
+
+  const allSelectedTokens = [...defaultTokens, ...tokens];
 
   const photos =
     campaignData.supportingImages?.map((file) =>
@@ -169,22 +184,30 @@ export default function StepFive() {
         </div>
 
         {/* Tokens Section */}
-        {/* <div className="flex justify-between items-center gap-3">
+        <div className="flex justify-between items-center gap-3">
           <div className="flex flex-col gap-2">
-            <p className="text-sm font-normal text-[#111111]">Accepted Tokens</p>
-            <div className="flex items-center gap-2">
-              {campaignData.tokens.map((token) => (
+            <p className="text-sm font-normal text-[#111111]">
+              Accepted Tokens
+            </p>
+            <div className="flex items-center gap-2 flex-wrap">
+              {allSelectedTokens.map((token) => (
                 <div
                   key={token.name}
-                  className="bg-[#2A2A2A] p-1 rounded-[4px] text-xs text-[#111111] font-normal flex items-center gap-1"
+                  className="bg-gray-100 py-2 px-3 rounded-xl text-xs text-[#111111] font-normal flex items-center gap-1"
                 >
-                  <Image width={10} height={10} alt="token" src={token.src} />
+                  <Image
+                    width={15}
+                    height={15}
+                    alt="token"
+                    src={token.imagePath}
+                    className="rounded-full"
+                  />
                   <p>{token.name}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div> */}
+        </div>
 
         {/* Action Button */}
       </div>

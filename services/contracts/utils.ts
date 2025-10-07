@@ -1,39 +1,34 @@
 import { getBalance, readContract } from "@wagmi/core";
 import TokenABI from "./abi/Token.json";
 import { config } from "@/lib/networks/config";
-import { formatEther } from "viem";
+import { formatEther, formatUnits, zeroAddress } from "viem";
 import { getTokenAddress, tokenNames } from "./tokensConfig";
+import { TokenDocument } from "@/types/api";
 
 async function getCoinBalance(
-  coin: string,
-  address: string | undefined
+  token: TokenDocument,
+  userAddress: string
 ): Promise<string> {
-  if (
-    coin.toLowerCase() == tokenNames.eth.toLowerCase() ||
-    coin.toLowerCase() == tokenNames.bsc.toLowerCase()
-  ) {
+  if (token.address === zeroAddress) {
     const data = await getBalance(config, {
-      address: address as `0x${string}`,
+      address: userAddress as `0x${string}`,
     });
     console.log({ data });
     const numList = formatEther(data.value).split(".");
     return `${numList[0]}${numList[1] ? "." + numList[1].slice(0, 5) : ""}`;
   }
+
   // ERC 20
-  const tokenAddress = getTokenAddress(coin);
-  if (tokenAddress) {
-    const result = await readContract(config, {
-      address: tokenAddress as `0x${string}`,
-      abi: TokenABI,
-      functionName: "balanceOf",
-      args: [address],
-    });
+  const tokenAddress = token.address;
+  const result = await readContract(config, {
+    address: tokenAddress as `0x${string}`,
+    abi: TokenABI,
+    functionName: "balanceOf",
+    args: [userAddress],
+  });
 
-    const numList = formatEther(result as bigint).split(".");
-    return `${numList[0]}${numList[1] ? "." + numList[1].slice(0, 5) : ""}`;
-  }
-
-  return "0";
+  const numList = formatUnits(result as bigint, token.decimals).split(".");
+  return `${numList[0]}${numList[1] ? "." + numList[1].slice(0, 5) : ""}`;
 }
 
 export { getCoinBalance };

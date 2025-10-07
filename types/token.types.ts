@@ -8,4 +8,7 @@ export interface IToken {
   name: TokenType;
   balance: string;
   src: string;
+  address: string;
+  decimals: number;
+  symbol: string;
 }
