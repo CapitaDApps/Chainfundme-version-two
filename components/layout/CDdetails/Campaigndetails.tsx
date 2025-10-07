@@ -56,14 +56,15 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
       </h1>
 
       <div className="pt-8">
-        <div className="flex flex-row justify-between gap-6">
-          <Leftpart campaign={campaign} />
-
-          <div className="h-fit hidden md:block">
+        <div className="flex flex-col lg:flex-row justify-between gap-6 ">
+          <div className="flex-1 w-full max-w-4xl">
+            <Leftpart campaign={campaign} />
+          </div>
+          <div className="h-fit min-w-[300px] w-full max-w-[600px] lg:max-w-[400px] lg:mt-0">
             <Rightpart campaign={campaign} />
           </div>
         </div>
-        <div className="max-w-3xl">
+        <div className="max-w-3xl mt-20 lg:mt-8">
           <Comments />
         </div>
       </div>

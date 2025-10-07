@@ -69,8 +69,7 @@ const Step4Schema = z.object({
     .array(z.string(), {
       message: "Please select a token.",
     })
-    .min(1, { message: "Please select at least one token." })
-    .max(5, { message: "You can select up to 5 tokens only." }),
+    .optional(),
 });
 const Step5Schema = z.object({
   agree: z.boolean().refine((val) => val === true, {

@@ -21,7 +21,7 @@ import SelectCoin from "./selectCoin";
 import { useWalletBalance } from "./hooks/useWalletBalance";
 
 export default function TransferDialog({ children }: { children: ReactNode }) {
-  const [selectedToken, setSelectedToken] = useState(tokenNames.eth);
+  const [selectedToken, setSelectedToken] = useState("");
   const [transferAmount, setTransferAmount] = useState("0");
   const [recipientAddress, setRecipientAddress] = useState("");
 
@@ -32,8 +32,9 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
 
   const address = user?.wallet?.address;
 
-  const balance =
-    tokenBalances.find((token) => token.name === selectedToken)?.balance || "0";
+  const token = tokenBalances.find((token) => token.address === selectedToken);
+
+  const balance = token?.balance || "0";
 
   const handleConfirmation = async () => {
     if (!address) return console.log("No address");
@@ -46,7 +47,7 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
     }
 
     await transfer({
-      selectedToken,
+      selectedToken: token,
       recipientAddress,
       transferAmount,
     });
@@ -92,7 +93,7 @@ export default function TransferDialog({ children }: { children: ReactNode }) {
             )}
             <div className="flex items-center text-gray-600 gap-1">
               <p>{balance}</p>
-              <p className="">{selectedToken.toUpperCase()}</p>
+              <p className="">{token?.symbol?.toUpperCase()}</p>
             </div>
           </div>
         </div>

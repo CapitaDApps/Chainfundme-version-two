@@ -5,4 +5,7 @@ export type TokenDocument = {
   chainId: number;
   decimals: number;
   imagePath: string;
+  dexscreenerPairAddress: string;
+  dexscreenerChainId: string;
+  type: string;
 };

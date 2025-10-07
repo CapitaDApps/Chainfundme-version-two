@@ -1,6 +1,6 @@
 "use client";
 
-import { getNetworkTokens } from "@/services/contracts/tokensConfig";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 import { getCoinBalance } from "@/services/contracts/utils";
 import { IToken, TokenType } from "@/types/token.types";
 import { usePrivy } from "@privy-io/react-auth";
@@ -10,33 +10,41 @@ export function useWalletBalance() {
   const { user } = usePrivy();
   const address = user?.wallet?.address;
 
-  const tokens = getNetworkTokens();
+  const { tokens } = useNetworkTokens();
 
   const { data, isFetching } = useQuery({
-    queryKey: ["walletBalances", address],
+    queryKey: ["walletBalances", address, tokens?.length],
     queryFn: async () => {
+      if (!tokens) return;
       const balances: IToken[] = [];
       for (const token of tokens) {
         if (!address) return balances;
-        const balance = await getCoinBalance(token.name, address);
+        const balance = await getCoinBalance(token, address);
 
         const exist = balances.findIndex((c) => c.name === token.name);
         if (exist > -1) {
           balances[exist] = {
             name: token.name as TokenType,
             balance,
-            src: token.src,
+            src: token.imagePath,
+            address: token.address,
+            decimals: token.decimals,
+            symbol: token.symbol,
           };
         } else {
           balances.push({
             name: token.name as TokenType,
             balance,
-            src: token.src,
+            src: token.imagePath,
+            address: token.address,
+            decimals: token.decimals,
+            symbol: token.symbol,
           });
         }
       }
       return balances;
     },
+    enabled: !!tokens,
   });
 
   const tokenBalances: IToken[] = data || [];

@@ -17,7 +17,7 @@ function useWriteFundingFactory() {
     functionName: string,
     args: any[],
     mutateOptions?: any,
-    value?: string
+    value?: bigint
   ) => {
     console.log({ chainId });
     const fundingFactoryAddress =
@@ -30,7 +30,7 @@ function useWriteFundingFactory() {
           functionName,
           abi: CapitaFundingFactoryABI,
           args,
-          value: value ? parseEther(value) : undefined,
+          value: value ? value : undefined,
         },
         mutateOptions
       );

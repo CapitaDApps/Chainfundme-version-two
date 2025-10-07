@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatPrice, formatTimeLeft } from "@/lib/utils";
@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import MobileDraftCard from "./MobileCard";
-import { getChainImage } from "@/lib/networks/config";
 
 const Draftcard = ({ campaignData, status }: DraftCardProps) => {
   const isClickable = status !== "draft";
@@ -20,14 +19,14 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
   const campaign = campaignData.campaign;
   const amountFunded = campaignData.amount;
 
-  const chains = campaign.chains.map((chain) => getChainImage(chain.networkId));
+  const chains = campaign.chains;
 
   return (
     <>
       <article className="w-full h-full hidden md:block">
         {isClickable ? (
           <div
-            className="w-full h-full rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer"
+            className="w-full h-fit rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer"
             onClick={() => handleClick(campaign.cmid)}
           >
             <div className="relative w-full h-60 rounded-[16px] overflow-hidden">
@@ -57,9 +56,21 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
               <div className="flex justify-between items-center pb-1">
                 <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
                   {chains.map((chain, i) => (
-                    <Avatar className="h-5 w-5" key={i}>
-                      <AvatarImage src={chain} alt="" />
-                    </Avatar>
+                    <div
+                      key={i}
+                      className="py-2 px-3 bg-gray-100 rounded-3xl flex text-xs items-center gap-2"
+                    >
+                      <Image
+                        src={chain.imagePath}
+                        alt={chain.symbol}
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
+                      <p className="text-secondary-text mt-1">
+                        {chain.symbol.toUpperCase()}
+                      </p>
+                    </div>
                   ))}
                 </div>
                 {amountFunded && (
@@ -90,7 +101,7 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
             </div>
           </div>
         ) : (
-          <div className="w-full h-full rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col">
+          <div className="w-full h-fit rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md">
             <div className="relative w-full h-60 rounded-[16px] overflow-hidden">
               <Image
                 src={campaign.image}
@@ -103,7 +114,7 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
             <div className="py-2 px-4 flex-1 flex flex-col">
               <div className="text-xs flex justify-start space-x-1 items-center mb-1 text-[#666666]">
                 <Clock className="w-3 h-3" />
-                <span>Draft</span>
+                <span className="mt-1">Draft</span>
               </div>
 
               <h3 className="font-semibold line-clamp-1 mb-2">

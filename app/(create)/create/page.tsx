@@ -24,6 +24,7 @@ import { useAccount } from "wagmi";
 import { zeroAddress } from "viem";
 import { usePublish } from "@/services/api/hooks/campaign/usePublish";
 import { useRouter } from "next/navigation";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 
 type FormData = z.infer<typeof FormSchema>;
 const stepText = [
@@ -46,6 +47,8 @@ export default function MultiStepForm() {
   const router = useRouter();
 
   const [fulfilledSteps, setFulFillSteps] = useState(0);
+
+  const { tokens: networkTokens } = useNetworkTokens();
 
   const steps = [
     <StepOne key="s1" />,
@@ -71,7 +74,7 @@ export default function MultiStepForm() {
       ];
     if (step === 1) fieldsToValidate = ["cover", "supportingImages", "twitter"];
     if (step === 2) fieldsToValidate = ["bio"];
-    if (step === 3) fieldsToValidate = ["amount", "tokens", "chain"];
+    if (step === 3) fieldsToValidate = ["amount", "chain"];
     if (step === 4) fieldsToValidate = ["agree", "read"];
 
     const isValid = await methods.trigger(fieldsToValidate);
@@ -92,26 +95,23 @@ export default function MultiStepForm() {
     console.log("Final Data:", data);
 
     // Get tokens from existing token configuration
-    const chainTokens = getNetworkTokens();
 
     // Transform token strings to token objects using existing config
-    const transformedTokens = data.tokens
-      .map((tokenValue) => {
-        const tokenInfo = chainTokens.find(
-          (token) =>
-            token.name.toLowerCase().includes(tokenValue.toLowerCase()) ||
-            tokenValue.toLowerCase().includes(token.name.toLowerCase())
-        );
-        return tokenInfo || "";
-      })
-      .filter((token) => token !== "");
+    // const transformedTokens = data.tokens
+    //   .map((tokenValue) => {
+    //     const tokenInfo = networkTokens.find(
+    //       (token) => token.address === tokenValue
+    //     );
+    //     return tokenInfo || "";
+    //   })
+    //   .filter((token) => token !== "");
 
     // Transform FormData to match CampaignFormSchema (what the hook expects)
     const transformedData = {
       ...data,
       fundingTarget: data.amount, // Map amount to fundingTarget
       avatar: data.cover, // Use cover as avatar since FormSchema doesn't have avatar
-      tokens: transformedTokens, // Transform tokens to objects
+      tokens: data.tokens || [],
     };
 
     console.log({ transformedData });
@@ -142,10 +142,7 @@ export default function MultiStepForm() {
             (new Date(data.startDate).getTime() + 3 * 60 * 1000) / 1000
           );
           const endTime = Math.floor(new Date(data.endDate).getTime() / 1000);
-          const tokenAddresses = transformedTokens
-            .map((token) => token.address)
-            .filter((token) => token !== zeroAddress);
-
+          const tokenAddresses = data.tokens || [];
           console.log("Smart contract deployment params:", {
             uri: campaignId,
             startTime,

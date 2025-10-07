@@ -1,6 +1,6 @@
 "use client";
 
-import { format, isBefore, startOfDay } from "date-fns";
+import { format, isBefore, isToday, startOfDay } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Control, FieldPath } from "react-hook-form";
 import z from "zod";
@@ -72,7 +72,14 @@ export default function DateField({
                   field.value ? new Date(field.value as string) : undefined
                 }
                 onSelect={(date) => {
-                  field.onChange(date ? date.toISOString() : "");
+                  field.onChange(
+                    date
+                      ? isToday(date)
+                        ? new Date(new Date().getTime() + 1800000).toISOString() // Buff now by 30mins
+                        : date.toISOString()
+                      : ""
+                  );
+                  // close the popover after selecting a date to ensure the click is handled
                   setIsOpen(false);
                 }}
                 disabled={(date) => {

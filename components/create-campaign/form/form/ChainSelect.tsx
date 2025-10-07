@@ -10,6 +10,8 @@ import {
 import SelectNetwork from "./SelectNetwork";
 import Image from "next/image";
 import { FormSchema } from "@/lib/schemas";
+import { useChains } from "@/services/api/hooks/chain/useChains";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 interface FormInput {
   control: Control<z.infer<typeof FormSchema>>;
   getValues: UseFormGetValues<z.infer<typeof FormSchema>>;
@@ -42,38 +44,22 @@ export default function ChainSelect({
   setValue,
   watch,
 }: FormInput) {
-  const chain = [
-    {
-      value: "base",
-      name: "Base",
-      image: "/tokens/base.svg",
-    },
-    {
-      value: "solana",
-      name: "Solana",
-      image: "/tokens/solana.svg",
-    },
-    {
-      value: "bnb",
-      name: "BNB",
-      image: "/tokens/binance.svg",
-    },
-  ];
+  const { chains } = useChains();
 
   const network = watch("chain");
-  const tokens = watch("tokens");
+  const tokens = watch("tokens") || [];
 
-  const chains = !network
-    ? []
-    : network === "base"
-    ? baseToks
-    : network === "solana"
-    ? solToks
-    : bnbToks;
+  console.log({ tokens });
 
-  const findToken = tokens?.map((token) =>
-    chains.find((x) => x.value === token)
-  );
+  const { defaultTokens } = useNetworkTokens();
+  const defaultTokenAddresses = defaultTokens.map((token) => token.address);
+
+  const { tokens: networkTokens } = useNetworkTokens();
+  const allTokens = [...defaultTokenAddresses, ...tokens];
+  const findToken = allTokens
+    .map((token) => networkTokens.find((x) => x.address === token))
+    .filter((token) => token !== undefined);
+
   return (
     <div className="space-y-1">
       <p className="text-xs text-[var(--form-label)] font-normal">
@@ -87,10 +73,10 @@ export default function ChainSelect({
           placeholder="Select Chain"
           setValue={setValue}
           watch={watch}
-          array={chain}
+          array={chains}
         />
         <CampaignTokens
-          chains={chains}
+          networkTokens={networkTokens}
           getValues={getValues}
           setValue={setValue}
           watch={watch}
@@ -98,18 +84,18 @@ export default function ChainSelect({
         />
       </div>
       <div className="flex flex-wrap items-center gap-2 mt-2">
-        {findToken?.map((token) => (
+        {findToken.map((token) => (
           <div
             className="flex items-center gap-1 text-xs rounded-full bg-primary/10 border border-primary/50 font-medium px-2 py-1"
-            key={token?.label}
+            key={token?.address}
           >
             <Image
-              src={token?.image || ""}
-              alt={`${token?.label} icon`}
+              src={token.imagePath || ""}
+              alt={`${token.symbol} icon`}
               width={20}
               height={20}
             />
-            {token?.label}
+            {token.name}
           </div>
         ))}
       </div>

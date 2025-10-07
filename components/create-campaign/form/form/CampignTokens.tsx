@@ -33,23 +33,26 @@ import {
 } from "react-hook-form";
 import Image from "next/image";
 import { FormSchema } from "@/lib/schemas";
+import { TokenDocument } from "@/types/api";
+import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 
 interface FormInput {
   control: Control<z.infer<typeof FormSchema>>;
   getValues: UseFormGetValues<z.infer<typeof FormSchema>>;
   setValue: UseFormSetValue<z.infer<typeof FormSchema>>;
   watch: UseFormWatch<z.infer<typeof FormSchema>>;
-  chains: { [keys: string]: string }[];
+  networkTokens: TokenDocument[];
 }
 export function CampaignTokens({
   control,
   watch,
   getValues,
   setValue,
-  chains,
+  networkTokens,
 }: FormInput) {
   const value = watch("tokens");
-  const dis = ["usdc", "usdt", "cngn", "eth(base)"];
+  const { defaultTokens } = useNetworkTokens();
+  console.log({ networkTokens, defaultTokens });
   return (
     <FormField
       control={control}
@@ -80,34 +83,37 @@ export function CampaignTokens({
                   <CommandEmpty>No token found.</CommandEmpty>
 
                   <CommandGroup className="cursor-pointer max-h-[120px] overflow-y-auto no-scroll">
-                    {chains.map((chain) => (
+                    {networkTokens.map((token) => (
                       <CommandItem
-                        disabled={dis.includes(chain.value)}
-                        value={chain.label}
-                        key={chain.value}
+                        disabled={defaultTokens.some(
+                          (defaultToken) =>
+                            token.address === defaultToken.address
+                        )}
+                        value={token.address}
+                        key={token.address}
                         className="hover:bg-primary hover:text-white cursor-pointer text-xs"
                         onSelect={() => {
                           const current = getValues("tokens") || [];
-                          if (current.includes(chain.value)) {
+                          if (current.includes(token.address)) {
                             setValue(
                               "tokens",
-                              current.filter((val) => val !== chain.value)
+                              current.filter((val) => val !== token.address)
                             );
                           } else {
-                            setValue("tokens", [...current, chain.value]);
+                            setValue("tokens", [...current, token.address]);
                           }
                         }}
                       >
                         <Image
-                          src={chain.image}
-                          alt={`${chain.label} icon`}
+                          src={token.imagePath}
+                          alt={`${token.symbol} icon`}
                           width={20}
                           height={20}
                         />
-                        {chain.label}
+                        {token.name}
                         <Check
                           className={
-                            watch("tokens")?.includes(chain.value)
+                            watch("tokens")?.includes(token.address)
                               ? "opacity-100"
                               : "opacity-0"
                           }

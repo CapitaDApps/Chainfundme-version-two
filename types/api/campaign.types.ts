@@ -39,6 +39,8 @@ export type ReturnCampaignDocument = {
   cmid: string;
   published: boolean;
   tokens: TokenDocument[];
-  campaignAddress?: string;
+  campaignAddresses?: {
+    [key: string]: string;
+  };
   funders: FunderDocument[];
 };
