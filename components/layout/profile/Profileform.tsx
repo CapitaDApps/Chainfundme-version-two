@@ -7,13 +7,62 @@ import z from "zod";
 import AvatarImage from "./AvatarImage";
 import CoverImage from "./CoverImage";
 import ProfileInputs from "./ProfileInputs";
+import { useUpdateProfile } from "@/services/api/hooks/user/useUpdateProfile";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function Profileform() {
   type FormData = z.infer<typeof FormSchema>;
-  const { control, handleSubmit } = useFormContext<FormData>();
+  const { control, handleSubmit, reset } = useFormContext<FormData>();
+  const { updateProfileFunc, updatingProfile, isSuccess } = useUpdateProfile();
+  const { userProfile, fetchingProfile } = useUserProfile();
+  const router = useRouter();
+
+  // Load existing profile data into form
+  useEffect(() => {
+    if (userProfile) {
+      reset({
+        name: userProfile.name || "",
+        bio: userProfile.bio || "",
+        twitter: "",
+        facebook: "",
+        linkedin: "",
+        website: "",
+      });
+    }
+  }, [userProfile, reset]);
+
+  // Redirect to profile page after successful update
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/profile");
+    }
+  }, [isSuccess, router]);
 
   const onSubmit = (data: FormData) => {
     console.log("Form submitted:", data);
+    
+    // Prepare social links object
+    const socialLinks: {
+      twitter?: string;
+      facebook?: string;
+      linkedin?: string;
+      website?: string;
+    } = {};
+    
+    if (data.twitter) socialLinks.twitter = data.twitter;
+    if (data.facebook) socialLinks.facebook = data.facebook;
+    if (data.linkedin) socialLinks.linkedin = data.linkedin;
+    if (data.website) socialLinks.website = data.website;
+
+    // Update profile with all fields including profile picture
+    updateProfileFunc({
+      name: data.name,
+      bio: data.bio,
+      profilePicture: data.avatar,
+      socialLinks: Object.keys(socialLinks).length > 0 ? socialLinks : undefined,
+    });
   };
 
   return (
@@ -26,9 +75,10 @@ function Profileform() {
 
           <Button
             type="submit"
-            className="w-full my-4 bg-[#003DEF] text-white rounded-lg py-2 hover:bg-sky-600 cursor-pointer max-w-[10rem] mx-auto block"
+            disabled={updatingProfile || fetchingProfile}
+            className="w-full my-4 bg-[#003DEF] text-white rounded-lg py-2 hover:bg-sky-600 cursor-pointer max-w-[10rem] mx-auto block disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Save Profile
+            {updatingProfile ? "Saving..." : "Save Profile"}
           </Button>
         </div>
 
