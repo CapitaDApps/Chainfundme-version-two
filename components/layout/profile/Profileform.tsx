@@ -56,11 +56,11 @@ function Profileform() {
     if (data.linkedin) socialLinks.linkedin = data.linkedin;
     if (data.website) socialLinks.website = data.website;
 
-    // Update profile with all fields including profile picture
+    // Update profile with all fields including profile image
     updateProfileFunc({
       name: data.name,
       bio: data.bio,
-      profilePicture: data.avatar,
+      profileImage: data.avatar,
       socialLinks: Object.keys(socialLinks).length > 0 ? socialLinks : undefined,
     });
   };

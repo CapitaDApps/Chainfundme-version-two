@@ -8,7 +8,7 @@ export function useUpdateProfile() {
       name?: string;
       bio?: string;
       email?: string;
-      profilePicture?: File;
+      profileImage?: File;
       socialLinks?: {
         twitter?: string;
         facebook?: string;

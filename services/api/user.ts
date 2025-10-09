@@ -22,7 +22,7 @@ async function updateProfile(data: {
   name?: string;
   bio?: string;
   email?: string;
-  profilePicture?: File;
+  profileImage?: File;
   socialLinks?: {
     twitter?: string;
     facebook?: string;
@@ -33,21 +33,21 @@ async function updateProfile(data: {
   const token = await getAuthToken();
   const formData = new FormData();
 
-  // Append fields to FormData
-  if (data.name) formData.append("name", data.name);
-  if (data.bio) formData.append("bio", data.bio);
-  if (data.email) formData.append("email", data.email);
-  if (data.profilePicture) formData.append("profilePicture", data.profilePicture);
+  // Set fields to FormData
+  if (data.name) formData.set("name", data.name);
+  if (data.bio) formData.set("bio", data.bio);
+  if (data.email) formData.set("email", data.email);
+  if (data.profileImage) formData.set("profileImage", data.profileImage);
   
-  // Append social links as JSON string or individual fields
+  // Set social links as JSON string
   if (data.socialLinks) {
-    formData.append("socialLinks", JSON.stringify(data.socialLinks));
+    formData.set("socialLinks", JSON.stringify(data.socialLinks));
   }
 
   const resp = await axios.post(`${url}/profile`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
+      // Note: Don't manually set Content-Type for FormData, axios handles it automatically
     },
   });
 
