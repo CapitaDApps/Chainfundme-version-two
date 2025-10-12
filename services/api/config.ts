@@ -12,7 +12,7 @@ let baseUrl = prod
   : process.env.NEXT_PUBLIC_BASE_STAGE_API_URL;
 
 if (!baseUrl) {
-  baseUrl = "http://localhost:3000/api/v1";
+  baseUrl = process.env.NEXT_PUBLIC_BASE_STAGE_API_URL;
 }
 
 export { baseUrl };
