@@ -209,6 +209,8 @@ function ExplorePageClient() {
           </div>
         </div>
       )}
+
+      {/* Why choose chainfundme */}
     </>
   );
 }

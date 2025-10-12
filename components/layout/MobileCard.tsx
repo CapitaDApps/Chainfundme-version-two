@@ -2,7 +2,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatNumber, formatTimeLeft } from "@/lib/utils";
-import { DraftCardProps } from "@/types/campaign";
+import { DraftCardProps, FundedCampaignType, Status } from "@/types/campaign";
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,26 @@ import CampaignMenu from "./MyCampaign/campaignMenu";
 import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
 import { useRouter } from "next/navigation";
 
-const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
+type MobileCardProps = {
+  campaignData: FundedCampaignType;
+  status: Status;
+  handleReDeploy: (networkId: string, tokens: string[]) => void;
+  handleEndCampaign: (
+    campaignAddress: string,
+    id: string,
+    networkId: string,
+    cb: () => void
+  ) => void;
+  handleWithdrawCampaignFunds: (campaignAddress: string) => void;
+};
+
+const MobileDraftCard = ({
+  campaignData,
+  status,
+  handleEndCampaign,
+  handleReDeploy,
+  handleWithdrawCampaignFunds,
+}: MobileCardProps) => {
   const router = useRouter();
 
   const { userProfile } = useUserProfile();
@@ -48,6 +67,9 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
                 className="py-1 px-2"
                 size={20}
                 campaign={campaign}
+                handleEndCampaign={handleEndCampaign}
+                handleReDeploy={handleReDeploy}
+                handleWithdrawCampaignFunds={handleWithdrawCampaignFunds}
               />
             )}
           </div>

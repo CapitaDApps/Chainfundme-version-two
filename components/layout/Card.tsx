@@ -237,7 +237,13 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
       </article>
 
       <div className="block md:hidden">
-        <MobileDraftCard campaignData={campaignData} status={status} />
+        <MobileDraftCard
+          campaignData={campaignData}
+          status={status}
+          handleEndCampaign={handleEndCampaign}
+          handleReDeploy={handleReDeploy}
+          handleWithdrawCampaignFunds={handleWithdrawCampaignFunds}
+        />
       </div>
     </>
   );
