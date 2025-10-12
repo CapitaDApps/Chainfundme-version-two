@@ -14,6 +14,9 @@ import {
 import PopupProfile from "../profile/PopupProfile";
 import { useAddComment } from "@/services/api/hooks/campaign/useAddComment";
 import { useAddReply } from "@/services/api/hooks/campaign/useAddReply";
+import { useDeleteComment } from "@/services/api/hooks/campaign/useDeleteComment";
+import { useEditComment } from "@/services/api/hooks/campaign/useEditComment";
+import { useLikeCampaign } from "@/services/api/hooks/campaign/useLikeCampaign"; // Note: This is actually for liking comments
 import { Comment, Reply } from "@/types/api";
 import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
 import { toast } from "sonner";
@@ -50,6 +53,9 @@ export default function Comments({
 
   const { addCommentFunc, addingComment } = useAddComment();
   const { addReplyFunc } = useAddReply();
+  const { deleteCommentFunc, deletingComment } = useDeleteComment();
+  const { editCommentFunc, editingComment } = useEditComment();
+  const { likeCommentFunc } = useLikeCampaign(); // Note: Despite the name, this is for liking comments
 
   const { userProfile } = useUserProfile();
 
@@ -77,18 +83,42 @@ export default function Comments({
     setNewText("");
     setVisibleCommentsCount((v) => Math.max(v, 1));
   }
-  function deleteComment(id: number) {
-    setComments((s) => s.filter((c) => c.id !== id));
-    setVisibleRepliesCount((s) => {
-      const copy = { ...s };
-      delete copy[id];
-      return copy;
-    });
-    setLikedComments((s) => {
-      const copy = { ...s };
-      delete copy[id];
-      return copy;
-    });
+  function deleteComment(id: number, commentId?: string) {
+    if (!commentId) {
+      toast.error("Cannot delete comment: Invalid comment ID");
+      return;
+    }
+
+    // Confirm before deleting
+    if (!confirm("Are you sure you want to delete this comment?")) {
+      return;
+    }
+
+    // Call API to delete comment
+    deleteCommentFunc(
+      { commentId },
+      {
+        onSuccess: () => {
+          // Remove from local state after successful API call
+          setComments((s) => s.filter((c) => c.id !== id));
+          setVisibleRepliesCount((s) => {
+            const copy = { ...s };
+            delete copy[id];
+            return copy;
+          });
+          setLikedComments((s) => {
+            const copy = { ...s };
+            delete copy[id];
+            return copy;
+          });
+          toast.success("Comment deleted successfully");
+        },
+        onError: (error: any) => {
+          console.error("Error deleting comment:", error);
+          toast.error("Failed to delete comment");
+        },
+      }
+    );
   }
 
   function startEdit(id: number, text: string) {
@@ -96,12 +126,41 @@ export default function Comments({
     setEditingText(text);
   }
 
-  function saveEdit(id: number) {
-    setComments((s) =>
-      s.map((c) => (c.id === id ? { ...c, text: editingText } : c))
-    );
+  function cancelEdit() {
     setEditingId(null);
     setEditingText("");
+  }
+
+  function saveEdit(id: number, commentId?: string) {
+    if (!commentId) {
+      toast.error("Cannot edit comment: Invalid comment ID");
+      return;
+    }
+
+    if (!editingText.trim()) {
+      toast.error("Comment cannot be empty");
+      return;
+    }
+
+    // Call API to edit comment
+    editCommentFunc(
+      { commentId, comment: editingText.trim() },
+      {
+        onSuccess: () => {
+          // Update local state after successful API call
+          setComments((s) =>
+            s.map((c) => (c.id === id ? { ...c, text: editingText.trim() } : c))
+          );
+          setEditingId(null);
+          setEditingText("");
+          toast.success("Comment updated successfully");
+        },
+        onError: (error: any) => {
+          console.error("Error editing comment:", error);
+          toast.error("Failed to update comment");
+        },
+      }
+    );
   }
 
   function toggleReply(id: number) {
@@ -150,9 +209,20 @@ export default function Comments({
     }));
   }
 
-  function toggleLikeComment(commentId: number) {
+  function toggleLikeComment(commentId: number, backendCommentId?: string) {
+    if (!userProfile) {
+      toast.error("You must be logged in to like a comment");
+      return;
+    }
+
+    if (!backendCommentId) {
+      toast.error("Cannot like comment: Invalid comment ID");
+      return;
+    }
+
     const currentlyLiked = !!likedComments[commentId];
 
+    // Optimistically update UI
     setComments((prevComments) =>
       prevComments.map((c) =>
         c.id === commentId
@@ -160,8 +230,29 @@ export default function Comments({
           : c
       )
     );
-
     setLikedComments((prev) => ({ ...prev, [commentId]: !currentlyLiked }));
+
+    // Call API - the existing hook expects commentId as a string directly
+    likeCommentFunc(backendCommentId, {
+      onSuccess: () => {
+        // Keep the optimistic update
+        console.log("Comment liked/unliked successfully");
+      },
+      onError: (error: any) => {
+        // Revert optimistic update on error
+        setComments((prevComments) =>
+          prevComments.map((c) =>
+            c.id === commentId
+              ? { ...c, likes: Math.max(0, c.likes + (currentlyLiked ? 1 : -1)) }
+              : c
+          )
+        );
+        setLikedComments((prev) => ({ ...prev, [commentId]: currentlyLiked }));
+        
+        console.error("Error liking comment:", error);
+        toast.error("Failed to like comment");
+      },
+    });
   }
 
   function toggleLikeReply(replyId: number) {
@@ -269,33 +360,38 @@ export default function Comments({
                       </div>
                     </div>
 
-                    <div className="relative flex-shrink-0">
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <button
-                            className="p-1 md:p-2 rounded-full hover:bg-gray-100"
-                            aria-haspopup="true"
-                            aria-label="Open comment actions"
-                          >
-                            <HiOutlineDotsHorizontal className="text-gray-600 w-4 h-4" />
-                          </button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-36 md:w-44 p-2 bg-white border border-gray-200 rounded-md shadow-lg">
-                          <button
-                            onClick={() => startEdit(c.id, c.text)}
-                            className="w-full text-left px-2 md:px-3 py-1.5 md:py-2 hover:bg-gray-100 rounded-md text-xs md:text-sm text-gray-700"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => deleteComment(c.id)}
-                            className="w-full text-left px-2 md:px-3 py-1.5 md:py-2 hover:bg-gray-100 rounded-md text-xs md:text-sm text-gray-700"
-                          >
-                            Delete
-                          </button>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
+                    {/* Only show edit/delete menu if user owns the comment */}
+                    {userProfile && c.user.privyId === userProfile.privyId && (
+                      <div className="relative flex-shrink-0">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              className="p-1 md:p-2 rounded-full hover:bg-gray-100"
+                              aria-haspopup="true"
+                              aria-label="Open comment actions"
+                            >
+                              <HiOutlineDotsHorizontal className="text-gray-600 w-4 h-4" />
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-36 md:w-44 p-2 bg-white border border-gray-200 rounded-md shadow-lg">
+                            <button
+                              onClick={() => startEdit(c.id, c.text)}
+                              disabled={editingComment || deletingComment}
+                              className="w-full text-left px-2 md:px-3 py-1.5 md:py-2 hover:bg-gray-100 rounded-md text-xs md:text-sm text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => deleteComment(c.id, c._id)}
+                              disabled={deletingComment || editingComment}
+                              className="w-full text-left px-2 md:px-3 py-1.5 md:py-2 hover:bg-gray-100 rounded-md text-xs md:text-sm text-red-600 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {deletingComment ? "Deleting..." : "Delete"}
+                            </button>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-2 text-gray-700">
@@ -306,18 +402,21 @@ export default function Comments({
                           onChange={(e) => setEditingText(e.target.value)}
                           className="w-full rounded-md bg-gray-50 border border-gray-300 p-2 md:p-3 text-sm md:text-base text-gray-900 resize-vertical focus:outline-none focus:ring-2 focus:ring-blue-400"
                           rows={3}
+                          disabled={editingComment}
                         />
 
                         <div className="mt-2 flex gap-2">
                           <button
-                            onClick={() => saveEdit(c.id)}
-                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md text-white bg-[#003DEF]"
+                            onClick={() => saveEdit(c.id, c._id)}
+                            disabled={editingComment}
+                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md text-white bg-[#003DEF] hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            Save
+                            {editingComment ? "Saving..." : "Save"}
                           </button>
                           <button
-                            onClick={() => setEditingId(null)}
-                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md bg-gray-200 text-gray-700"
+                            onClick={cancelEdit}
+                            disabled={editingComment}
+                            className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Cancel
                           </button>
@@ -336,7 +435,7 @@ export default function Comments({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleLikeComment(c.id);
+                          toggleLikeComment(c.id, c._id);
                         }}
                         type="button"
                         aria-pressed={!!likedComments[c.id]}
