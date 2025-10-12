@@ -6,42 +6,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { allowedChains, getEnvChainId } from "@/lib/networks/config";
-import { NetworkName } from "@/lib/networks/types";
-import { useState } from "react";
-import { useAccount, useSwitchChain } from "wagmi";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { ChainDocument } from "@/types/api";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
-function ChangeNetwork() {
-  const { chainId } = useAccount();
-  console.log({ chainId });
-  const [networkChange, setNetworkChange] = useState<NetworkName>("Base");
-  const { switchChain } = useSwitchChain();
-  const handleNetworkChange = (val: NetworkName) => {
-    setNetworkChange(val);
-    const chainId = getEnvChainId(val);
-    switchChain({ chainId });
-  };
+function ChangeNetwork({
+  chains,
+  selectedNetwork,
+  handleSwitchChain,
+}: {
+  chains: ChainDocument[];
+  selectedNetwork: string;
+  handleSwitchChain: (networkId: string) => void;
+}) {
   return (
     <Select
-      value={networkChange}
-      onValueChange={(val) => handleNetworkChange(val as NetworkName)}
+      onValueChange={(val) => handleSwitchChain(val)}
+      value={selectedNetwork}
     >
-      <SelectTrigger className="w-fit border-[1px]">
-        <SelectValue defaultValue={"Base"} />
+      <SelectTrigger className="border-[1px] border-primary-accent flex-1">
+        <SelectValue placeholder="Select Chain" />
       </SelectTrigger>
       <SelectContent>
-        {allowedChains
-          .filter((chain) => !chain.testnet)
-          .map((chain) => (
-            <SelectItem value={chain.value} key={chain.networkId}>
-              <Avatar className="w-4 h-4">
-                <AvatarImage src={chain.image} />
-                <AvatarFallback>{chain.symbol}</AvatarFallback>
-              </Avatar>
-              <p>{chain.symbol}</p>
-            </SelectItem>
-          ))}
+        {chains.map((chain) => (
+          <SelectItem value={chain.networkId.toString()} key={chain.networkId}>
+            <Avatar className="w-4 h-4">
+              <AvatarImage src={chain.imagePath} />
+            </Avatar>
+            {chain.symbol}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

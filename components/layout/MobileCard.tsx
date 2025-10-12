@@ -7,8 +7,15 @@ import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
+import CampaignMenu from "./MyCampaign/campaignMenu";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import { useRouter } from "next/navigation";
 
 const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
+  const router = useRouter();
+
+  const { userProfile } = useUserProfile();
+
   const isClickable = status !== "draft";
 
   const campaign = campaignData.campaign;
@@ -16,69 +23,86 @@ const MobileDraftCard = ({ campaignData, status }: DraftCardProps) => {
 
   const chains = campaign.chains;
 
+  const userId = userProfile ? userProfile._id : "";
+  const owned = userId == String(campaign.owner);
+
+  const handleClick = (campaignId: string) => {
+    router.push(`/campaign/${campaignId}`);
+  };
+
   return (
     <article className="block md:hidden w-full">
       {isClickable ? (
-        <Link href={`/campaign/${campaign.cmid}`} className="block w-full">
-          <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row hover:shadow-md cursor-pointer">
-            <div className="relative w-28 flex-shrink-0">
-              <Image
-                src={campaign.image}
-                alt={campaign.title}
-                fill
-                className="object-cover rounded-xl"
+        <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row hover:shadow-md cursor-pointer">
+          <div className="relative w-28 flex-shrink-0">
+            <Image
+              src={campaign.image}
+              alt={campaign.title}
+              fill
+              className="object-cover rounded-xl"
+              onClick={() => handleClick(campaign.cmid)}
+            />
+            {owned && (
+              <CampaignMenu
+                status={status}
+                className="py-1 px-2"
+                size={20}
+                campaign={campaign}
               />
+            )}
+          </div>
+          <div
+            className="flex-1 p-3 flex flex-col min-w-0"
+            onClick={() => handleClick(campaign.cmid)}
+          >
+            <div
+              className={`text-xs flex justify-start space-x-1 items-center mb-1 ${
+                status == "active"
+                  ? "text-blue-600"
+                  : status === "completed"
+                  ? "text-green-600"
+                  : "text-[#666666]"
+              }`}
+            >
+              {formatTimeLeft(campaign.startDate, campaign.endDate)}
             </div>
-            <div className="flex-1 p-3 flex flex-col min-w-0">
-              <div
-                className={`text-xs flex justify-start space-x-1 items-center mb-1 ${
-                  status == "active"
-                    ? "text-blue-600"
-                    : status === "completed"
-                    ? "text-green-600"
-                    : "text-[#666666]"
+            <h3 className="font-bold line-clamp-2 mb-2 text-sm max-w-50">
+              {campaign.title}
+            </h3>
+            <div className="flex justify-between items-center pb-1">
+              <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+                {chains.map((chain, i) => (
+                  <Avatar className="h-4 w-4" key={i}>
+                    <AvatarImage src={chain.imagePath} alt="" />
+                  </Avatar>
+                ))}
+              </div>
+              {amountFunded && (
+                <p className="text-[10px] text-green-600">
+                  Donated ${formatNumber(amountFunded)}
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Progress
+                value={(campaign.currentAmount / campaign.targetAmount) * 100}
+                className={`h-2 ${
+                  status === "completed"
+                    ? "[&>div]:bg-green-500"
+                    : "[&>div]:bg-blue-500"
                 }`}
-              >
-                {formatTimeLeft(campaign.startDate, campaign.endDate)}
-              </div>
-              <h3 className="font-bold line-clamp-2 mb-2 text-sm max-w-50">
-                {campaign.title}
-              </h3>
-              <div className="flex justify-between items-center pb-1">
-                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
-                  {chains.map((chain, i) => (
-                    <Avatar className="h-4 w-4" key={i}>
-                      <AvatarImage src={chain.imagePath} alt="" />
-                    </Avatar>
-                  ))}
-                </div>
-                {amountFunded && (
-                  <p className="text-[10px] text-green-600">
-                    Donated ${formatNumber(amountFunded)}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Progress
-                  value={(campaign.currentAmount / campaign.targetAmount) * 100}
-                  className={`h-2 ${
-                    status === "completed"
-                      ? "[&>div]:bg-green-500"
-                      : "[&>div]:bg-blue-500"
-                  }`}
-                />
-                <div className="flex justify-start space-x-1 items-center text-[10px]">
-                  <span className="text-muted-foreground/80">
-                    {formatNumber(campaign.currentAmount)} raised
-                  </span>
-                  <span className="text-muted-foreground">
-                    of {formatNumber(campaign.targetAmount)}
-                  </span>
-                </div>
+              />
+              <div className="flex justify-start space-x-1 items-center text-[10px]">
+                <span className="text-muted-foreground/80">
+                  {formatNumber(campaign.currentAmount)} raised
+                </span>
+                <span className="text-muted-foreground">
+                  of {formatNumber(campaign.targetAmount)}
+                </span>
               </div>
             </div>
           </div>
-        </Link>
+        </div>
       ) : (
         <div className="w-full max-w-full mx-auto rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-row">
           <div className="relative w-28 flex-shrink-0">

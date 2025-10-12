@@ -15,10 +15,21 @@ import React, { useState } from "react";
 import Draftcard from "../Card";
 import Loader from "../Loader";
 import EmptyModel from "./EmptyModel";
+import { Status } from "@/types/campaign";
+import { EllipsisVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function Campaignsdraft() {
   const campaignTabs = [
     { name: "Drafts", value: "draft" },
+    { name: "Pending ", value: "pending" },
     { name: "Active ", value: "active" },
     { name: "Ended ", value: "completed" },
   ];
@@ -27,6 +38,7 @@ function Campaignsdraft() {
     draft: 1,
     active: 1,
     completed: 1,
+    pending: 1,
   });
 
   const { userProfile, fetchingProfile } = useUserProfile();
@@ -40,8 +52,16 @@ function Campaignsdraft() {
   );
 
   const activeCampaign = userCampaigns?.filter(
-    (campaign) => isFuture(new Date(campaign.endDate)) && campaign.published
+    (campaign) =>
+      isPast(new Date(campaign.startDate)) &&
+      campaign.published &&
+      isFuture(new Date(campaign.endDate))
   );
+
+  const pendingCampaigns = userCampaigns?.filter(
+    (campaign) => isFuture(new Date(campaign.startDate)) && campaign.published
+  );
+
   const completed = userCampaigns?.filter(
     (campaign) => isPast(new Date(campaign.endDate)) && campaign.published
   );
@@ -53,7 +73,7 @@ function Campaignsdraft() {
   };
 
   const renderCampaigns = (
-    status: "draft" | "active" | "completed",
+    status: Status,
     campaigns: ReturnCampaignDocument[] | undefined
   ) => {
     if (!campaigns || campaigns?.length === 0) {
@@ -65,7 +85,9 @@ function Campaignsdraft() {
             status === "draft"
               ? "No Drafts Yet"
               : status === "active"
-              ? "You don't have an active campaign"
+              ? "You don't have any active campaign"
+              : status == "pending"
+              ? "No pending campaigns"
               : "No Completed Campaigns"
           }
           text1={
@@ -73,8 +95,11 @@ function Campaignsdraft() {
               ? "Work on a campaign privately and publish it when you’re ready."
               : status === "active"
               ? "Create a campaign to start raising funds for the causes you care about."
+              : status === "pending"
+              ? "Campaigns yet to start will appear here."
               : "Once a campaign reaches its goal or end date, it will appear here."
           }
+          btnLink="/create"
         />
       );
     }
@@ -146,7 +171,7 @@ function Campaignsdraft() {
   return (
     <div className="mt-12">
       <Tabs defaultValue="draft" className="w-full">
-        <TabsList className="flex-nowrap gap-2">
+        <TabsList className="hidden sm:flex sm:flex-nowrap gap-2">
           {campaignTabs.map((tab) => (
             <React.Fragment key={tab.value}>
               <TabsTrigger
@@ -164,9 +189,53 @@ function Campaignsdraft() {
           ))}
         </TabsList>
 
+        <TabsList className="flex-nowrap sm:hidden items-center gap-2 mt-8">
+          {campaignTabs.slice(0, 2).map((tab) => (
+            <React.Fragment key={tab.value}>
+              <TabsTrigger
+                value={tab.value}
+                className="bg-transparent border-none shadow-none 
+                     data-[state=active]:text-primary-accent
+                     data-[state=active]:bg-transparent 
+                     focus-visible:ring-0 cursor-pointer 
+                     px-4 text-sm font-bold md:text-[16px]
+                     text-[#6B6B65]/50 whitespace-nowrap"
+              >
+                <span>{tab.name}</span>
+              </TabsTrigger>
+            </React.Fragment>
+          ))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <EllipsisVertical />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="shadow-xl border-none">
+              {campaignTabs.slice(2).map((tab) => (
+                <DropdownMenuItem key={tab.value}>
+                  <TabsTrigger
+                    value={tab.value}
+                    className="bg-transparent border-none shadow-none 
+                     data-[state=active]:text-primary-accent
+                     data-[state=active]:bg-transparent 
+                     focus-visible:ring-0 cursor-pointer 
+                     w-full text-sm font-bold md:text-[16px]
+                     text-[#6B6B65]/50 whitespace-nowrap"
+                  >
+                    <span>{tab.name}</span>
+                  </TabsTrigger>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </TabsList>
+
         <div className="mt-8">
           <TabsContent value="draft" className="w-full">
             {renderCampaigns("draft", unpublishedCampaigns)}
+          </TabsContent>
+          <TabsContent value="pending" className="w-full">
+            {renderCampaigns("pending", pendingCampaigns)}
           </TabsContent>
           <TabsContent value="active" className="w-full ">
             {renderCampaigns("active", activeCampaign)}

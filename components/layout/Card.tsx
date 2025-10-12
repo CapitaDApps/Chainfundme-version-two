@@ -3,42 +3,145 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatNumber, formatTimeLeft } from "@/lib/utils";
 import { DraftCardProps } from "@/types/campaign";
-import { Clock } from "lucide-react";
+import { Clock, EllipsisVertical } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import MobileDraftCard from "./MobileCard";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import CampaignMenu from "./MyCampaign/campaignMenu";
+import { useWriteCampaign } from "@/services/contracts/hooks/useWriteCampaign";
+import { usePublish } from "@/services/api/hooks/campaign/usePublish";
+import { toast } from "sonner";
+import { useChains } from "@/services/api/hooks/chain/useChains";
+import { useWriteChainFundMeContract } from "@/services/contracts/hooks/useWriteChainFundMeContract";
+import { useWriteFundingFactory } from "@/services/contracts/hooks/useWriteFundingFactory";
+import { useEndCampaign } from "@/services/api/hooks/campaign/useEndCampaign";
+import { useWatchFactoryEvents } from "@/services/contracts/hooks/events/useWatchFactoryEvents";
+import { contractEvents } from "@/services/contracts/constants";
 
 const Draftcard = ({ campaignData, status }: DraftCardProps) => {
-  const isClickable = status !== "draft";
   const router = useRouter();
 
-  const handleClick = (campaignId: string) => {
-    router.push(`/campaign/${campaignId}`);
-  };
+  const { userProfile } = useUserProfile();
+  const { createChainFundMe } = useWriteCampaign();
+  const { publish, publishing } = usePublish();
+  const { chains: allNetworks } = useChains();
+
+  const writeToFactory = useWriteFundingFactory();
+  const { endCampaignMutation, endingCampaign } = useEndCampaign();
+
+  const isClickable = status !== "draft";
   const campaign = campaignData.campaign;
   const amountFunded = campaignData.amount;
 
   const chains = campaign.chains;
 
+  const userId = userProfile ? userProfile._id : "";
+  const owned = userId == String(campaign.owner);
+
+  const handleClick = (campaignId: string) => {
+    router.push(`/campaign/${campaignId}`);
+  };
+
+  const handleReDeploy = (networkId: string, tokens: string[]) => {
+    const startTime = Math.floor(new Date(campaign.startDate).getTime() / 1000);
+    const endTime = Math.floor(new Date(campaign.endDate).getTime() / 1000);
+    if (startTime >= endTime || startTime <= Date.now() / 1000) return;
+    const redeployedChain = allNetworks.find(
+      (network) => network.networkId === +networkId
+    );
+    console.log("Publishing...");
+    createChainFundMe(
+      {
+        uri: campaign.cmid,
+        startTime,
+        endTime,
+        otherTokens: tokens,
+      },
+      (err) => {
+        if (err) {
+          toast.error(
+            `Couldn't publish campaign to ${redeployedChain?.chain}, please try again`
+          );
+          return;
+        }
+        console.log("CB called??");
+        publish(
+          { campaignId: campaign.cmid, tokens, networkId: +networkId },
+          {
+            onSuccess: () => {
+              toast.success(
+                `Successfully published campaign ${redeployedChain?.chain}`
+              );
+            },
+          }
+        );
+      }
+    );
+  };
+
+  const handleEndCampaign = (
+    campaignAddress: string,
+    id: string,
+    networkId: string,
+    cb: () => void
+  ) => {
+    writeToFactory("chainFundMe_endCampaign", [campaignAddress], {
+      onSuccess: async () => {
+        endCampaignMutation(
+          { campaignId: id, networkId },
+          { onSettled: () => cb() }
+        );
+      },
+      onError: (err: { message: string }) => {
+        console.log({ err });
+        toast.error("Failed on contract call");
+      },
+
+      onSettled: () => cb(),
+    });
+  };
+
+  const handleWithdrawCampaignFunds = async (campaignAddress: string) => {
+    try {
+      await writeToFactory("chainFundMe_withdrawAllFunds", [campaignAddress]);
+      toast.success("Withdrawal Tx sent successfully");
+    } catch (error) {
+      toast.error("Error withdrawing...");
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <article className="w-full h-full hidden md:block">
         {isClickable ? (
-          <div
-            className="w-full h-fit rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer"
-            onClick={() => handleClick(campaign.cmid)}
-          >
+          <div className="w-full h-fit rounded-[16px] bg-blue-50/50 border-none transition-colors duration-500 overflow-hidden flex flex-col hover:shadow-md cursor-pointer">
             <div className="relative w-full h-60 rounded-[16px] overflow-hidden">
               <Image
                 src={campaign.image}
                 alt={campaign.title}
                 fill
                 className="object-cover w-full h-full"
+                onClick={() => handleClick(campaign.cmid)}
               />
+
+              {owned && (
+                <CampaignMenu
+                  status={status}
+                  campaign={campaign}
+                  handleReDeploy={handleReDeploy}
+                  handleEndCampaign={handleEndCampaign}
+                  handleWithdrawCampaignFunds={handleWithdrawCampaignFunds}
+                />
+              )}
             </div>
 
-            <div className="py-2 px-4 flex-1 flex flex-col">
+            <div
+              className="py-2 px-4 flex-1 flex flex-col"
+              onClick={() => handleClick(campaign.cmid)}
+            >
               <div
                 className={`text-xs font-bold flex justify-start space-x-1 items-center mb-1 ${
                   status === "active"
@@ -54,7 +157,7 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
               <h3 className="font-bold line-clamp-1 mb-2">{campaign.title}</h3>
 
               <div className="flex justify-between items-center pb-1">
-                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+                <div className="*:data-[slot=avatar]:ring-background flex gap-2 flex-wrap -space-x-2 *:data-[slot=avatar]:ring-2">
                   {chains.map((chain, i) => (
                     <div
                       key={i}
@@ -90,11 +193,11 @@ const Draftcard = ({ campaignData, status }: DraftCardProps) => {
                   }`}
                 />
                 <div className="flex justify-start space-x-1 items-center text-xs pb-2">
-                  <span className="text-muted-foreground/80">
-                    {formatNumber(campaign.currentAmount)} raised
+                  <span className="text-muted-foreground">
+                    ${formatNumber(campaign.currentAmount)} raised
                   </span>
                   <span className="text-muted-foreground">
-                    of {formatNumber(campaign.targetAmount)}
+                    of ${formatNumber(campaign.targetAmount)}
                   </span>
                 </div>
               </div>

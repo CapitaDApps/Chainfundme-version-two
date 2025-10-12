@@ -23,7 +23,10 @@ export type FundedCampaignType = {
   campaign: ReturnCampaignDocument;
   amount?: number;
 };
+
+export type Status = "draft" | "active" | "completed" | "pending";
+
 export interface DraftCardProps {
   campaignData: FundedCampaignType;
-  status: "draft" | "active" | "completed" | "active";
+  status: Status;
 }

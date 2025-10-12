@@ -48,11 +48,6 @@
   },
   {
     "inputs": [],
-    "name": "CapitaFundingFactory__CapitaPointsAlreadySet",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "CapitaFundingFactory__ContractPaused",
     "type": "error"
   },
@@ -125,6 +120,11 @@
   },
   {
     "inputs": [],
+    "name": "CapitaFundingFactory__UriAlreadyExists",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "CapitaFundingFactory__WithdrawFailed",
     "type": "error"
   },
@@ -147,6 +147,11 @@
       }
     ],
     "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
     "type": "error"
   },
   {
@@ -200,11 +205,11 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "capitaPointsAddress",
+        "name": "chainFundMeAddress",
         "type": "address"
       }
     ],
-    "name": "CapitaPointsAddressSet",
+    "name": "ChainFundMeAllFundsWithdrawn",
     "type": "event"
   },
   {
@@ -221,9 +226,116 @@
         "internalType": "address",
         "name": "fundMeAddress",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "campaignId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "metadataUri",
+        "type": "string"
       }
     ],
     "name": "ChainFundMeCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "chainFundMeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ChainFundMeEnded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "chainFundMeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ChainFundMeEthWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "chainFundMeAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "otherToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ChainFundMeFunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "campaignAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ChainFundMeRefundWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "chainFundMeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "ChainFundMeTokensWithdrawn",
     "type": "event"
   },
   {
@@ -331,13 +443,29 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "capitaPoints",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "campaigns",
     "outputs": [
       {
-        "internalType": "contract CapitaPoints",
-        "name": "",
+        "internalType": "address",
+        "name": "campaignAddress",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "metadataUri",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -463,6 +591,32 @@
         "internalType": "address",
         "name": "_campaignAddress",
         "type": "address"
+      }
+    ],
+    "name": "chainFundMe_enableRefunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_campaignAddress",
+        "type": "address"
+      }
+    ],
+    "name": "chainFundMe_endCampaign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_campaignAddress",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -548,6 +702,24 @@
         "internalType": "address",
         "name": "_campaignAddress",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "chainFundMe_withdrawRefund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_campaignAddress",
+        "type": "address"
       }
     ],
     "name": "chainFundMe_withdrawTokens",
@@ -618,19 +790,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "deleteCampaignByIndex",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -674,32 +833,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getDeployedCampaigns",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
       }
     ],
-    "name": "getUserCampaigns",
+    "name": "getAddressByUri",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "address",
         "name": "",
-        "type": "address[]"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -709,16 +855,38 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "page",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberPerPage",
         "type": "uint256"
       }
     ],
-    "name": "indexToDeployedCampaigns",
+    "name": "getDeployedCampaigns",
     "outputs": [
       {
-        "internalType": "address",
+        "components": [
+          {
+            "internalType": "address",
+            "name": "campaignAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "creator",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "metadataUri",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct CapitaFundingFactory.CampaignInfo[]",
         "name": "",
-        "type": "address"
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
@@ -862,19 +1030,6 @@
       }
     ],
     "name": "setAcceptableToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_capitaPointsAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setCapitaPointsAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

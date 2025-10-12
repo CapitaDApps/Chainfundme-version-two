@@ -139,16 +139,10 @@ export default function MultiStepForm() {
 
           // Deploy smart contract after backend campaign creation
           const startTime = Math.floor(
-            (new Date(data.startDate).getTime() + 3 * 60 * 1000) / 1000
+            new Date(data.startDate).getTime() / 1000
           );
           const endTime = Math.floor(new Date(data.endDate).getTime() / 1000);
           const tokenAddresses = data.tokens || [];
-          console.log("Smart contract deployment params:", {
-            uri: campaignId,
-            startTime,
-            endTime,
-            otherTokens: tokenAddresses,
-          });
 
           await createChainFundMe(
             {
@@ -160,11 +154,15 @@ export default function MultiStepForm() {
             (error) => {
               if (error) {
                 console.error("Smart contract deployment failed:", error);
-                toast.error(`Smart contract deployment failed: ${error}`);
-                throw new Error(`Smart contract deployment failed: ${error}`);
+                toast.error(`Couldn't create campaign, please try again`);
+                return;
               }
               publish(
-                { campaignId, tokens: tokenAddresses, networkId: chainId },
+                {
+                  campaignId,
+                  tokens: tokenAddresses,
+                  networkId: chainId,
+                },
                 {
                   onSuccess: () => {
                     console.log("Campaign created successfully");
@@ -226,7 +224,7 @@ export default function MultiStepForm() {
                     Next
                   </Button>
                 ) : (
-                  <Button type="submit" disabled={isSaving}>
+                  <Button type="submit" disabled={isSaving || publishing}>
                     {isSaving || publishing ? "Creating Campaign..." : "Create"}
                   </Button>
                 )}

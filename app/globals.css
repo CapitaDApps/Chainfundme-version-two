@@ -206,3 +206,36 @@ a {
 body[data-radix-dialog-open] {
   overflow: auto !important;
 }
+
+/* Overall scrollbar track */
+::-webkit-scrollbar {
+  width: 6px; /* width for vertical scrollbar */
+  height: 12px; /* height for horizontal scrollbar */
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 61, 239, 0.2);
+  border-radius: 10px;
+}
+
+/* Scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 61, 239, 0.7);
+  border-radius: 10px;
+}
+
+/* Scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 61, 239, 0.8);
+}
+/* 
+Corner of the scrollbar (where vertical and horizontal meet) */
+::-webkit-scrollbar-corner {
+  background: rgba(0, 61, 239, 0.2);
+}
+
+/* Buttons at the ends of the scrollbar (if present) */
+::-webkit-scrollbar-button {
+  display: none; /* Often hidden for custom styling */
+}
