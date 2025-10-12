@@ -9,19 +9,18 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { tokenNames } from "@/services/contracts/tokensConfig";
 import { handleCopyAddress, truncateAddr } from "@/lib/utils";
 import { usePrivy } from "@privy-io/react-auth";
-import { Copy, Settings, WalletIcon } from "lucide-react";
+import { Copy, WalletIcon } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
 import { MoonLoader } from "react-spinners";
 
-import { useWalletBalance } from "./hooks/useWalletBalance";
-import TransferDialog from "./transferDialog";
-import FundWalletDialog from "./fundWalletDialog";
 import { IToken } from "@/types/token.types";
 import { zeroAddress } from "viem";
+import FundWalletDialog from "./fundWalletDialog";
+import { useWalletBalance } from "./hooks/useWalletBalance";
+import TransferDialog from "./transferDialog";
 
 function WalletSheet({ children }: { children: ReactNode }) {
   const { user } = usePrivy();

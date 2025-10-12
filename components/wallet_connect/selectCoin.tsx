@@ -5,13 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getNetworkTokens } from "@/services/contracts/tokensConfig";
-import { Dispatch, SetStateAction } from "react";
-import { useAccount } from "wagmi";
-import { useTokens } from "../../services/api/hooks/token/useTokens";
-import Loader from "../layout/Loader";
-import { ClipLoader } from "react-spinners";
 import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
+import { Dispatch, SetStateAction } from "react";
+import { ClipLoader } from "react-spinners";
+import { useAccount } from "wagmi";
 
 function SelectCoin({
   selectedToken,

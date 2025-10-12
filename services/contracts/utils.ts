@@ -2,7 +2,6 @@ import { getBalance, readContract } from "@wagmi/core";
 import TokenABI from "./abi/Token.json";
 import { config } from "@/lib/networks/config";
 import { formatEther, formatUnits, zeroAddress } from "viem";
-import { getTokenAddress, tokenNames } from "./tokensConfig";
 import { TokenDocument } from "@/types/api";
 
 async function getCoinBalance(
