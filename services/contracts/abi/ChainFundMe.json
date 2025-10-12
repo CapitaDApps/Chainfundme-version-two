@@ -56,6 +56,11 @@
   },
   {
     "inputs": [],
+    "name": "ChainFundMe__NoContributionToRefund",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "ChainFundMe__NotApproved",
     "type": "error"
   },
@@ -67,6 +72,11 @@
   {
     "inputs": [],
     "name": "ChainFundMe__NotOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ChainFundMe__RefundsNotEnabled",
     "type": "error"
   },
   {
@@ -87,6 +97,16 @@
   {
     "inputs": [],
     "name": "ChainFundMe__WithdrawFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ChainFundMe__WithdrawalRevoked",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
     "type": "error"
   },
   {
@@ -203,6 +223,44 @@
       }
     ],
     "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "supporter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RefundWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "campaignAddress",
+        "type": "address"
+      }
+    ],
+    "name": "RefundsEnabled",
     "type": "event"
   },
   {
@@ -357,6 +415,13 @@
     "name": "deposit",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "enableRefunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -680,6 +745,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "refundSupporters",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "bool",
@@ -754,19 +832,6 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_uri",
-        "type": "string"
-      }
-    ],
-    "name": "updateMetadataURI",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bool",
         "name": "pause",
         "type": "bool"
@@ -800,6 +865,24 @@
   {
     "inputs": [],
     "name": "withdrawOtherTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_supporter",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawRefund",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

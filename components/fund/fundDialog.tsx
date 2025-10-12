@@ -6,9 +6,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getChainData } from "@/lib/networks/config";
-import { ReturnCampaignDocument } from "@/types/api";
-import { Dispatch, SetStateAction, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -16,19 +13,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Avatar, AvatarImage } from "../ui/avatar";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { toast } from "sonner";
+import { formatTimeLeft } from "@/lib/utils";
+import { useAddFunder } from "@/services/api/hooks/funder/useAddFunder";
 import { useFund } from "@/services/contracts/hooks/useWriteFund";
-import { useSwitchChain } from "wagmi";
-import { useWalletBalance } from "../wallet_connect/hooks/useWalletBalance";
+import { ReturnCampaignDocument } from "@/types/api";
 import { useUser } from "@privy-io/react-auth";
 import { redirect } from "next/navigation";
-import { useAddFunder } from "@/services/api/hooks/funder/useAddFunder";
-import { parseUnits } from "viem";
-import { formatTimeLeft } from "@/lib/utils";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ClipLoader } from "react-spinners";
+import { toast } from "sonner";
+import { parseUnits, zeroAddress } from "viem";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import ChangeNetwork from "../wallet_connect/changeNetwork";
+import { useNetworkChange } from "../wallet_connect/hooks/useNetworkChange";
+import { useWalletBalance } from "../wallet_connect/hooks/useWalletBalance";
+import { useWriteTokenContract } from "@/services/contracts/hooks/useWriteTokenContract";
+
 function FundDialog({
   campaign,
   children,
@@ -40,7 +42,6 @@ function FundDialog({
   isFunding: boolean;
   setIsFunding: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [selectedNetwork, setSelectedNetwork] = useState("");
   const [selectedToken, setSelectedToken] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -48,13 +49,15 @@ function FundDialog({
 
   const authenticated = !!user;
 
-  const { switchChain } = useSwitchChain();
-
   const { fundCampaign } = useFund();
 
   const { tokenBalances } = useWalletBalance();
 
   const { syncFund } = useAddFunder();
+
+  const { selectedNetwork, handleSwitchChain } = useNetworkChange();
+
+  const approveTokens = useWriteTokenContract();
 
   if (!campaign.campaignAddresses) return redirect("/explore");
 
@@ -62,6 +65,8 @@ function FundDialog({
 
   const tokens = campaign.tokens;
   const chains = campaign.chains;
+
+  const chain = chains.find((chain) => chain.networkId === +selectedNetwork);
 
   const selectedTokenBalance = tokenBalances.find(
     (token) => token.address === selectedToken
@@ -73,12 +78,11 @@ function FundDialog({
     (token) => token.chainId === +selectedNetwork
   );
 
-  const campaignAddress = campaign.campaignAddresses[selectedNetwork];
+  const campaignAddress =
+    campaign.campaignAddresses?.[selectedNetwork]?.campaignAddress;
 
-  const handleSwitchChain = (networkId: string) => {
-    setSelectedNetwork(networkId);
-    switchChain({ chainId: +networkId });
-  };
+  const campaignEndedOnNetwork =
+    campaign.campaignAddresses?.[selectedNetwork]?.ended;
 
   const handleDonate = async () => {
     if (!authenticated) return toast.error("Please sign in to donate");
@@ -88,8 +92,36 @@ function FundDialog({
     if (!campaign) return;
     if (!selectedTokenBalance) return;
 
+    if (!campaignAddress) return;
+
     setIsFunding(true);
 
+    if (selectedTokenBalance.address !== zeroAddress) {
+      // approve
+      approveTokens(
+        selectedTokenBalance.address,
+        [campaignAddress, parseUnits(amount, selectedTokenBalance.decimals)],
+        "approve",
+        {
+          errorCb: async () => {
+            setIsFunding(false);
+            toast.error("Couldn't approve tokens to fund campaign");
+          },
+
+          successCb: async () => {
+            fund();
+          },
+        }
+      );
+    } else {
+      fund();
+    }
+  };
+
+  const fund = async () => {
+    if (!authenticated) return toast.error("Please sign in to donate");
+    if (!campaign) return;
+    if (!selectedTokenBalance) return;
     fundCampaign(campaignAddress, amount, selectedTokenBalance, {
       successCb: async () => {
         // add funder
@@ -133,27 +165,11 @@ function FundDialog({
 
         <div className="flex gap-2">
           {/* Networks */}
-          <Select
-            onValueChange={(val) => handleSwitchChain(val)}
-            value={selectedNetwork}
-          >
-            <SelectTrigger className="border-[1px] border-primary-accent flex-1">
-              <SelectValue placeholder="Select Chain" />
-            </SelectTrigger>
-            <SelectContent>
-              {chains.map((chain) => (
-                <SelectItem
-                  value={chain.networkId.toString()}
-                  key={chain.networkId}
-                >
-                  <Avatar className="w-4 h-4">
-                    <AvatarImage src={chain.imagePath} />
-                  </Avatar>
-                  {chain.symbol}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <ChangeNetwork
+            chains={chains}
+            selectedNetwork={selectedNetwork}
+            handleSwitchChain={handleSwitchChain}
+          />
 
           {/* Tokens */}
           {tokensForChosenChain.length > 0 && (
@@ -212,13 +228,16 @@ function FundDialog({
                 disabled={
                   !authenticated ||
                   +amount > +selectedTokenBalance.balance ||
-                  startsInFuture
+                  startsInFuture ||
+                  campaignEndedOnNetwork
                 }
               >
                 {startsInFuture ? (
                   formatTimeLeft(campaign.startDate, campaign.endDate)
                 ) : isFunding ? (
                   <ClipLoader color="#fff" size={20} />
+                ) : campaignEndedOnNetwork ? (
+                  `Ended on ${chain?.chain}`
                 ) : (
                   "Donate"
                 )}

@@ -113,7 +113,7 @@ export default function Comments({
           });
           toast.success("Comment deleted successfully");
         },
-        onError: (error: any) => {
+        onError: (error) => {
           console.error("Error deleting comment:", error);
           toast.error("Failed to delete comment");
         },
@@ -155,7 +155,7 @@ export default function Comments({
           setEditingText("");
           toast.success("Comment updated successfully");
         },
-        onError: (error: any) => {
+        onError: (error) => {
           console.error("Error editing comment:", error);
           toast.error("Failed to update comment");
         },
@@ -238,17 +238,20 @@ export default function Comments({
         // Keep the optimistic update
         console.log("Comment liked/unliked successfully");
       },
-      onError: (error: any) => {
+      onError: (error) => {
         // Revert optimistic update on error
         setComments((prevComments) =>
           prevComments.map((c) =>
             c.id === commentId
-              ? { ...c, likes: Math.max(0, c.likes + (currentlyLiked ? 1 : -1)) }
+              ? {
+                  ...c,
+                  likes: Math.max(0, c.likes + (currentlyLiked ? 1 : -1)),
+                }
               : c
           )
         );
         setLikedComments((prev) => ({ ...prev, [commentId]: currentlyLiked }));
-        
+
         console.error("Error liking comment:", error);
         toast.error("Failed to like comment");
       },

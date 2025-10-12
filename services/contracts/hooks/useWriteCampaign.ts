@@ -8,7 +8,6 @@ import { useQueryClient } from "@tanstack/react-query";
 export function useWriteCampaign() {
   const createCampaignFunc = useWriteFundingFactory();
   const queryClient = useQueryClient();
-  const { publish } = usePublish();
 
   async function createChainFundMe(
     options: {

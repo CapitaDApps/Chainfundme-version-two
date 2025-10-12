@@ -40,7 +40,10 @@ export type ReturnCampaignDocument = {
   published: boolean;
   tokens: TokenDocument[];
   campaignAddresses?: {
-    [key: string]: string;
+    [key: string]: {
+      campaignAddress: string;
+      ended: boolean;
+    };
   };
   funders: FunderDocument[];
 };

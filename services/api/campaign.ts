@@ -70,7 +70,29 @@ const publishCampaign = async (
     }
   );
 
+  console.log(resp);
+
   return resp.data.message;
 };
 
-export { createCampaignDraft, publishCampaign, getCampaigns, getCampaign };
+// /campaign/end/:campaignId
+const endCampaign = async (campaignId: string, networkId: string) => {
+  const token = await getAuthToken();
+  const resp = await axios.post(
+    `${url}/end/${campaignId}`,
+    { networkId },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  console.log(resp);
+
+  return resp.data.message;
+};
+
+export {
+  createCampaignDraft,
+  publishCampaign,
+  getCampaigns,
+  getCampaign,
+  endCampaign,
+};
