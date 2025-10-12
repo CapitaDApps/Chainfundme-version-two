@@ -8,13 +8,13 @@ type NetworkContractType = {
 
 export const networkContractAddresses: NetworkContractType = {
   [base.id.toString()]: {
-    fundingFactoryAddress: "0x2ce04B8F4838581A3D8CCF3116FC74C75D4214E7",
+    fundingFactoryAddress: "0x172Eb2E64b7B8fB085e615Bb249D354455138BBF",
   },
   [baseSepolia.id.toString()]: {
     fundingFactoryAddress: "0xB6D80DafEe61a8E05c05E539Df1a1910392ddA9B",
   },
   [bsc.id.toString()]: {
-    fundingFactoryAddress: "0x65fE10C5620649A3A0E5d65A4B5DE43Bf922fc8C",
+    fundingFactoryAddress: "0x172Eb2E64b7B8fB085e615Bb249D354455138BBF",
   },
   [bscTestnet.id.toString()]: {
     fundingFactoryAddress: "0xDA132466373e3dF28d61419fCc045A6f10f7cCD8",

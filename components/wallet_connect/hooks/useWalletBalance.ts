@@ -2,7 +2,7 @@
 
 import { useNetworkTokens } from "@/services/api/hooks/token/useNetworkTokens";
 import { getCoinBalance } from "@/services/contracts/utils";
-import { IToken, TokenType } from "@/types/token.types";
+import { IToken } from "@/types/token.types";
 import { usePrivy } from "@privy-io/react-auth";
 import { useQuery } from "@tanstack/react-query";
 
@@ -24,7 +24,7 @@ export function useWalletBalance() {
         const exist = balances.findIndex((c) => c.name === token.name);
         if (exist > -1) {
           balances[exist] = {
-            name: token.name as TokenType,
+            name: token.name,
             balance,
             src: token.imagePath,
             address: token.address,
@@ -33,7 +33,7 @@ export function useWalletBalance() {
           };
         } else {
           balances.push({
-            name: token.name as TokenType,
+            name: token.name,
             balance,
             src: token.imagePath,
             address: token.address,

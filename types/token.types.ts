@@ -1,11 +1,5 @@
-export type TokenType = "usdc" | "eth" | "frenchie" | "enb" | "cngn" | "bhusky";
-
-export type Token = {
-  [C in TokenType]: string;
-};
-
 export interface IToken {
-  name: TokenType;
+  name: string;
   balance: string;
   src: string;
   address: string;

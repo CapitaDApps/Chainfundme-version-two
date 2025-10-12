@@ -51,14 +51,6 @@ export default function SelectNetwork({
   setValue,
   array,
 }: FormInput) {
-  // const solanaTokens: z.infer<typeof FormSchema>["tokens"] = ["usdc", "usdt"];
-  // const baseTokens: z.infer<typeof FormSchema>["tokens"] = [
-  //   "usdc",
-  //   "cngn",
-  //   "eth(base)",
-  // ];
-  // const bnbTokens: z.infer<typeof FormSchema>["tokens"] = ["usdt"];
-
   const { switchChain } = useSwitchChain();
 
   return (

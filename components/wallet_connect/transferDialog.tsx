@@ -10,8 +10,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { tokenNames } from "@/services/contracts/tokensConfig";
-
 import { usePrivy } from "@privy-io/react-auth";
 import { Wallet } from "lucide-react";
 import { Button } from "../ui/button";
