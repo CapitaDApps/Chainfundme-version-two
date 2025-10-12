@@ -7,17 +7,35 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 function UserDropdownMenu() {
+  const { userProfile, fetchingProfile } = useUserProfile();
+
+  // Get first letter of name for fallback
+  const getInitials = () => {
+    if (!userProfile?.name) return "U";
+    return userProfile.name.charAt(0).toUpperCase();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <div className="flex items-center space-x-1 cursor-pointer">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/layout/img3.png" alt="Profile" />
-            <AvatarFallback>TK</AvatarFallback>
+            {fetchingProfile ? (
+              <AvatarFallback>...</AvatarFallback>
+            ) : (
+              <>
+                <AvatarImage 
+                  src={userProfile?.profilePicture || "/layout/img3.png"} 
+                  alt="Profile" 
+                />
+                <AvatarFallback>{getInitials()}</AvatarFallback>
+              </>
+            )}
           </Avatar>
 
           <ChevronDown className="w-4 h-4" />

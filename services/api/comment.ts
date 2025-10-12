@@ -76,4 +76,36 @@ const likeReply = async (replyId: string) => {
   return resp.data;
 };
 
-export { addComment, addReply, likeComment, likeReply };
+// comments/edit/:commentId
+const editComment = async (commentId: string, comment: string) => {
+  const token = await getAuthToken();
+
+  const resp = await axios.post(
+    `${url}/edit/${commentId}`,
+    {
+      comment,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return resp.data;
+};
+
+// comments/delete/:commentId
+const deleteComment = async (commentId: string) => {
+  const token = await getAuthToken();
+
+  const resp = await axios.delete(`${url}/delete/${commentId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return resp.data;
+};
+
+export { addComment, addReply, likeComment, likeReply, editComment, deleteComment };
