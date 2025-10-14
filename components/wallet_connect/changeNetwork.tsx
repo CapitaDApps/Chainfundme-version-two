@@ -8,22 +8,27 @@ import {
 
 import { ChainDocument } from "@/types/api";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { cn } from "@/lib/utils";
 
 function ChangeNetwork({
   chains,
   selectedNetwork,
   handleSwitchChain,
+  className = "",
 }: {
   chains: ChainDocument[];
   selectedNetwork: string;
   handleSwitchChain: (networkId: string) => void;
+  className?: string;
 }) {
   return (
     <Select
       onValueChange={(val) => handleSwitchChain(val)}
       value={selectedNetwork}
     >
-      <SelectTrigger className="border-[1px] border-primary-accent flex-1">
+      <SelectTrigger
+        className={cn("border-[1px] border-primary-accent flex-1", className)}
+      >
         <SelectValue placeholder="Select Chain" />
       </SelectTrigger>
       <SelectContent>

@@ -5,6 +5,7 @@ import { getCoinBalance } from "@/services/contracts/utils";
 import { IToken } from "@/types/token.types";
 import { usePrivy } from "@privy-io/react-auth";
 import { useQuery } from "@tanstack/react-query";
+import { useAccount } from "wagmi";
 
 export function useWalletBalance() {
   const { user } = usePrivy();
@@ -12,8 +13,10 @@ export function useWalletBalance() {
 
   const { tokens } = useNetworkTokens();
 
+  const { chainId } = useAccount();
+
   const { data, isFetching } = useQuery({
-    queryKey: ["walletBalances", address, tokens?.length],
+    queryKey: ["walletBalances", address, tokens?.length, chainId],
     queryFn: async () => {
       if (!tokens) return;
       const balances: IToken[] = [];
