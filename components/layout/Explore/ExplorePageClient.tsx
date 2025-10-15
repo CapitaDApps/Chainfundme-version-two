@@ -7,6 +7,7 @@ import { useCampaigns } from "@/services/api/hooks/campaign/useCampaigns";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import CreateCamBtn from "../CreateCamBtn";
+import WhyChooseUse from "./WhyChooseUs";
 import SearchBar from "../SearchBar";
 
 function ExplorePageClient() {
@@ -210,7 +211,9 @@ function ExplorePageClient() {
         </div>
       )}
 
-      {/* Why choose chainfundme */}
+      <section>
+        <WhyChooseUse />
+      </section>
     </>
   );
 }
