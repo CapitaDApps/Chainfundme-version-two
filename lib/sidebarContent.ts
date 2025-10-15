@@ -32,7 +32,7 @@ export const menuItems = [
     slug: "my-campaigns",
   },
   {
-    title: "Get API",
+    title: "Get APIs",
     icon: LuUnplug,
     route: "/get-api",
     slug: "get-api",

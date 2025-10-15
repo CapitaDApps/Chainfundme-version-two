@@ -29,7 +29,7 @@ export default function WhyChooseUse() {
   ];
 
   return (
-    <section className="py-16 bg-white text-center px-4 md:px-10">
+    <section className="py-16 bg-white text-center px-4 md:px-10 relative">
       <h2 className="text-[#1E1E1E] text-2xl md:text-3xl font-bold mb-4">
         WHY CHOOSE CHAINFUNDME
       </h2>

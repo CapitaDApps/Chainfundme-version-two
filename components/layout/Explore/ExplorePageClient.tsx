@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import CreateCamBtn from "../CreateCamBtn";
 import WhyChooseUse from "./WhyChooseUs";
 import SearchBar from "../SearchBar";
+import ExploreBackground from "./ExploreBackground";
 
 function ExplorePageClient() {
   const { campaigns, retrievingCampaigns } = useCampaigns();
@@ -20,7 +21,8 @@ function ExplorePageClient() {
     router.push(`/campaign/${campaignId}`);
   };
   return (
-    <>
+    <div className="relative" >
+    <ExploreBackground />
       <div className="flex flex-col items-center justify-center mt-14 md:mt-10 lg:mt-12 py-6">
         <div className="border border-none bg-[#F5F7FA]  rounded-4xl mt-3 md:mt-0 px-4 py-2 md:mb-2 lg:mb-4">
           <h1 className="text-xs md:text-lg lg:text-[24px] font-semibold text-[#292933] px-2">
@@ -214,7 +216,7 @@ function ExplorePageClient() {
       <section>
         <WhyChooseUse />
       </section>
-    </>
+    </div>
   );
 }
 
