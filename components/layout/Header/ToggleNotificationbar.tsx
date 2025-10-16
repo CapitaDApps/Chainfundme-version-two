@@ -1,10 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { initialNotifications } from "@/lib/notification";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
+import { getNotifications } from "../Notification/conf";
+import { formatNotificationTimeMessage } from "@/lib/utils";
 
 function ToggleNotificationbar() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const { userProfile } = useUserProfile();
+
+  const userNotification = userProfile?.notifications;
+
+  const notifications = getNotifications(userNotification)?.slice(0, 5);
+
+  const unread = notifications?.filter(
+    (notification) => notification.status == "unread"
+  );
 
   useEffect(() => {
     function onDoc(e: MouseEvent) {
@@ -34,7 +46,7 @@ function ToggleNotificationbar() {
             }}
             className="absolute -top-1 right-2 bg-primary text-background text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center"
           >
-            {initialNotifications.filter((n) => !n.read).length}
+            {unread?.length}
           </span>
 
           {open && (
@@ -44,21 +56,27 @@ function ToggleNotificationbar() {
                   Notifications
                 </h4>
                 <div className="mt-2 max-h-56 overflow-y-auto divide-y divide-disabled-text/30">
-                  {initialNotifications.slice(0, 5).map((n) => (
-                    <div key={n.id} className="py-2 flex items-start gap-2">
-                      <div
-                        className={`h-8 w-8 rounded-full flex items-center justify-center text-sidebar-content ${n.iconBg}`}
-                      >
-                        {n.iconEmoji}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm text-sidebar-content truncate">
-                          {n.title}
+                  {notifications?.length == 0 ? (
+                    <p className="text-center font-bold">No Notifications</p>
+                  ) : (
+                    notifications?.map((n) => (
+                      <div key={n._id} className="py-2 flex items-start gap-2">
+                        <div
+                          className={`h-8 w-8 rounded-full flex items-center justify-center text-sidebar-content ${n.iconBg}`}
+                        >
+                          {n.emoji}
                         </div>
-                        <div className="text-xs text-slate-400">{n.time}</div>
+                        <div className="flex-1">
+                          <div className="text-sm text-sidebar-content truncate">
+                            {n.title}
+                          </div>
+                          <div className="text-xs text-slate-400">
+                            {formatNotificationTimeMessage(n.createdAt)}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
                 <div className="mt-3 text-right">
                   <a
