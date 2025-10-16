@@ -4,6 +4,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiFolderOn } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { FaNetworkWired } from "react-icons/fa";
+import { LuUnplug } from "react-icons/lu";
 // import { CiBookmark } from "react-icons/ci";
 export const menuItems = [
   {
@@ -29,6 +30,12 @@ export const menuItems = [
     icon: CiFolderOn,
     route: "/my-campaigns",
     slug: "my-campaigns",
+  },
+  {
+    title: "Get APIs",
+    icon: LuUnplug,
+    route: "/get-api",
+    slug: "get-api",
   },
   {
     title: "Notifications",
