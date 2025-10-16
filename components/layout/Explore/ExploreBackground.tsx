@@ -13,10 +13,10 @@ export default function ExploreBackground() {
   ];
 
   const imagePositions = [
-    { top: "4%", left: "10%" },
-    { top: "5%", left: "80%" },
-    { top: "25%", left: "16%" },
-    { top: "30%", left: "85%" },
+    { top: "4%", left: "8%" },
+    { top: "5%", left: "85%" },
+    { top: "16%", left: "12%" },
+    { top: "17%", left: "85%" },
   ];
 
   return (

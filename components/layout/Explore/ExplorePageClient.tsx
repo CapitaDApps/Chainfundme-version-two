@@ -61,7 +61,7 @@ function ExplorePageClient() {
       {retrievingCampaigns ? (
         <PrioritySkeleton />
       ) : !firstCampaign ? (
-        <div>No campaigns</div>
+        <div></div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-12 md:gap-6 lg:gap-10 px-4 sm:px-10 lg:px-14 xl:px-20 mt-24 mb-20">
           {/* First */}

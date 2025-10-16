@@ -51,7 +51,7 @@ export default function Getapi() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto px-4 md:px-6">
+          <div className="grid min-[560px]:grid-cols-2 grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:gap-x-15  max-w-4xl mx-auto px-6">
             {why.map((item) => (
               <div
                 key={item.title}
