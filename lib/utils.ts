@@ -5,7 +5,9 @@ import {
   differenceInDays,
   differenceInHours,
   differenceInMinutes,
+  formatDistanceToNow,
   isPast,
+  parseISO,
 } from "date-fns";
 import { toast } from "sonner";
 
@@ -87,6 +89,14 @@ function formatTimeMessage(end: Date, start: Date) {
 
   // 5. If less than a minute is left
   return "Less than a minute left";
+}
+
+export function formatNotificationTimeMessage(date: string): string {
+  // Use parseISO to safely convert the ISO string to a Date object.
+  const createdAt = parseISO(date);
+
+  // addSuffix: true ensures it includes "ago".
+  return formatDistanceToNow(createdAt, { addSuffix: true });
 }
 
 export function formatNumber(num: number) {
