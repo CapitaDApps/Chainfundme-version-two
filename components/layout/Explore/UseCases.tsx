@@ -80,7 +80,7 @@ const UseCases = () => {
             Use Cases
           </h1>
           <p className="text-[#666666] text-sm md:text-lg font-medium ">
-            Want to know how best Crowdr suites you?
+            Explore how ChainFundMe helps you make impact, your way.
           </p>
         </header>
 
