@@ -8,21 +8,20 @@ const useCasesData = [
     icon: Heart,
     title: "For Individuals",
     description:
-      "Get the support you need for personal causes — from medical care to education and creative pursuits.",
+      "Chainfundme enables individuals to raise funds for personal needs like medical bills, education, or creative projects,Launch a campaign in minutes,Share easily across social platforms, Receive secure donations from supporters worldwide.",
     link: "/how-it-works",
   },
   {
     icon: Users2,
     title: "For Communities",
-    description:
-      "Empower your community to come together, raise funds, and drive real local impact through collective action.",
+    description: `Communities and DAOs can use ChainFundMe to fund shared projects and initiatives,
+Create campaigns for community goals,Enable DAO-style governance for funding decisions,Track all contributions transparently.`,
     link: "/how-it-works",
   },
   {
     icon: Building2,
     title: "For Organizations",
-    description:
-      "Streamline your social impact projects — launch CSR initiatives and fund community programs seamlessly.",
+    description: `Organizations use ChainFundMe to manage fundraising efficiently and transparently,Launch tailored campaigns for projects,Monitor donations and spending in real time,Integrate seamlessly with existing systems.`,
     link: "/get-api",
   },
 ];
@@ -80,7 +79,7 @@ const UseCases = () => {
             Use Cases
           </h1>
           <p className="text-[#666666] text-sm md:text-lg font-medium ">
-            Want to know how best Crowdr suites you?
+            Explore how ChainFundMe helps you make impact, your way.
           </p>
         </header>
 
