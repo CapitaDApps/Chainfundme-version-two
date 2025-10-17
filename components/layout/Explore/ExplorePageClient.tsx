@@ -7,9 +7,10 @@ import { useCampaigns } from "@/services/api/hooks/campaign/useCampaigns";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import CreateCamBtn from "../CreateCamBtn";
-import WhyChooseUse from "./WhyChooseUs";
 import SearchBar from "../SearchBar";
 import ExploreBackground from "./ExploreBackground";
+import UseCases from "./UseCases";
+import WhyChooseUse from "./WhyChooseUs";
 
 function ExplorePageClient() {
   const { campaigns, retrievingCampaigns } = useCampaigns();
@@ -213,6 +214,8 @@ function ExplorePageClient() {
 
       <section className="mt-14 mb-20">
         <WhyChooseUse />
+
+        <UseCases />
       </section>
     </div>
   );
