@@ -26,7 +26,7 @@ export default function ShareModal({
   }, []);
 
   const campaignUrl = useMemo(() => {
-    return `${origin}/campaigns/${campaignId}`;
+    return `${origin}/campaign/${campaignId}`;
   }, [origin, campaignId]);
 
   const shareText =
