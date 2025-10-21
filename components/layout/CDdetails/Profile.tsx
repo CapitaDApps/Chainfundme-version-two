@@ -41,7 +41,7 @@ function Profile({ owner }: { owner: UserDocument }) {
             side="bottom"
             align="center"
             sideOffset={8}
-            className="bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-[310px] md:max-w-[350px]"
+            className="bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-[310px] md:max-w-[350px] ml-3"
           >
             <PopupProfile owner={owner} />
           </PopoverContent>

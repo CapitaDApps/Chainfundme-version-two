@@ -8,7 +8,7 @@ export default function WhyChooseUse() {
     },
     {
       title: "Low Platform Fees",
-      desc: "Creators pay only 3%.",
+      desc: "Creators pay only 5%.",
       image: "/explore/Group.png",
     },
     {

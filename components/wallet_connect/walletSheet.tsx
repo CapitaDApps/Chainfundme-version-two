@@ -13,19 +13,22 @@ import { handleCopyAddress, truncateAddr } from "@/lib/utils";
 import { usePrivy } from "@privy-io/react-auth";
 import { Copy, WalletIcon } from "lucide-react";
 import Image from "next/image";
-import { ReactNode } from "react";
-import { MoonLoader } from "react-spinners";
+import { ReactNode, useState } from "react";
+import { ClipLoader, FadeLoader, MoonLoader } from "react-spinners";
 
 import { IToken } from "@/types/token.types";
 import { zeroAddress } from "viem";
 import FundWalletDialog from "./fundWalletDialog";
 import { useWalletBalance } from "./hooks/useWalletBalance";
 import TransferDialog from "./transferDialog";
+import ChangeNetwork from "./changeNetwork";
+import { useChains } from "@/services/api/hooks/chain/useChains";
+import { useSwitchChain } from "wagmi";
 
 function WalletSheet({ children }: { children: ReactNode }) {
   const { user } = usePrivy();
 
-  const { tokenBalances } = useWalletBalance();
+  const { tokenBalances, isFetching } = useWalletBalance();
 
   const address = user?.wallet?.address;
 
@@ -40,6 +43,7 @@ function WalletSheet({ children }: { children: ReactNode }) {
           address={address}
           connectorType={connectorType}
           tokenBalances={tokenBalances}
+          isFetchingBalances={isFetching}
         />
       </SheetContent>
     </Sheet>
@@ -51,9 +55,10 @@ export default WalletSheet;
 export function UserMobileSheet({ children }: { children: ReactNode }) {
   const { user } = usePrivy();
 
-  const { tokenBalances } = useWalletBalance();
+  const { tokenBalances, isFetching } = useWalletBalance();
 
   const address = user?.wallet?.address;
+  console.log({ tokenBalances });
 
   const connectorType = user?.wallet?.connectorType;
 
@@ -69,6 +74,7 @@ export function UserMobileSheet({ children }: { children: ReactNode }) {
           address={address}
           connectorType={connectorType}
           tokenBalances={tokenBalances}
+          isFetchingBalances={isFetching}
         />
       </SheetContent>
     </Sheet>
@@ -79,14 +85,23 @@ type WalletSheetProps = {
   address: string | undefined;
   connectorType: string | undefined;
   tokenBalances: IToken[];
+  isFetchingBalances: boolean;
 };
 
 function WalletSheetContent({
   address,
   connectorType,
   tokenBalances,
+  isFetchingBalances,
 }: WalletSheetProps) {
   const token = tokenBalances.find((token) => token.address === zeroAddress);
+  const { chains } = useChains();
+  const { switchChain } = useSwitchChain();
+  const [selectedNetwork, setSelectedNetwork] = useState("");
+  const handleSwitchChain = (networkId: string) => {
+    switchChain({ chainId: +networkId });
+    setSelectedNetwork(networkId);
+  };
   return (
     <>
       <SheetHeader>
@@ -136,42 +151,54 @@ function WalletSheetContent({
         </div>
       </div>
 
-      <div className="mt-2 px-3">
-        <div>
-          <p className="text-gray-600 font-bold">Portfolio</p>
+      {isFetchingBalances ? (
+        <div className="mt-8 flex justify-center">
+          <FadeLoader color="#364153" height={10} width={3} />
         </div>
+      ) : (
+        <div className="mt-5 px-3">
+          <ChangeNetwork
+            chains={chains}
+            handleSwitchChain={handleSwitchChain}
+            selectedNetwork={selectedNetwork}
+            className="border-gray-200 mb-5"
+          />
+          <div>
+            <p className="text-gray-600 font-bold">Portfolio</p>
+          </div>
 
-        {tokenBalances.length == 0 ? (
-          <MoonLoader className="mx-auto mt-5" color="#fff" size={20} />
-        ) : (
-          <div className="mt-3 space-y-6">
-            {tokenBalances.map((tokenBalance) => (
-              <div
-                className="flex items-center justify-between"
-                key={tokenBalance.name}
-              >
-                <div className="flex items-center gap-2">
-                  <Image
-                    width={50}
-                    height={50}
-                    alt={""}
-                    src={tokenBalance.src}
-                    quality={100}
-                    className="w-6 h-6 rounded-full"
-                  />
-                  <p className="text-sidebar-content text-xs">
-                    {tokenBalance.name}
+          {tokenBalances.length == 0 ? (
+            <MoonLoader className="mx-auto mt-5" color="#fff" size={20} />
+          ) : (
+            <div className="mt-3 space-y-6">
+              {tokenBalances.map((tokenBalance) => (
+                <div
+                  className="flex items-center justify-between"
+                  key={tokenBalance.name}
+                >
+                  <div className="flex items-center gap-2">
+                    <Image
+                      width={50}
+                      height={50}
+                      alt={""}
+                      src={tokenBalance.src}
+                      quality={100}
+                      className="w-6 h-6 rounded-full"
+                    />
+                    <p className="text-sidebar-content text-xs">
+                      {tokenBalance.name}
+                    </p>
+                  </div>
+
+                  <p className="text-xs text-sidebar-content">
+                    {tokenBalance.balance}
                   </p>
                 </div>
-
-                <p className="text-xs text-sidebar-content">
-                  {tokenBalance.balance}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
