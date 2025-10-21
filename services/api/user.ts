@@ -27,6 +27,7 @@ async function updateProfile(data: {
     twitter?: string;
     facebook?: string;
     linkedin?: string;
+    instagram?: string;
     website?: string;
   };
 }) {
@@ -54,4 +55,26 @@ async function updateProfile(data: {
   return resp.data.data as UserDocument;
 }
 
-export { getProfile, updateProfile };
+async function followUser(userId: string) {
+  const token = await getAuthToken()
+  
+  const resp = await axios.post(`${url}/follow`, { userId }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return resp.data;
+}
+
+async function unfollowUser(userId: string) {
+  const token = await getAuthToken()
+  
+  const resp = await axios.post(`${url}/unfollow`, { userId }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return resp.data;
+}
+
+export { getProfile, updateProfile, followUser, unfollowUser };

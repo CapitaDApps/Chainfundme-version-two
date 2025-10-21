@@ -18,10 +18,11 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
   const previewText = fullText.slice(0, 250) + "...";
 
   const timeLeft = formatTimeLeft(campaign.startDate, campaign.endDate);
-
   const router = useRouter();
 
-  if (!campaign.published) router.back();
+  if (campaign.published === false) {
+    router.back();
+  }
 
   const deployedChains = campaign.chains.map((chain) => {
     const allowedChain = allowedChains.find(
@@ -32,8 +33,6 @@ function Leftpart({ campaign }: { campaign: ReturnCampaignDocument }) {
       src: allowedChain?.image || "",
     };
   });
-
-  console.log({ deployedChains });
 
   const firstChain = deployedChains[0];
 

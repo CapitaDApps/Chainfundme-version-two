@@ -16,6 +16,7 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
   const router = useRouter();
   const { campaign, retrievingCampaign, error } = useCampaign(campaignId);
 
+
   if (retrievingCampaign) {
     return <Loader />;
   }
@@ -43,7 +44,6 @@ function Campaigndetails({ campaignId }: { campaignId: string }) {
     );
   }
 
-  console.log(campaign);
   const campaignComments = campaign.comments
     .sort((a, b) => compareAsc(new Date(b.createdAt), new Date(a.createdAt)))
     .map((comment, commentIndex) => {

@@ -16,5 +16,6 @@ export type UserDocument = {
   isVerified: boolean;
   socialLinks: Map<string, string>;
   followers: number;
+  usersFollowing: string[]; // Array of user IDs that the current user is following
   notifications: NotificationDocument[];
 };

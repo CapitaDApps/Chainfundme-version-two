@@ -10,7 +10,11 @@ const url = `${baseUrl}/campaign`;
 // /campaign
 const getCampaigns = async (): Promise<ReturnCampaignDocument[]> => {
   const resp = await axios.get(url);
-  return resp.data.data.campaignData;
+
+  // Use the existing cmid field directly since it exists in the API response
+  const campaigns = resp.data.data.campaignData;
+  
+  return campaigns;
 };
 
 // /campaign/:campaignId
@@ -18,8 +22,14 @@ const getCampaign = async (
   campaignId: string
 ): Promise<ReturnCampaignDocument> => {
   const resp = await axios.get(`${url}/${campaignId}`);
-  console.log({ campaign: resp.data.data });
-  return resp.data.data;
+  
+  // Map _id to cmid to match the expected interface
+  const campaign = {
+    ...resp.data.data,
+    cmid: resp.data.data.cmid,
+  };
+  
+  return campaign;
 };
 
 // /campaign/create

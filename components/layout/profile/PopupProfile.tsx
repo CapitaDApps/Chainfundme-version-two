@@ -1,16 +1,64 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import Socials from "./Socials";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { GoPlus } from "react-icons/go";
 import { UserDocument } from "@/types/api";
+import { useFollowUser } from "@/services/api/hooks/user/useFollowUser";
+import { useUnfollowUser } from "@/services/api/hooks/user/useUnfollowUser";
+import { useUserProfile } from "@/services/api/hooks/user/useUserProfile";
 
 function PopupProfile({ owner }: { owner: UserDocument }) {
+  const { userProfile } = useUserProfile();
+  const followUserMutation = useFollowUser();
+  const unfollowUserMutation = useUnfollowUser();
+  
   const [isFollowing, setIsFollowing] = useState(false);
-  const toggleFollow = () => setIsFollowing(!isFollowing);
+  const [followersCount, setFollowersCount] = useState(owner.followers || 0);
+  
+  // Check if current user is following this profile owner
+  useEffect(() => {
+    if (userProfile?.usersFollowing && owner._id) {
+      setIsFollowing(userProfile.usersFollowing.includes(owner._id));
+    }
+  }, [userProfile?.usersFollowing, owner._id]);
+
+  // Update followers count when owner changes
+  useEffect(() => {
+    console.log("PopupProfile: Owner followers count:", owner.followers);
+    setFollowersCount(owner.followers || 0);
+  }, [owner.followers]);
+
+  const handleFollow = async () => {
+    if (!owner._id) return;
+    
+    const previousCount = followersCount;
+    
+    if (isFollowing) {
+      // Optimistically update the followers count
+      setFollowersCount(prev => Math.max(0, prev - 1));
+      try {
+        await unfollowUserMutation.mutateAsync(owner._id);
+      } catch (error) {
+        // Revert optimistic update on error
+        setFollowersCount(previousCount);
+        throw error;
+      }
+    } else {
+      // Optimistically update the followers count
+      setFollowersCount(prev => prev + 1);
+      try {
+        await followUserMutation.mutateAsync(owner._id);
+      } catch (error) {
+        // Revert optimistic update on error
+        setFollowersCount(previousCount);
+        throw error;
+      }
+    }
+  };
 
   return (
     <div className="relative">
@@ -53,7 +101,7 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
 
         <div className="flex justify-center mt-5 space-x-8">
           <div className="text-center">
-            <p className="font-bold text-sm">{owner.followers}</p>
+            <p className="font-bold text-sm">{followersCount || 0}</p>
             <p className="text-gray-500 text-xs">Followers</p>
           </div>
           {/* <div className="text-center">
@@ -62,14 +110,29 @@ function PopupProfile({ owner }: { owner: UserDocument }) {
           </div> */}
         </div>
         <Button
-          className="flex items-center gap-1 mt-2 px-4 text-xs rounded-2xl cursor-pointer bg-[#003DEF] text-white hover:bg-sky-600 h-7"
-          onClick={toggleFollow}
+          className="flex items-center gap-1 mt-2 px-4 text-xs rounded-2xl cursor-pointer bg-[#003DEF] text-white hover:bg-sky-600 h-7 disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={handleFollow}
+          disabled={
+            followUserMutation.isPending || 
+            unfollowUserMutation.isPending ||
+            userProfile?._id === owner._id
+          }
         >
-          {isFollowing ? "Unfollow" : "Follow"}
-          <GoPlus className="text-sm" />
+          {(followUserMutation.isPending || unfollowUserMutation.isPending) ? (
+            isFollowing ? "Unfollowing..." : "Following..."
+          ) : userProfile?._id === owner._id ? (
+            "Your Profile"
+          ) : isFollowing ? (
+            "Unfollow"
+          ) : (
+            "Follow"
+          )}
+          {!(followUserMutation.isPending || unfollowUserMutation.isPending) && userProfile?._id !== owner._id && !isFollowing && (
+            <GoPlus className="text-sm" />
+          )}
         </Button>
         <div className="mt-4">
-          <Socials />
+          <Socials owner={owner} />
         </div>
       </div>
     </div>

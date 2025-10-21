@@ -13,7 +13,7 @@ import UseCases from "./UseCases";
 import WhyChooseUse from "./WhyChooseUs";
 
 function ExplorePageClient() {
-  const { campaigns, retrievingCampaigns } = useCampaigns();
+  const { campaigns, retrievingCampaigns, error } = useCampaigns();
   const router = useRouter();
 
   const firstCampaign = campaigns?.[0];
