@@ -29,7 +29,7 @@ export default function WhyChooseUse() {
   ];
 
   return (
-    <section className="py-16 bg-white text-center px-4 md:px-10 relative">
+    <section className="pb-16 bg-white text-center px-4 md:px-10 relative">
       <h2 className="text-[#1E1E1E] text-2xl md:text-3xl font-bold mb-4">
         WHY CHOOSE CHAINFUNDME
       </h2>
@@ -38,23 +38,34 @@ export default function WhyChooseUse() {
         Startups, Communities & Religious Organizations
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-6">
-        {features.slice(0, 3).map((item, index) => (
-          <div
-            key={index}
-            className="bg-[#F8F9FC] rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col items-center text-center"
-          >
-            <Image src={item.image} alt="" width="70" height="70" />
+<div className="max-w-6xl mx-auto mb-6 px-6">
+  <div
+    className="
+      grid grid-cols-1
+      min-[590px]:grid-cols-2 
+      lg:grid-cols-3 
+      gap-6 
+      justify-items-center
+    "
+  >
+    {features.map((item, index) => (
+      <div
+        key={index}
+        className="bg-[#F8F9FC] rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col items-center text-center w-full sm:w-[90%] md:w-[100%]"
+      >
+        <Image src={item.image} alt="" width="70" height="70" />
 
-            <h3 className="text-[#1E1E1E] font-semibold text-lg mb-2">
-              {item.title}
-            </h3>
-            <p className="text-[#666666] text-sm">{item.desc}</p>
-          </div>
-        ))}
+        <h3 className="text-[#1E1E1E] font-semibold text-lg mb-2">
+          {item.title}
+        </h3>
+        <p className="text-[#666666] text-sm">{item.desc}</p>
       </div>
+    ))}
+  </div>
+</div>
 
-      <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+
+      {/* <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
         {features.slice(3).map((item, index) => (
           <div
             key={index}
@@ -67,7 +78,7 @@ export default function WhyChooseUse() {
             <p className="text-[#666666] text-sm">{item.desc}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }

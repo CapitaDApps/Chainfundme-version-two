@@ -4,6 +4,7 @@ import { TwitterShareButton, TwitterIcon } from "next-share";
 import { useEffect, useMemo, useState } from "react";
 import { Mail } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface ShareModalProps {
@@ -68,7 +69,7 @@ export default function ShareModal({
             rel="noopener noreferrer"
             className="hover:opacity-80"
           >
-            <img
+            <Image
               src="/Farcaster.svg"
               alt="Farcaster"
               width={40}

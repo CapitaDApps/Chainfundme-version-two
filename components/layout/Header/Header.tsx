@@ -4,7 +4,12 @@ import { menuItems } from "@/lib/sidebarContent";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import CreateWalletButton from "@/components/wallet_connect/CreateWalletButton";
 import { usePrivy } from "@privy-io/react-auth";
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -13,6 +18,8 @@ import ToggleNotificationbar from "./ToggleNotificationbar";
 import UserDropdownMenu from "./userDropdownMenu";
 import { Settings } from "lucide-react";
 import UserWalletSettings from "@/components/wallet_connect/userWalletSettings";
+import useScreenWidth from "@/hooks/useScreenWidth";
+import { ChevronDown } from "lucide-react";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -23,14 +30,19 @@ function Header() {
   const pathname = usePathname();
   const { user } = usePrivy();
   const connected = !!user;
-
+  const width = useScreenWidth();
   const [scroll, setScroll] = useState(0);
+  const [open, setOpen] = useState(false);
+  const slug = pathname.split("/").at(pathname.split("/").length >= 2 ? 1 : 1);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     document.addEventListener("scroll", () => {
       setScroll(scrollY);
     });
   }, []);
+
+  const isBetween1055And1130 = width >= 1055 && width <= 1130;
 
   return (
     <div
@@ -58,25 +70,87 @@ function Header() {
           <div
             className={`flex items-center justify-center gap-x-4 lg:gap-x-10 ${plusJakartaSans.className}  mt-1`}
           >
-            {menuItems.slice(0, -2).map((link) => {
-              const isActive = pathname == link.route;
+            {isBetween1055And1130 ? (
+              <div className=" flex items-center justify-center space-x-3">
+                <div className="flex items-center gap-4">
+                  {menuItems.slice(0, -4).map((link) => {
+                    const isActive = pathname === link.route;
 
-              return (
-                <Link
-                  key={link.route}
-                  href={link.route}
-                  className={`relative text-xs lg:text-[16px] font-medium `}
-                >
-                  <p
-                    className={` hover:text-blue-700 ${
-                      isActive ? "text-blue-700" : "text-secondary-text"
-                    }`}
-                  >
-                    {link.title}
-                  </p>
-                </Link>
-              );
-            })}
+                    return (
+                      <Link
+                        key={link.route}
+                        href={link.route}
+                        className="relative text-xs lg:text-[16px] font-medium"
+                      >
+                        <p
+                          className={`hover:text-blue-700 transition-colors ${
+                            isActive ? "text-blue-700" : "text-secondary-text"
+                          }`}
+                        >
+                          {link.title}
+                        </p>
+                      </Link>
+                    );
+                  })}
+                </div>
+                <DropdownMenu open={open} onOpenChange={setOpen}>
+                  <DropdownMenuTrigger>
+                    <div>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <div className="flex flex-col gap-2 w-full">
+                        {menuItems.slice(3,-2).map((item) => {
+                          return (
+                            <Link
+                              key={item.slug}
+                              href={item.route}
+                              onClick={handleClose}
+                              className={`
+                               flex items-center py-3 gap-3 cursor-pointer rounded-md text-xs
+                               hover:text-primary text-[#666666] transition-colors duration-200
+                                ${
+                                  slug === item.slug
+                                    ? "!bg-primary/15 border-r-[2px] !text-primary rounded-none border-primary"
+                                    : "hover:bg-primary/10"
+                                }
+                                `}
+                            >
+                              <span className="text-lg">{<item.icon />}</span>
+                              <span className="truncate">{item.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                {menuItems.slice(0, -2).map((link) => {
+                  const isActive = pathname === link.route;
+
+                  return (
+                    <Link
+                      key={link.route}
+                      href={link.route}
+                      className="relative text-xs lg:text-[16px] font-medium"
+                    >
+                      <p
+                        className={`hover:text-blue-700 transition-colors ${
+                          isActive ? "text-blue-700" : "text-secondary-text"
+                        }`}
+                      >
+                        {link.title}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 
